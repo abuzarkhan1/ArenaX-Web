@@ -4,7 +4,7 @@ const About = () => {
 
   const handleDownload = () => {
     const link = document.createElement('a');
-    link.href = 'https://github.com/abuzarkhan1/ArenaX-web/releases/download/v1.0.0/ArenaX.apk';
+    link.href = 'https://github.com/abuzarkhan1/ArenaX-Web/releases/download/v1.0/ArenaX.apk';
     link.download = 'ArenaX.apk';
     link.target = '_blank';
     document.body.appendChild(link);

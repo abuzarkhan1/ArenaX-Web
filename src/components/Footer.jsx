@@ -5,29 +5,35 @@ const Footer = ({ setCurrentPage }) => {
   };
 
   return (
-    <footer className="bg-[#0A0A0A] border-t border-[#1E1E1E] py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+    <footer className="bg-[#0A0A0A] border-t border-white/5 py-16 px-4 sm:px-6 lg:px-8 relative">
+      {/* Background decoration */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-[#00FF7F]/5 rounded-full blur-3xl"></div>
+        <div className="absolute top-0 right-1/4 w-96 h-96 bg-[#00BFFF]/5 rounded-full blur-3xl"></div>
+      </div>
+
+      <div className="max-w-7xl mx-auto relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
           <div className="md:col-span-1">
-            <div className="flex items-center gap-2 mb-4">
-              <div className="w-10 h-10 bg-gradient-to-br from-[#00FF7F] to-[#00BFFF] rounded-lg flex items-center justify-center">
-                <span className="text-2xl">🎮</span>
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-12 h-12 bg-[#00FF7F]/20 backdrop-blur-xl rounded-2xl flex items-center justify-center border border-[#00FF7F]/30 shadow-lg shadow-[#00FF7F]/20">
+                <span className="text-3xl">🎮</span>
               </div>
-              <span className="text-2xl font-bold text-white">ArenaX</span>
+              <span className="text-3xl font-bold text-white">ArenaX</span>
             </div>
-            <p className="text-gray-400 text-sm leading-relaxed">
-              India's premier mobile esports tournament platform. Compete, win,
+            <p className="text-gray-400 text-base leading-relaxed">
+              Pakistan's premier mobile esports tournament platform. Compete, win,
               and dominate in Free Fire and PUBG tournaments.
             </p>
           </div>
 
           <div>
-            <h3 className="text-white font-bold mb-4">Quick Links</h3>
-            <ul className="space-y-2">
+            <h3 className="text-white font-bold mb-6 text-lg">Quick Links</h3>
+            <ul className="space-y-3">
               <li>
                 <button
                   onClick={() => scrollToTop('home')}
-                  className="text-gray-400 hover:text-[#00FF7F] transition-colors text-sm"
+                  className="text-gray-400 hover:text-[#00FF7F] transition-colors text-base"
                 >
                   Home
                 </button>
@@ -35,7 +41,7 @@ const Footer = ({ setCurrentPage }) => {
               <li>
                 <button
                   onClick={() => scrollToTop('about')}
-                  className="text-gray-400 hover:text-[#00FF7F] transition-colors text-sm"
+                  className="text-gray-400 hover:text-[#00FF7F] transition-colors text-base"
                 >
                   About Us
                 </button>
@@ -43,7 +49,7 @@ const Footer = ({ setCurrentPage }) => {
               <li>
                 <button
                   onClick={() => scrollToTop('faq')}
-                  className="text-gray-400 hover:text-[#00FF7F] transition-colors text-sm"
+                  className="text-gray-400 hover:text-[#00FF7F] transition-colors text-base"
                 >
                   FAQs
                 </button>
@@ -51,7 +57,7 @@ const Footer = ({ setCurrentPage }) => {
               <li>
                 <button
                   onClick={() => scrollToTop('contact')}
-                  className="text-gray-400 hover:text-[#00FF7F] transition-colors text-sm"
+                  className="text-gray-400 hover:text-[#00FF7F] transition-colors text-base"
                 >
                   Contact Us
                 </button>
@@ -60,12 +66,12 @@ const Footer = ({ setCurrentPage }) => {
           </div>
 
           <div>
-            <h3 className="text-white font-bold mb-4">Legal</h3>
-            <ul className="space-y-2">
+            <h3 className="text-white font-bold mb-6 text-lg">Legal</h3>
+            <ul className="space-y-3">
               <li>
                 <button
                   onClick={() => scrollToTop('terms')}
-                  className="text-gray-400 hover:text-[#00FF7F] transition-colors text-sm"
+                  className="text-gray-400 hover:text-[#00FF7F] transition-colors text-base"
                 >
                   Terms & Conditions
                 </button>
@@ -73,7 +79,7 @@ const Footer = ({ setCurrentPage }) => {
               <li>
                 <a
                   href="#"
-                  className="text-gray-400 hover:text-[#00FF7F] transition-colors text-sm"
+                  className="text-gray-400 hover:text-[#00FF7F] transition-colors text-base"
                 >
                   Privacy Policy
                 </a>
@@ -81,7 +87,7 @@ const Footer = ({ setCurrentPage }) => {
               <li>
                 <a
                   href="#"
-                  className="text-gray-400 hover:text-[#00FF7F] transition-colors text-sm"
+                  className="text-gray-400 hover:text-[#00FF7F] transition-colors text-base"
                 >
                   Refund Policy
                 </a>
@@ -89,7 +95,7 @@ const Footer = ({ setCurrentPage }) => {
               <li>
                 <a
                   href="#"
-                  className="text-gray-400 hover:text-[#00FF7F] transition-colors text-sm"
+                  className="text-gray-400 hover:text-[#00FF7F] transition-colors text-base"
                 >
                   Fair Play Policy
                 </a>
@@ -98,46 +104,46 @@ const Footer = ({ setCurrentPage }) => {
           </div>
 
           <div>
-            <h3 className="text-white font-bold mb-4">Connect With Us</h3>
-            <div className="flex gap-3 mb-4">
+            <h3 className="text-white font-bold mb-6 text-lg">Connect With Us</h3>
+            <div className="flex gap-4 mb-6">
               <a
                 href="#"
-                className="w-10 h-10 bg-[#1E1E1E] rounded-lg flex items-center justify-center hover:bg-[#00FF7F] transition-colors group"
+                className="w-12 h-12 bg-[#1E1E1E]/60 backdrop-blur-xl rounded-xl flex items-center justify-center hover:bg-[#00FF7F]/20 transition-all group border border-white/10 hover:border-[#00FF7F]/30 shadow-lg"
               >
-                <span className="text-xl group-hover:scale-110 transition-transform">
+                <span className="text-2xl group-hover:scale-110 transition-transform">
                   📘
                 </span>
               </a>
               <a
                 href="#"
-                className="w-10 h-10 bg-[#1E1E1E] rounded-lg flex items-center justify-center hover:bg-[#00BFFF] transition-colors group"
+                className="w-12 h-12 bg-[#1E1E1E]/60 backdrop-blur-xl rounded-xl flex items-center justify-center hover:bg-[#00BFFF]/20 transition-all group border border-white/10 hover:border-[#00BFFF]/30 shadow-lg"
               >
-                <span className="text-xl group-hover:scale-110 transition-transform">
+                <span className="text-2xl group-hover:scale-110 transition-transform">
                   🐦
                 </span>
               </a>
               <a
                 href="#"
-                className="w-10 h-10 bg-[#1E1E1E] rounded-lg flex items-center justify-center hover:bg-[#FF6B6B] transition-colors group"
+                className="w-12 h-12 bg-[#1E1E1E]/60 backdrop-blur-xl rounded-xl flex items-center justify-center hover:bg-[#00FF7F]/20 transition-all group border border-white/10 hover:border-[#00FF7F]/30 shadow-lg"
               >
-                <span className="text-xl group-hover:scale-110 transition-transform">
+                <span className="text-2xl group-hover:scale-110 transition-transform">
                   📸
                 </span>
               </a>
               <a
                 href="#"
-                className="w-10 h-10 bg-[#1E1E1E] rounded-lg flex items-center justify-center hover:bg-[#FFD700] transition-colors group"
+                className="w-12 h-12 bg-[#1E1E1E]/60 backdrop-blur-xl rounded-xl flex items-center justify-center hover:bg-[#00BFFF]/20 transition-all group border border-white/10 hover:border-[#00BFFF]/30 shadow-lg"
               >
-                <span className="text-xl group-hover:scale-110 transition-transform">
+                <span className="text-2xl group-hover:scale-110 transition-transform">
                   💬
                 </span>
               </a>
             </div>
-            <p className="text-gray-400 text-sm">
+            <p className="text-gray-400 text-base">
               Email:{' '}
               <a
                 href="mailto:support@arenax.com"
-                className="text-[#00FF7F] hover:text-[#00BFFF]"
+                className="text-[#00FF7F] hover:text-[#00BFFF] transition-colors"
               >
                 support@arenax.com
               </a>
@@ -145,12 +151,12 @@ const Footer = ({ setCurrentPage }) => {
           </div>
         </div>
 
-        <div className="border-t border-[#1E1E1E] pt-8">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-gray-500 text-sm text-center md:text-left">
-              © 2025 ArenaX. All rights reserved. Made with 💚 in India
+        <div className="border-t border-white/5 pt-10">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-6">
+            <p className="text-gray-500 text-base text-center md:text-left">
+              © 2025 ArenaX. All rights reserved. Made with 💚 in Pakistan
             </p>
-            <div className="flex items-center gap-6 text-sm">
+            <div className="flex items-center gap-8 text-base">
               <span className="text-gray-500">🎮 Free Fire</span>
               <span className="text-gray-500">🎯 PUBG Mobile</span>
               <span className="text-gray-500">🏆 Tournaments</span>
@@ -158,8 +164,8 @@ const Footer = ({ setCurrentPage }) => {
           </div>
         </div>
 
-        <div className="mt-6 text-center">
-          <p className="text-gray-600 text-xs">
+        <div className="mt-8 text-center">
+          <p className="text-gray-600 text-sm">
             ArenaX is a skill-based gaming platform. Play responsibly. Users
             must be 18+ or have parental consent.
           </p>

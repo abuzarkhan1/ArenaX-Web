@@ -58,36 +58,39 @@ const FAQ = () => {
   };
 
   return (
-    <div className="pt-24 pb-20 px-4 sm:px-6 lg:px-8 min-h-screen">
-      <div className="max-w-4xl mx-auto">
-        <div className="text-center mb-16">
+    <div className="pt-24 pb-20 px-4 sm:px-6 lg:px-8 min-h-screen relative">
+      {/* Background decoration */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute top-20 left-1/4 w-96 h-96 bg-[#00FF7F]/5 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-20 right-1/4 w-96 h-96 bg-[#00BFFF]/5 rounded-full blur-3xl"></div>
+      </div>
+
+      <div className="max-w-4xl mx-auto relative z-10">
+        <div className="text-center mb-20">
           <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
-            Frequently Asked{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00FF7F] to-[#00BFFF]">
-              Questions
-            </span>
+            Frequently Asked <span className="text-[#00FF7F]">Questions</span>
           </h1>
-          <p className="text-xl text-gray-400">
+          <p className="text-xl text-gray-400 leading-relaxed">
             Got questions? We've got answers. Find everything you need to know
             about ArenaX.
           </p>
         </div>
 
-        <div className="space-y-4">
+        <div className="space-y-5">
           {faqs.map((faq, index) => (
             <div
               key={index}
-              className="bg-[#1E1E1E] rounded-2xl border border-[#2A2A2A] overflow-hidden hover:border-[#00FF7F]/30 transition-all"
+              className="bg-[#1E1E1E]/40 backdrop-blur-2xl rounded-2xl border border-white/10 overflow-hidden hover:border-white/20 transition-all shadow-xl"
             >
               <button
                 onClick={() => toggleFAQ(index)}
-                className="w-full px-6 py-6 flex items-center justify-between text-left"
+                className="w-full px-8 py-6 flex items-center justify-between text-left"
               >
-                <span className="text-lg font-semibold text-white pr-4">
+                <span className="text-lg font-semibold text-white pr-6">
                   {faq.question}
                 </span>
                 <ChevronDown
-                  className={`w-5 h-5 text-[#00FF7F] flex-shrink-0 transition-transform ${
+                  className={`w-6 h-6 text-[#00FF7F] flex-shrink-0 transition-transform duration-300 ${
                     openIndex === index ? 'rotate-180' : ''
                   }`}
                 />
@@ -97,19 +100,19 @@ const FAQ = () => {
                   openIndex === index ? 'max-h-96' : 'max-h-0'
                 }`}
               >
-                <div className="px-6 pb-6">
-                  <p className="text-gray-400 leading-relaxed">{faq.answer}</p>
+                <div className="px-8 pb-6">
+                  <p className="text-gray-400 leading-relaxed text-lg">{faq.answer}</p>
                 </div>
               </div>
             </div>
           ))}
         </div>
 
-        <div className="mt-16 bg-gradient-to-r from-[#00FF7F]/10 to-[#00BFFF]/10 rounded-3xl p-8 md:p-12 border border-[#2A2A2A] text-center">
-          <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">
+        <div className="mt-20 bg-[#1E1E1E]/40 backdrop-blur-2xl rounded-3xl p-10 md:p-12 border border-white/10 text-center shadow-2xl">
+          <h2 className="text-2xl md:text-3xl font-bold text-white mb-5">
             Still Have Questions?
           </h2>
-          <p className="text-gray-400 mb-8 text-lg">
+          <p className="text-gray-400 mb-10 text-lg leading-relaxed">
             Can't find the answer you're looking for? Our support team is here
             to help you 24/7.
           </p>
@@ -117,7 +120,7 @@ const FAQ = () => {
             onClick={() =>
               (window.location.href = 'mailto:arenasupprt@gmail.com')
             }
-            className="bg-gradient-to-r from-[#00FF7F] to-[#00BFFF] text-black px-8 py-4 rounded-xl font-bold text-lg hover:shadow-lg hover:shadow-[#00FF7F]/50 transition-all duration-300"
+            className="bg-[#00FF7F]/90 backdrop-blur-xl text-black px-10 py-5 rounded-2xl font-bold text-xl hover:bg-[#00FF7F] transition-all duration-300 shadow-2xl shadow-[#00FF7F]/30 hover:shadow-[#00FF7F]/50 border border-[#00FF7F]/30 hover:scale-105"
           >
             Contact Support
           </button>

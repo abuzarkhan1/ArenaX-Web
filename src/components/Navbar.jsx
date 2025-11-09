@@ -19,30 +19,27 @@ const Navbar = ({ currentPage, setCurrentPage }) => {
   };
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-[#121212]/95 backdrop-blur-sm border-b border-[#1E1E1E]">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-[#121212]/70 backdrop-blur-2xl border-b border-white/5 shadow-xl">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center justify-between h-20">
           <div
-            className="flex items-center cursor-pointer"
+            className="flex items-center cursor-pointer group"
             onClick={() => handleNavClick('home')}
           >
-            <div className="flex items-center gap-2">
-              <div className="w-10 h-10 bg-gradient-to-br from-[#00FF7F] to-[#00BFFF] rounded-lg flex items-center justify-center">
-                <span className="text-2xl">🎮</span>
-              </div>
-              <span className="text-2xl font-bold text-white">ArenaX</span>
+            <div className="flex items-center gap-3">
+              <span className="text-3xl font-bold text-white tracking-tight">ArenaX</span>
             </div>
           </div>
 
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden md:flex items-center space-x-2">
             {navItems.map((item) => (
               <button
                 key={item.id}
                 onClick={() => handleNavClick(item.id)}
-                className={`text-sm font-medium transition-colors ${
+                className={`px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-300 ${
                   currentPage === item.id
-                    ? 'text-[#00FF7F]'
-                    : 'text-gray-300 hover:text-white'
+                    ? 'bg-[#00FF7F]/20 text-[#00FF7F] backdrop-blur-xl border border-[#00FF7F]/30 shadow-lg shadow-[#00FF7F]/20'
+                    : 'text-gray-300 hover:text-white hover:bg-white/5 backdrop-blur-xl border border-transparent hover:border-white/10'
                 }`}
               >
                 {item.label}
@@ -51,7 +48,7 @@ const Navbar = ({ currentPage, setCurrentPage }) => {
           </div>
 
           <button
-            className="md:hidden text-white"
+            className="md:hidden text-white w-12 h-12 flex items-center justify-center bg-white/5 backdrop-blur-xl rounded-xl border border-white/10 hover:bg-white/10 transition-all"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
             {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -60,16 +57,16 @@ const Navbar = ({ currentPage, setCurrentPage }) => {
       </div>
 
       {mobileMenuOpen && (
-        <div className="md:hidden bg-[#1E1E1E] border-t border-[#2A2A2A]">
-          <div className="px-4 py-4 space-y-3">
+        <div className="md:hidden bg-[#1E1E1E]/95 backdrop-blur-2xl border-t border-white/5 shadow-2xl">
+          <div className="px-4 py-6 space-y-2">
             {navItems.map((item) => (
               <button
                 key={item.id}
                 onClick={() => handleNavClick(item.id)}
-                className={`block w-full text-left px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                className={`block w-full text-left px-5 py-3.5 rounded-xl text-sm font-semibold transition-all duration-300 ${
                   currentPage === item.id
-                    ? 'text-[#00FF7F] bg-[#00FF7F]/10'
-                    : 'text-gray-300 hover:text-white hover:bg-[#2A2A2A]'
+                    ? 'text-[#00FF7F] bg-[#00FF7F]/20 border border-[#00FF7F]/30 shadow-lg shadow-[#00FF7F]/10'
+                    : 'text-gray-300 hover:text-white hover:bg-white/5 border border-transparent hover:border-white/10'
                 }`}
               >
                 {item.label}

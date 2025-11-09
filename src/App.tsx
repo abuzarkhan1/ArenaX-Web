@@ -8,6 +8,7 @@ import FAQ from './components/FAQ';
 import Contact from './components/Contact';
 import Terms from './components/Terms';
 import Footer from './components/Footer';
+import WhatsAppButton from './components/WhatsAppButton';
 
 function App() {
   const [currentPage, setCurrentPage] = useState('home');
@@ -46,6 +47,7 @@ function App() {
       <Navbar currentPage={currentPage} setCurrentPage={setCurrentPage} />
       {renderPage()}
       <Footer setCurrentPage={setCurrentPage} />
+      <WhatsAppButton />
     </div>
   );
 }

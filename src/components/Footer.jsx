@@ -1,3 +1,5 @@
+import { Facebook, Instagram, Youtube } from 'lucide-react';
+
 const Footer = ({ setCurrentPage }) => {
   const scrollToTop = (page) => {
     setCurrentPage(page);
@@ -107,36 +109,30 @@ const Footer = ({ setCurrentPage }) => {
             <h3 className="text-white font-bold mb-6 text-lg">Connect With Us</h3>
             <div className="flex gap-4 mb-6">
               <a
-                href="#"
-                className="w-12 h-12 bg-[#1E1E1E]/60 backdrop-blur-xl rounded-xl flex items-center justify-center hover:bg-[#00FF7F]/20 transition-all group border border-white/10 hover:border-[#00FF7F]/30 shadow-lg"
+                href="https://www.facebook.com/share/17NfG8Syiq/"
+                className="w-12 h-12 bg-[#1E1E1E]/60 backdrop-blur-xl rounded-xl flex items-center justify-center hover:bg-[#1877F2]/20 transition-all group border border-white/10 hover:border-[#1877F2]/30 shadow-lg"
               >
-                <span className="text-2xl group-hover:scale-110 transition-transform">
-                  📘
-                </span>
+                <Facebook className="w-5 h-5 text-gray-400 group-hover:text-[#1877F2] group-hover:scale-110 transition-all" />
               </a>
               <a
-                href="#"
-                className="w-12 h-12 bg-[#1E1E1E]/60 backdrop-blur-xl rounded-xl flex items-center justify-center hover:bg-[#00BFFF]/20 transition-all group border border-white/10 hover:border-[#00BFFF]/30 shadow-lg"
+                href="https://www.instagram.com/arenaxbattlefield?igsh=MTQyOHA4c3Q3NWRzYQ=="
+                className="w-12 h-12 bg-[#1E1E1E]/60 backdrop-blur-xl rounded-xl flex items-center justify-center hover:bg-[#E4405F]/20 transition-all group border border-white/10 hover:border-[#E4405F]/30 shadow-lg"
               >
-                <span className="text-2xl group-hover:scale-110 transition-transform">
-                  🐦
-                </span>
+                <Instagram className="w-5 h-5 text-gray-400 group-hover:text-[#E4405F] group-hover:scale-110 transition-all" />
               </a>
               <a
-                href="#"
-                className="w-12 h-12 bg-[#1E1E1E]/60 backdrop-blur-xl rounded-xl flex items-center justify-center hover:bg-[#00FF7F]/20 transition-all group border border-white/10 hover:border-[#00FF7F]/30 shadow-lg"
+                href="https://www.tiktok.com/@arenax_15?_r=1&_t=ZN-91AVzEZPhGY"
+                className="w-12 h-12 bg-[#1E1E1E]/60 backdrop-blur-xl rounded-xl flex items-center justify-center hover:bg-[#FF0050]/20 transition-all group border border-white/10 hover:border-[#FF0050]/30 shadow-lg"
               >
-                <span className="text-2xl group-hover:scale-110 transition-transform">
-                  📸
-                </span>
+                <svg className="w-5 h-5 text-gray-400 group-hover:text-[#FF0050] group-hover:scale-110 transition-all" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-5.2 1.74 2.89 2.89 0 012.31-4.64 2.93 2.93 0 01.88.13V9.4a6.84 6.84 0 00-1-.05A6.33 6.33 0 005 20.1a6.34 6.34 0 0010.86-4.43v-7a8.16 8.16 0 004.77 1.52v-3.4a4.85 4.85 0 01-1-.1z"/>
+                </svg>
               </a>
               <a
-                href="#"
-                className="w-12 h-12 bg-[#1E1E1E]/60 backdrop-blur-xl rounded-xl flex items-center justify-center hover:bg-[#00BFFF]/20 transition-all group border border-white/10 hover:border-[#00BFFF]/30 shadow-lg"
+                href="https://youtube.com/@arenax_15?si=ElRn9O3vcBtpJRXI"
+                className="w-12 h-12 bg-[#1E1E1E]/60 backdrop-blur-xl rounded-xl flex items-center justify-center hover:bg-[#FF0000]/20 transition-all group border border-white/10 hover:border-[#FF0000]/30 shadow-lg"
               >
-                <span className="text-2xl group-hover:scale-110 transition-transform">
-                  💬
-                </span>
+                <Youtube className="w-5 h-5 text-gray-400 group-hover:text-[#FF0000] group-hover:scale-110 transition-all" />
               </a>
             </div>
             <p className="text-gray-400 text-base">

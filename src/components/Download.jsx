@@ -1,18 +1,22 @@
 import { Download as DownloadIcon, Smartphone, Clock } from "lucide-react";
 
 const Download = () => {
-const handleDownload = () => {
-    const link = document.createElement('a');
-    link.href = 'https://github.com/abuzarkhan1/ArenaX-Web/releases/tag/v1.0/ArenaX.apk';
-    link.download = 'ArenaX.apk';
-    link.target = '_blank';
+  const handleDownload = () => {
+    const link = document.createElement("a");
+    link.href =
+      "https://github.com/abuzarkhan1/ArenaX-Web/releases/download/v1.0/ArenaX.apk";
+    link.download = "ArenaX.apk";
+    link.target = "_blank";
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
   };
 
   return (
-    <div id="download" className="py-24 px-4 sm:px-6 lg:px-8 bg-[#121212] relative">
+    <div
+      id="download"
+      className="py-24 px-4 sm:px-6 lg:px-8 bg-[#121212] relative"
+    >
       {/* Background decoration */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute top-1/4 left-10 w-96 h-96 bg-[#00FF7F]/5 rounded-full blur-3xl"></div>
@@ -142,25 +146,33 @@ const handleDownload = () => {
               <div className="w-16 h-16 bg-[#00FF7F]/20 backdrop-blur-xl rounded-2xl flex items-center justify-center mx-auto mb-4 border border-[#00FF7F]/30 shadow-lg shadow-[#00FF7F]/20">
                 <span className="text-white font-bold text-xl">1</span>
               </div>
-              <p className="text-gray-400 text-base leading-relaxed">Download the APK file</p>
+              <p className="text-gray-400 text-base leading-relaxed">
+                Download the APK file
+              </p>
             </div>
             <div className="text-center">
               <div className="w-16 h-16 bg-[#00FF7F]/20 backdrop-blur-xl rounded-2xl flex items-center justify-center mx-auto mb-4 border border-[#00FF7F]/30 shadow-lg shadow-[#00FF7F]/20">
                 <span className="text-white font-bold text-xl">2</span>
               </div>
-              <p className="text-gray-400 text-base leading-relaxed">Enable Unknown Sources</p>
+              <p className="text-gray-400 text-base leading-relaxed">
+                Enable Unknown Sources
+              </p>
             </div>
             <div className="text-center">
               <div className="w-16 h-16 bg-[#00FF7F]/20 backdrop-blur-xl rounded-2xl flex items-center justify-center mx-auto mb-4 border border-[#00FF7F]/30 shadow-lg shadow-[#00FF7F]/20">
                 <span className="text-white font-bold text-xl">3</span>
               </div>
-              <p className="text-gray-400 text-base leading-relaxed">Install the application</p>
+              <p className="text-gray-400 text-base leading-relaxed">
+                Install the application
+              </p>
             </div>
             <div className="text-center">
               <div className="w-16 h-16 bg-[#00FF7F]/20 backdrop-blur-xl rounded-2xl flex items-center justify-center mx-auto mb-4 border border-[#00FF7F]/30 shadow-lg shadow-[#00FF7F]/20">
                 <span className="text-white font-bold text-xl">4</span>
               </div>
-              <p className="text-gray-400 text-base leading-relaxed">Open and start playing</p>
+              <p className="text-gray-400 text-base leading-relaxed">
+                Open and start playing
+              </p>
             </div>
           </div>
         </div>

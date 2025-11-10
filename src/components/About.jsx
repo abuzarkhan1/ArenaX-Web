@@ -1,17 +1,17 @@
-import { Target, Heart, Zap, Users } from 'lucide-react';
+import { Target, Heart, Zap, Users } from "lucide-react";
 
 const About = () => {
-
   const handleDownload = () => {
-    const link = document.createElement('a');
-    link.href = 'https://github.com/abuzarkhan1/ArenaX-Web/releases/tag/v1.0/ArenaX.apk';
-    link.download = 'ArenaX.apk';
-    link.target = '_blank';
+    const link = document.createElement("a");
+    link.href =
+      "https://github.com/abuzarkhan1/ArenaX-Web/releases/download/v1.0/ArenaX.apk";
+    link.download = "ArenaX.apk";
+    link.target = "_blank";
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
   };
-  
+
   return (
     <div className="pt-24 pb-20 px-4 sm:px-6 lg:px-8 min-h-screen relative">
       {/* Background decoration */}
@@ -105,9 +105,7 @@ const About = () => {
           <div className="grid md:grid-cols-3 gap-10">
             <div className="text-center">
               <div className="text-5xl mb-5">🎯</div>
-              <h3 className="text-xl font-bold text-white mb-4">
-                Fair Play
-              </h3>
+              <h3 className="text-xl font-bold text-white mb-4">Fair Play</h3>
               <p className="text-gray-400 leading-relaxed text-lg">
                 Advanced anti-cheat systems and manual verification ensure every
                 match is fair
@@ -140,8 +138,8 @@ const About = () => {
             Join the ArenaX Revolution
           </h2>
           <p className="text-gray-400 text-lg mb-10 max-w-2xl mx-auto leading-relaxed">
-            Be part of Pakistan's fastest-growing mobile esports community. Start
-            your journey to becoming a champion today!
+            Be part of Pakistan's fastest-growing mobile esports community.
+            Start your journey to becoming a champion today!
           </p>
           <button
             onClick={handleDownload}

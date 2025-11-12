@@ -23,8 +23,8 @@ const Hero = () => {
           </div>
 
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-8 leading-tight">
-            Best Free Fire & PUBG Mobile Tournament Platform -{' '}
-            <span className="text-[#00FF7F]">ArenaX Pakistan</span>
+            Compete, Win & Dominate in{' '}
+            <span className="text-[#00FF7F]">ArenaX</span>
           </h1>
 
           <p className="text-xl md:text-2xl text-gray-400 mb-14 max-w-3xl mx-auto leading-relaxed">

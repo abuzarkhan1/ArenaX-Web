@@ -1,7 +1,11 @@
 import { Download as DownloadIcon, Smartphone, Clock } from "lucide-react";
+import { logEvent } from "../utils/analytics";
 
 const Download = () => {
   const handleDownload = () => {
+    // Track download event
+    logEvent("App", "Download", "ArenaX APK");
+
     const link = document.createElement("a");
     link.href =
       "https://github.com/abuzarkhan1/ArenaX-Web/releases/download/v1.3/ArenaX.apk";

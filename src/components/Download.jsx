@@ -1,10 +1,10 @@
 import { Download as DownloadIcon, Smartphone, Clock } from "lucide-react";
-import { logEvent } from "../utils/analytics";
+import { trackDownload } from "../utils/analytics";
 
 const Download = () => {
   const handleDownload = () => {
-    // Track download event
-    logEvent("App", "Download", "ArenaX APK");
+    // Track download event with GA4 format
+    trackDownload("ArenaX.apk", "Android", "1.0.0");
 
     const link = document.createElement("a");
     link.href =

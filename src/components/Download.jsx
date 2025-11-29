@@ -3,18 +3,17 @@ import { trackDownload } from "../utils/analytics";
 
 const Download = () => {
   const handleDownload = () => {
-    // Track download event with GA4 format
-    trackDownload("ArenaX.apk", "Android", "1.0.0");
+  trackDownload("ArenaX.apk", "Android", "2.0.0");
 
-    const link = document.createElement("a");
-    link.href =
-      "https://github.com/abuzarkhan1/ArenaX-Web/releases/download/v1.3/ArenaX.apk";
-    link.download = "ArenaX.apk";
-    link.target = "_blank";
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
+  const link = document.createElement("a");
+  link.href = "https://github.com/abuzarkhan1/ArenaX-Web/releases/download/2.0/ArenaX.apk";
+  link.download = "ArenaX.apk";
+  link.target = "_blank";
+
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+};
 
   return (
     <div

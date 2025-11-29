@@ -8,7 +8,7 @@ const About = () => {
 
     const link = document.createElement("a");
     link.href =
-      "https://github.com/abuzarkhan1/ArenaX-Web/releases/download/v1.3/ArenaX.apk";
+      "https://github.com/abuzarkhan1/ArenaX-Web/releases/download/2.0/ArenaX.apk";
     link.download = "ArenaX.apk";
     link.target = "_blank";
     document.body.appendChild(link);

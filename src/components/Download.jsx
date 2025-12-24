@@ -3,17 +3,18 @@ import { trackDownload } from "../utils/analytics";
 
 const Download = () => {
   const handleDownload = () => {
-  trackDownload("ArenaX.apk", "Android", "2.0.0");
+    trackDownload("arenaX.apk", "Android", "2.1.0");
 
-  const link = document.createElement("a");
-  link.href = "https://github.com/abuzarkhan1/ArenaX-Web/releases/download/2.0/ArenaX.apk";
-  link.download = "ArenaX.apk";
-  link.target = "_blank";
+    const link = document.createElement("a");
+    link.href =
+      "https://github.com/abuzarkhan1/ArenaX-Web/releases/download/v2.1/arenaX.apk";
+    link.download = "arenaX.apk";
+    link.target = "_blank";
 
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-};
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
 
   return (
     <div

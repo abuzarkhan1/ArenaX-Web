@@ -1,4 +1,5 @@
 import { ChevronRight, Trophy, Users, Zap } from 'lucide-react';
+import { DotScreenShader } from './ui/dot-shader-background';
 
 const Hero = () => {
   const scrollToDownload = () => {
@@ -8,9 +9,8 @@ const Hero = () => {
   return (
     <section className="relative pt-20 overflow-hidden min-h-screen flex items-center" aria-label="Hero section">
       {/* Animated background elements */}
-      <div className="absolute inset-0" aria-hidden="true">
-        <div className="absolute top-20 left-10 w-96 h-96 bg-[#00FF7F]/10 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-20 right-10 w-96 h-96 bg-[#00BFFF]/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
+      <div className="absolute inset-0 z-0" aria-hidden="true">
+        <DotScreenShader />
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-10">
@@ -22,9 +22,9 @@ const Hero = () => {
             </span>
           </div>
 
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-8 leading-tight">
+          <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold font-heading text-white mb-8 leading-tight">
             Compete, Win & Dominate in{' '}
-            <span className="text-[#00FF7F]">ArenaX</span>
+            <span className="text-[#00FF7F] font-heading">ArenaX</span>
           </h1>
 
           <p className="text-xl md:text-2xl text-gray-400 mb-14 max-w-3xl mx-auto leading-relaxed">
@@ -55,7 +55,7 @@ const Hero = () => {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 max-w-4xl mx-auto" role="list">
             <div className="group bg-[#1E1E1E]/40 backdrop-blur-2xl p-8 rounded-3xl border border-white/10 hover:border-[#00FF7F]/40 transition-all duration-300 shadow-2xl hover:shadow-[#00FF7F]/20 hover:-translate-y-2" role="listitem">
               <Trophy className="w-14 h-14 text-[#00FF7F] mb-5 mx-auto" aria-hidden="true" />
-              <h2 className="text-3xl font-bold text-white mb-2">50+ Daily</h2>
+              <h2 className="text-3xl font-bold font-heading text-white mb-2">50+ Daily</h2>
               <p className="text-gray-400 font-medium">Free Fire & PUBG Tournaments</p>
             </div>
 
@@ -66,7 +66,7 @@ const Hero = () => {
             </div>
 
             <div className="group bg-[#1E1E1E]/40 backdrop-blur-2xl p-8 rounded-3xl border border-white/10 hover:border-[#00FF7F]/40 transition-all duration-300 shadow-2xl hover:shadow-[#00FF7F]/20 hover:-translate-y-2" role="listitem">
-               <Users className="w-14 h-14 text-[#00BFFF] mb-5 mx-auto" aria-hidden="true" />
+              <Users className="w-14 h-14 text-[#00BFFF] mb-5 mx-auto" aria-hidden="true" />
               <h2 className="text-3xl font-bold text-white mb-2">4,000+</h2>
               <p className="text-gray-400 font-medium">Active Daily Players</p>
             </div>

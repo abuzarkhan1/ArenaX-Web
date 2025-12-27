@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
+import SmoothScroll from './components/SmoothScroll';
 import Hero from './components/Hero';
 import Features from './components/Features';
 import Download from './components/Download';
@@ -133,6 +134,7 @@ function App() {
 
   return (
     <div className="min-h-screen bg-[#121212]">
+      <SmoothScroll />
       <SEO {...getSEOProps()} />
       <Navbar currentPage={currentPage} setCurrentPage={setCurrentPage} />
       {renderPage()}

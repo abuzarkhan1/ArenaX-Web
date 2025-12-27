@@ -12,10 +12,28 @@ const Navbar = ({ currentPage, setCurrentPage }) => {
     { id: 'terms', label: 'Terms & Conditions' },
   ];
 
+  // Toggle body scroll when mobile menu opens/closes
+  const toggleMobileMenu = () => {
+    const newState = !mobileMenuOpen;
+    setMobileMenuOpen(newState);
+
+    if (newState) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+  };
+
   const handleNavClick = (pageId) => {
     setCurrentPage(pageId);
     setMobileMenuOpen(false);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    document.body.style.overflow = ''; // Ensure scroll is restored
+    if (pageId === 'home') {
+      window.scrollTo({ top: 0, behavior: 'instant' }); // Let Lenis handle smooth if needed, or instant reset
+    } else {
+      // Standard scroll behavior
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   };
 
   return (
@@ -36,11 +54,10 @@ const Navbar = ({ currentPage, setCurrentPage }) => {
               <button
                 key={item.id}
                 onClick={() => handleNavClick(item.id)}
-                className={`px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-300 ${
-                  currentPage === item.id
-                    ? 'bg-[#00FF7F]/20 text-[#00FF7F] backdrop-blur-xl border border-[#00FF7F]/30 shadow-lg shadow-[#00FF7F]/20'
-                    : 'text-gray-300 hover:text-white hover:bg-white/5 backdrop-blur-xl border border-transparent hover:border-white/10'
-                }`}
+                className={`px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-300 ${currentPage === item.id
+                  ? 'bg-[#00FF7F]/20 text-[#00FF7F] backdrop-blur-xl border border-[#00FF7F]/30 shadow-lg shadow-[#00FF7F]/20'
+                  : 'text-gray-300 hover:text-white hover:bg-white/5 backdrop-blur-xl border border-transparent hover:border-white/10'
+                  }`}
               >
                 {item.label}
               </button>
@@ -49,7 +66,7 @@ const Navbar = ({ currentPage, setCurrentPage }) => {
 
           <button
             className="md:hidden text-white w-12 h-12 flex items-center justify-center bg-white/5 backdrop-blur-xl rounded-xl border border-white/10 hover:bg-white/10 transition-all"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            onClick={toggleMobileMenu}
           >
             {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
@@ -63,11 +80,10 @@ const Navbar = ({ currentPage, setCurrentPage }) => {
               <button
                 key={item.id}
                 onClick={() => handleNavClick(item.id)}
-                className={`block w-full text-left px-5 py-3.5 rounded-xl text-sm font-semibold transition-all duration-300 ${
-                  currentPage === item.id
-                    ? 'text-[#00FF7F] bg-[#00FF7F]/20 border border-[#00FF7F]/30 shadow-lg shadow-[#00FF7F]/10'
-                    : 'text-gray-300 hover:text-white hover:bg-white/5 border border-transparent hover:border-white/10'
-                }`}
+                className={`block w-full text-left px-5 py-3.5 rounded-xl text-sm font-semibold transition-all duration-300 ${currentPage === item.id
+                  ? 'text-[#00FF7F] bg-[#00FF7F]/20 border border-[#00FF7F]/30 shadow-lg shadow-[#00FF7F]/10'
+                  : 'text-gray-300 hover:text-white hover:bg-white/5 border border-transparent hover:border-white/10'
+                  }`}
               >
                 {item.label}
               </button>

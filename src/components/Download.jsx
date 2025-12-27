@@ -60,7 +60,7 @@ const Download = () => {
                 <div className="w-8 h-8 bg-[#00FF7F]/20 backdrop-blur-xl rounded-xl flex items-center justify-center flex-shrink-0 border border-[#00FF7F]/30">
                   <span className="text-[#00FF7F] font-bold">✓</span>
                 </div>
-                <span>Size: 45 MB</span>
+                <span>Size: 115 MB</span>
               </li>
               <li className="flex items-center gap-4 text-gray-300 text-lg">
                 <div className="w-8 h-8 bg-[#00FF7F]/20 backdrop-blur-xl rounded-xl flex items-center justify-center flex-shrink-0 border border-[#00FF7F]/30">

@@ -1,4 +1,5 @@
 import { Shield, Award, Clock, Users, Zap, Trophy } from 'lucide-react';
+import { GlowingEffect } from './ui/glowing-effect';
 
 const Features = () => {
   const features = [
@@ -71,23 +72,36 @@ const Features = () => {
             return (
               <div
                 key={index}
-                className="group bg-[#1E1E1E]/40 backdrop-blur-2xl p-10 rounded-3xl border border-white/10 hover:border-white/20 transition-all duration-500 hover:transform hover:-translate-y-3 shadow-xl hover:shadow-2xl"
+                className="relative rounded-3xl h-full"
               >
-                <div
-                  className="w-20 h-20 rounded-2xl flex items-center justify-center mb-7 group-hover:scale-110 transition-transform duration-300 shadow-2xl border border-white/10"
-                  style={{ 
-                    backgroundColor: `${feature.color}20`,
-                    boxShadow: `0 10px 40px ${feature.color}30`
-                  }}
-                >
-                  <Icon className="w-10 h-10" style={{ color: feature.color }} />
+                <div className="absolute -inset-px rounded-3xl z-0">
+                  <GlowingEffect
+                    spread={40}
+                    glow={true}
+                    disabled={false}
+                    proximity={64}
+                    inactiveZone={0.01}
+                    borderWidth={3}
+                  />
                 </div>
-                <h3 className="text-2xl font-bold text-white mb-4">
-                  {feature.title}
-                </h3>
-                <p className="text-gray-400 leading-relaxed text-lg">
-                  {feature.description}
-                </p>
+
+                <div className="relative h-full bg-[#1E1E1E]/40 backdrop-blur-2xl p-10 rounded-3xl border border-white/10 hover:border-white/20 transition-all duration-500 hover:transform hover:-translate-y-3 shadow-xl hover:shadow-2xl z-10 flex flex-col">
+                  <div
+                    className="w-20 h-20 rounded-2xl flex items-center justify-center mb-7 transition-transform duration-300 shadow-2xl border border-white/10 group-hover:scale-110"
+                    style={{
+                      backgroundColor: `${feature.color}20`,
+                      boxShadow: `0 10px 40px ${feature.color}30`
+                    }}
+                  >
+                    <Icon className="w-10 h-10" style={{ color: feature.color }} />
+                  </div>
+                  <h3 className="text-2xl font-bold font-heading text-white mb-4">
+                    {feature.title}
+                  </h3>
+                  <p className="text-gray-400 leading-relaxed text-lg font-sans">
+                    {feature.description}
+                  </p>
+                </div>
               </div>
             );
           })}

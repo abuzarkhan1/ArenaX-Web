@@ -2,7 +2,7 @@ import { Download as DownloadIcon, Smartphone, Clock } from "lucide-react";
 import { trackDownload } from "../utils/analytics";
 
 const Download = () => {
-  cconst handleDownload = () => {
+  const handleDownload = () => {
   trackDownload("ArenaX.apk", "Android", "2.2.0");
 
   const link = document.createElement("a");

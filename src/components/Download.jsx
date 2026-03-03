@@ -2,11 +2,11 @@ import { Download as DownloadIcon, Smartphone, Clock } from "lucide-react";
 import { trackDownload } from "../utils/analytics";
 
 const Download = () => {
-  const handleDownload = () => {
-  trackDownload("ArenaX.apk", "Android", "2.4.0");
+ const handleDownload = () => {
+  trackDownload("ArenaX.apk", "Android", "2.5.0");
   const link = document.createElement("a");
   link.href =
-    "https://github.com/abuzarkhan1/ArenaX-Web/releases/download/v2.4/ArenaX.apk";
+    "https://github.com/abuzarkhan1/ArenaX-Web/releases/download/v2.5/ArenaX.apk";
   link.download = "ArenaX.apk";
   link.target = "_blank";
   document.body.appendChild(link);

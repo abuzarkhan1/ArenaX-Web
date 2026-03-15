@@ -2,16 +2,19 @@ import { Download as DownloadIcon, Smartphone, Clock } from "lucide-react";
 import { trackDownload } from "../utils/analytics";
 
 const Download = () => {
- const handleDownload = () => {
-  trackDownload("ArenaX.apk", "Android", "2.5.0");
-  const link = document.createElement("a");
-  link.href =
-    "https://github.com/abuzarkhan1/ArenaX-Web/releases/download/v2.5/ArenaX.apk";
-  link.download = "ArenaX.apk";
-  link.target = "_blank";
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
+  const handleDownload = () => {
+    trackDownload("ArenaX.apk", "Android", "2.6.0");
+
+    const link = document.createElement("a");
+    link.href =
+      "https://github.com/abuzarkhan1/ArenaX-Web/releases/download/v2.6/ArenaX.apk";
+    link.download = "ArenaX.apk";
+    link.target = "_blank";
+
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
 };
 
 

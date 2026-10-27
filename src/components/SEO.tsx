@@ -9,7 +9,9 @@ interface SEOProps {
   schema?: object;
 }
 
-const SEO = ({ title, description, canonical, ogImage, keywords, schema }: SEOProps) => {
+export default function SEO({ title, description, canonical, ogImage, keywords, schema }: SEOProps) {
+  const schemaStr = schema ? JSON.stringify(schema) : '';
+
   useEffect(() => {
     document.title = title;
 
@@ -49,10 +51,10 @@ const SEO = ({ title, description, canonical, ogImage, keywords, schema }: SEOPr
       }
     }
 
-    if (schema) {
+    if (schemaStr) {
       const script = document.createElement('script');
       script.type = 'application/ld+json';
-      script.text = JSON.stringify(schema);
+      script.text = schemaStr;
       script.id = 'page-schema';
       document.head.appendChild(script);
 
@@ -63,9 +65,7 @@ const SEO = ({ title, description, canonical, ogImage, keywords, schema }: SEOPr
         }
       };
     }
-  }, [title, description, canonical, ogImage, keywords, schema]);
+  }, [title, description, canonical, ogImage, keywords, schemaStr]);
 
   return null;
-};
-
-export default SEO;
+}

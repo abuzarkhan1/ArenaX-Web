@@ -11,18 +11,29 @@ import Terms from './components/Terms';
 import Footer from './components/Footer';
 import WhatsAppButton from './components/WhatsAppButton';
 import SEO from './components/SEO';
+import { logPageView } from './utils/analytics';
 
 function App() {
   const [currentPage, setCurrentPage] = useState('home');
 
   useEffect(() => {
-    const currentUrl = window.location.pathname.replace('/', '') || 'home';
-    setCurrentPage(currentUrl);
+    const getPath = () => window.location.pathname.replace('/', '') || 'home';
+    setCurrentPage(getPath());
+
+    const handlePopState = () => {
+      setCurrentPage(getPath());
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
   }, []);
 
   useEffect(() => {
     const newPath = currentPage === 'home' ? '/' : `/${currentPage}`;
-    window.history.pushState({}, '', newPath);
+    if (window.location.pathname !== newPath) {
+      window.history.pushState({}, '', newPath);
+    }
+    logPageView();
   }, [currentPage]);
 
   const getSEOProps = () => {

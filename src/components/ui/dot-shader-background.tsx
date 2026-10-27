@@ -102,7 +102,7 @@ function Scene() {
   const size = useThree((s) => s.size)
   const viewport = useThree((s) => s.viewport)
   const { theme } = useTheme()
-  const dotMaterialRef = useRef<any>(null)
+  const dotMaterialRef = useRef<THREE.ShaderMaterial>(null)
 
   const rotation = 0
   const gridSize = 100
@@ -150,6 +150,12 @@ function Scene() {
   const dotMaterial = useMemo(() => {
     return new DotMaterial()
   }, [])
+
+  useEffect(() => {
+    return () => {
+      dotMaterial.dispose()
+    }
+  }, [dotMaterial])
 
   useEffect(() => {
     if (dotMaterial) {

@@ -1,74 +1,97 @@
-import { ChevronRight, Trophy, Users, Zap } from 'lucide-react';
-import { DotScreenShader } from './ui/dot-shader-background';
+import { ChevronRight, Trophy, Zap, RefreshCw } from 'lucide-react';
+import { Hero3DScene } from './ui/Hero3DScene';
 
 const Hero = () => {
   const scrollToDownload = () => {
     document.getElementById('download')?.scrollIntoView({ behavior: 'smooth' });
   };
 
+  const scrollToTournaments = () => {
+    document.getElementById('tournaments')?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
-    <section className="relative pt-20 overflow-hidden min-h-screen flex items-center" aria-label="Hero section">
-      {/* Animated background elements */}
-      <div className="absolute inset-0 z-0" aria-hidden="true">
-        <DotScreenShader />
-      </div>
+    <section className="relative pt-24 overflow-hidden min-h-screen flex items-center" aria-label="Hero section">
+      {/* Interactive 3D ArenaX Brand Installation */}
+      <Hero3DScene />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-10">
         <article className="text-center max-w-5xl mx-auto">
-          <div className="inline-flex items-center gap-3 bg-[#1E1E1E]/40 backdrop-blur-2xl px-6 py-3 rounded-2xl mb-10 border border-white/10 shadow-2xl hover:border-[#00FF7F]/30 transition-all duration-300">
-            <Zap size={20} className="text-[#00FF7F]" aria-hidden="true" />
-            <span className="text-sm font-semibold text-gray-200">
-              Ultimate Tournament Platform
+          {/* Tag Pill with Starter Gift Callout */}
+          <div className="inline-flex items-center gap-2.5 bg-[#14171A]/85 backdrop-blur-2xl px-4 sm:px-5 py-2 sm:py-2.5 rounded-full mb-8 border border-white/10 shadow-2xl hover:border-[#00C878]/40 transition-all duration-300">
+            <span className="relative flex h-2.5 w-2.5">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#00C878] opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#00C878]"></span>
+            </span>
+            <span className="text-xs sm:text-sm font-semibold text-[#F3F4F6]">
+              Free Fire Esports Pakistan • <span className="text-[#00C878] font-bold">Claim 25 AX Welcome Bonus</span>
             </span>
           </div>
 
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold font-heading text-white mb-8 leading-tight">
-            Compete, Win & Dominate in{' '}
-            <span className="text-[#00FF7F] font-heading">ArenaX</span>
+          {/* Main Title */}
+          <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black font-heading mb-6 leading-[1.1] tracking-tight uppercase">
+            <span className="text-gradient-white">Compete, Win & Dominate in</span>{' '}
+            <span className="text-gradient-emerald font-heading block sm:inline">ArenaX</span>
           </h1>
 
-          <p className="text-xl md:text-2xl text-gray-400 mb-14 max-w-3xl mx-auto leading-relaxed">
-            Join Pakistan's premier mobile esports platform. Play Free Fire and PUBG Mobile tournaments daily, compete with 10,000+ players, and win real cash prizes. Safe, secure, instant withdrawals.
+          {/* Subtitle */}
+          <p className="text-base sm:text-lg md:text-xl text-[#A1A1AA] mb-10 sm:mb-12 max-w-3xl mx-auto leading-relaxed font-normal">
+            Pakistan's premier mobile esports platform. Play daily Free Fire Bermuda Battle Royale & Clash Squad 4v4 tournaments, verified by ArenaX Vision Engine. Instant JazzCash & EasyPaisa cashouts.
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-5 justify-center mb-20">
+          {/* Action Buttons */}
+          <div className="flex flex-col sm:flex-row gap-3.5 sm:gap-4 justify-center mb-14 sm:mb-16 max-w-md sm:max-w-none mx-auto w-full">
             <button
               onClick={scrollToDownload}
-              className="group bg-[#00FF7F]/90 backdrop-blur-xl text-black px-10 py-5 rounded-2xl font-bold text-lg hover:bg-[#00FF7F] transition-all duration-300 flex items-center justify-center gap-3 border border-[#00FF7F]/30 shadow-2xl shadow-[#00FF7F]/30 hover:shadow-[#00FF7F]/50 hover:scale-105"
+              className="group bg-gradient-to-r from-[#00E58A] via-[#00C878] to-[#00B46C] hover:from-[#00FF9D] hover:to-[#00C878] text-[#0A0D0F] px-8 py-4 rounded-xl font-black text-base transition-all duration-200 flex items-center justify-center gap-2.5 border-t border-white/40 shadow-xl shadow-[#00C878]/25 hover:shadow-[#00C878]/45 active:scale-[0.98] cursor-pointer"
               aria-label="Download ArenaX app"
             >
-              Download ArenaX App
+              <span>Download ArenaX App</span>
               <ChevronRight
-                size={22}
-                className="group-hover:translate-x-1 transition-transform"
+                size={20}
+                className="group-hover:translate-x-1 transition-transform stroke-[2.5]"
                 aria-hidden="true"
               />
             </button>
             <button
-              className="bg-[#1E1E1E]/40 backdrop-blur-2xl text-white px-10 py-5 rounded-2xl font-bold text-lg hover:bg-[#1E1E1E]/60 transition-all duration-300 border border-white/10 hover:border-white/20 shadow-xl hover:scale-105"
-              aria-label="Watch ArenaX trailer"
+              onClick={scrollToTournaments}
+              className="bg-white/[0.04] hover:bg-white/[0.08] text-white px-8 py-4 rounded-xl font-bold text-base transition-all duration-200 border border-white/10 hover:border-white/20 backdrop-blur-xl shadow-lg active:scale-[0.98] cursor-pointer"
+              aria-label="Explore Free Fire Tournament Modes"
             >
-              Watch Trailer
+              Explore Tournament Modes
             </button>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 max-w-4xl mx-auto" role="list">
-            <div className="group bg-[#1E1E1E]/40 backdrop-blur-2xl p-8 rounded-3xl border border-white/10 hover:border-[#00FF7F]/40 transition-all duration-300 shadow-2xl hover:shadow-[#00FF7F]/20 hover:-translate-y-2" role="listitem">
-              <Trophy className="w-14 h-14 text-[#00FF7F] mb-5 mx-auto" aria-hidden="true" />
-              <h2 className="text-3xl font-bold font-heading text-white mb-2">50+ Daily</h2>
-              <p className="text-gray-400 font-medium">Free Fire & PUBG Tournaments</p>
+          {/* 3 Verified Value Cards */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-5 max-w-4xl mx-auto text-left" role="list">
+            <div className="premium-card p-5 sm:p-6 rounded-2xl flex flex-col justify-between group" role="listitem">
+              <div>
+                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#00C878]/25 to-[#00C878]/5 flex items-center justify-center mb-4 border border-[#00C878]/30 group-hover:scale-105 transition-transform shadow-inner">
+                  <Zap className="w-6 h-6 text-[#00C878]" aria-hidden="true" />
+                </div>
+                <h3 className="text-base sm:text-lg font-bold font-heading text-white mb-1.5">ArenaX Vision Engine</h3>
+                <p className="text-xs text-[#A1A1AA] leading-relaxed">Automated neural scoreboard scans with dispute-free instant settlement</p>
+              </div>
             </div>
 
-            <div className="group bg-[#1E1E1E]/40 backdrop-blur-2xl p-8 rounded-3xl border border-white/10 hover:border-[#00BFFF]/40 transition-all duration-300 shadow-2xl hover:shadow-[#00BFFF]/20 hover:-translate-y-2" role="listitem">
-              <Users className="w-14 h-14 text-[#00BFFF] mb-5 mx-auto" aria-hidden="true" />
-              <h2 className="text-3xl font-bold text-white mb-2">10,000+</h2>
-              <p className="text-gray-400 font-medium">Registered Players</p>
+            <div className="premium-card p-5 sm:p-6 rounded-2xl flex flex-col justify-between group" role="listitem">
+              <div>
+                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#F59E0B]/25 to-[#F59E0B]/5 flex items-center justify-center mb-4 border border-[#F59E0B]/30 group-hover:scale-105 transition-transform shadow-inner">
+                  <Trophy className="w-6 h-6 text-[#F59E0B]" aria-hidden="true" />
+                </div>
+                <h3 className="text-base sm:text-lg font-bold font-heading text-white mb-1.5">70%–90% Player Prizes</h3>
+                <p className="text-xs text-[#A1A1AA] leading-relaxed">Transparent 3-way split with dedicated organizer commission</p>
+              </div>
             </div>
 
-            <div className="group bg-[#1E1E1E]/40 backdrop-blur-2xl p-8 rounded-3xl border border-white/10 hover:border-[#00FF7F]/40 transition-all duration-300 shadow-2xl hover:shadow-[#00FF7F]/20 hover:-translate-y-2" role="listitem">
-              <Users className="w-14 h-14 text-[#00BFFF] mb-5 mx-auto" aria-hidden="true" />
-              <h2 className="text-3xl font-bold text-white mb-2">4,000+</h2>
-              <p className="text-gray-400 font-medium">Active Daily Players</p>
+            <div className="premium-card p-5 sm:p-6 rounded-2xl flex flex-col justify-between group" role="listitem">
+              <div>
+                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#00D2FF]/25 to-[#00D2FF]/5 flex items-center justify-center mb-4 border border-[#00D2FF]/30 group-hover:scale-105 transition-transform shadow-inner">
+                  <RefreshCw className="w-6 h-6 text-[#00D2FF]" aria-hidden="true" />
+                </div>
+                <h3 className="text-base sm:text-lg font-bold font-heading text-white mb-1.5">100% Auto-Refund</h3>
+                <p className="text-xs text-[#A1A1AA] leading-relaxed">Instant return of entry fees if match is cancelled by host or admin</p>
+              </div>
             </div>
           </div>
         </article>

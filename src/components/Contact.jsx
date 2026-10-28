@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Mail, MessageSquare, Phone, MapPin, Send } from 'lucide-react';
+import { Mail, MessageSquare, Phone, Send, Facebook, Instagram, Youtube, CheckCircle2 } from 'lucide-react';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -8,13 +8,15 @@ const Contact = () => {
     subject: '',
     message: '',
   });
+  const [submitted, setSubmitted] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    alert(
-      'Thank you for your message! Our team will get back to you within 24 hours.'
-    );
+    setSubmitted(true);
     setFormData({ name: '', email: '', subject: '', message: '' });
+    setTimeout(() => {
+      setSubmitted(false);
+    }, 6000);
   };
 
   const handleChange = (e) => {
@@ -25,80 +27,91 @@ const Contact = () => {
   };
 
   return (
-    <div className="pt-24 pb-20 px-4 sm:px-6 lg:px-8 min-h-screen relative">
-      {/* Background decoration */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-20 left-10 w-96 h-96 bg-[#00FF7F]/5 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-20 right-10 w-96 h-96 bg-[#00BFFF]/5 rounded-full blur-3xl"></div>
+    <div className="pt-24 sm:pt-32 pb-16 sm:pb-24 px-4 sm:px-6 lg:px-8 min-h-screen bg-[#101214] relative">
+      {/* Background ambient lighting */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+        <div className="absolute top-20 left-10 w-96 h-96 bg-[#00C878]/5 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-20 right-10 w-96 h-96 bg-[#00D2FF]/5 rounded-full blur-3xl"></div>
       </div>
 
       <div className="max-w-6xl mx-auto relative z-10">
-        <div className="text-center mb-20">
-          <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
-            Get in <span className="text-[#00FF7F]">Touch</span>
+        <div className="text-center mb-12 sm:mb-16">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#00C878]/10 border border-[#00C878]/30 mb-4">
+            <span className="text-xs font-bold uppercase tracking-widest text-[#00C878]">
+              24/7 Player Support Desk
+            </span>
+          </div>
+          <h1 className="text-3xl sm:text-5xl md:text-6xl font-extrabold text-white mb-4 font-heading tracking-tight">
+            Get in <span className="text-[#00C878]">Touch</span>
           </h1>
-          <p className="text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed">
-            Have questions or feedback? We'd love to hear from you. Our team is
-            always ready to help!
+          <p className="text-base sm:text-lg text-[#A1A1AA] max-w-2xl mx-auto leading-relaxed">
+            Have questions about a Free Fire tournament, need deposit assistance, or interested in organizing community scrims? We are here to help.
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-3 gap-8 mb-16">
-          <div className="bg-[#1E1E1E]/40 backdrop-blur-2xl p-10 rounded-3xl border border-white/10 hover:border-[#00FF7F]/40 transition-all text-center shadow-xl hover:shadow-[#00FF7F]/20 hover:-translate-y-2">
-            <div className="w-20 h-20 bg-[#00FF7F]/20 backdrop-blur-xl rounded-2xl flex items-center justify-center mx-auto mb-5 border border-[#00FF7F]/30 shadow-lg shadow-[#00FF7F]/20">
-              <Mail className="w-10 h-10 text-[#00FF7F]" />
+        {/* 3 Contact Channels */}
+        <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 mb-12 sm:mb-16">
+          <div className="premium-card p-6 sm:p-8 rounded-3xl text-center group">
+            <div className="w-14 h-14 bg-[#00C878]/15 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-[#00C878]/30 group-hover:scale-110 transition-transform shadow-md">
+              <Mail className="w-7 h-7 text-[#00C878]" />
             </div>
-            <h3 className="text-xl font-bold text-white mb-3">Email Us</h3>
-            <p className="text-gray-400 mb-5 text-base">
-              Send us an email anytime
-            </p>
+            <h3 className="text-lg font-bold text-white mb-1 font-heading">Official Email</h3>
+            <p className="text-[#A1A1AA] mb-4 text-xs">Direct support & tournament help</p>
             <a
-              href="mailto:arenasupprt@gmail.com"
-              className="text-[#00FF7F] hover:text-[#00BFFF] transition-colors font-medium"
+              href="mailto:arenasupport@gmail.com"
+              className="text-[#00C878] hover:underline font-bold text-sm block"
             >
-              arenasupprt@gmail.com
+              arenasupport@gmail.com
             </a>
           </div>
 
-          <div className="bg-[#1E1E1E]/40 backdrop-blur-2xl p-10 rounded-3xl border border-white/10 hover:border-[#00BFFF]/40 transition-all text-center shadow-xl hover:shadow-[#00BFFF]/20 hover:-translate-y-2">
-            <div className="w-20 h-20 bg-[#00BFFF]/20 backdrop-blur-xl rounded-2xl flex items-center justify-center mx-auto mb-5 border border-[#00BFFF]/30 shadow-lg shadow-[#00BFFF]/20">
-              <Phone className="w-10 h-10 text-[#00BFFF]" />
+          <div className="premium-card p-6 sm:p-8 rounded-3xl text-center group">
+            <div className="w-14 h-14 bg-[#00D2FF]/15 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-[#00D2FF]/30 group-hover:scale-110 transition-transform shadow-md">
+              <Phone className="w-7 h-7 text-[#00D2FF]" />
             </div>
-            <h3 className="text-xl font-bold text-white mb-3">Call Us</h3>
-            <p className="text-gray-400 mb-5 text-base">
-              Mon-Sat, 9 AM to 6 PM IST
-            </p>
+            <h3 className="text-lg font-bold text-white mb-1 font-heading">WhatsApp Helpline</h3>
+            <p className="text-[#A1A1AA] mb-4 text-xs">Mon–Sat, 9:00 AM to 6:00 PM PKT</p>
             <a
-              href="tel:+923367135319"
-              className="text-[#00FF7F] hover:text-[#00BFFF] transition-colors font-medium"
+              href="https://wa.me/+923367135319"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[#00D2FF] hover:underline font-bold text-sm block"
             >
               +92 336 7135319
             </a>
           </div>
 
-          <div className="bg-[#1E1E1E]/40 backdrop-blur-2xl p-10 rounded-3xl border border-white/10 hover:border-[#00FF7F]/40 transition-all text-center shadow-xl hover:shadow-[#00FF7F]/20 hover:-translate-y-2">
-            <div className="w-20 h-20 bg-[#00FF7F]/20 backdrop-blur-xl rounded-2xl flex items-center justify-center mx-auto mb-5 border border-[#00FF7F]/30 shadow-lg shadow-[#00FF7F]/20">
-              <MessageSquare className="w-10 h-10 text-[#00FF7F]" />
+          <div className="premium-card p-6 sm:p-8 rounded-3xl text-center group sm:col-span-2 md:col-span-1">
+            <div className="w-14 h-14 bg-[#F59E0B]/15 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-[#F59E0B]/30 group-hover:scale-110 transition-transform shadow-md">
+              <MessageSquare className="w-7 h-7 text-[#F59E0B]" />
             </div>
-            <h3 className="text-xl font-bold text-white mb-3">Live Chat</h3>
-            <p className="text-gray-400 mb-5 text-base">
-              24/7 support available
-            </p>
-            <button className="text-[#00FF7F] hover:text-[#00BFFF] transition-colors font-semibold">
-              Start Chat
-            </button>
+            <h3 className="text-lg font-bold text-white mb-1 font-heading">In-App Live Chat</h3>
+            <p className="text-[#A1A1AA] mb-4 text-xs">Instant match dispute resolution</p>
+            <span className="text-[#F59E0B] font-bold text-sm block">
+              Available in Mobile App
+            </span>
           </div>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-10">
-          <div className="bg-[#1E1E1E]/40 backdrop-blur-2xl p-10 md:p-12 rounded-3xl border border-white/10 shadow-2xl">
-            <h2 className="text-3xl font-bold text-white mb-8">
+        {/* Message Form & Business Column */}
+        <div className="grid lg:grid-cols-2 gap-6 sm:gap-8">
+          {/* Contact Form */}
+          <div className="premium-card p-6 sm:p-8 md:p-10 rounded-3xl relative overflow-hidden">
+            <h2 className="text-2xl font-bold text-white mb-6 font-heading">
               Send us a Message
             </h2>
-            <form onSubmit={handleSubmit} className="space-y-6">
+
+            {submitted && (
+              <div className="p-4 rounded-xl bg-[#00C878]/15 border border-[#00C878]/40 text-[#00C878] text-sm font-semibold flex items-center gap-2.5 mb-6 animate-in fade-in duration-200">
+                <CheckCircle2 className="w-5 h-5 flex-shrink-0" />
+                <span>Thank you for reaching out! Our support team will get back to you shortly.</span>
+              </div>
+            )}
+
+            <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label className="block text-gray-300 mb-3 font-medium text-base">
-                  Your Name
+                <label className="block text-xs font-semibold text-[#A1A1AA] mb-2 uppercase tracking-wider">
+                  Your Full Name
                 </label>
                 <input
                   type="text"
@@ -106,13 +119,13 @@ const Contact = () => {
                   value={formData.name}
                   onChange={handleChange}
                   required
-                  className="w-full bg-[#0A0A0A]/60 backdrop-blur-xl border border-white/10 rounded-xl px-5 py-4 text-white focus:outline-none focus:border-[#00FF7F]/50 transition-colors text-base"
-                  placeholder="John Doe"
+                  className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3.5 text-sm text-white placeholder-[#71717A] focus:outline-none focus:border-[#00C878] focus:ring-1 focus:ring-[#00C878]/30 transition-all"
+                  placeholder="e.g. Hamza Ali"
                 />
               </div>
 
               <div>
-                <label className="block text-gray-300 mb-3 font-medium text-base">
+                <label className="block text-xs font-semibold text-[#A1A1AA] mb-2 uppercase tracking-wider">
                   Email Address
                 </label>
                 <input
@@ -121,13 +134,13 @@ const Contact = () => {
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  className="w-full bg-[#0A0A0A]/60 backdrop-blur-xl border border-white/10 rounded-xl px-5 py-4 text-white focus:outline-none focus:border-[#00FF7F]/50 transition-colors text-base"
-                  placeholder="john@example.com"
+                  className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3.5 text-sm text-white placeholder-[#71717A] focus:outline-none focus:border-[#00C878] focus:ring-1 focus:ring-[#00C878]/30 transition-all"
+                  placeholder="hamza@example.com"
                 />
               </div>
 
               <div>
-                <label className="block text-gray-300 mb-3 font-medium text-base">
+                <label className="block text-xs font-semibold text-[#A1A1AA] mb-2 uppercase tracking-wider">
                   Subject
                 </label>
                 <input
@@ -136,92 +149,98 @@ const Contact = () => {
                   value={formData.subject}
                   onChange={handleChange}
                   required
-                  className="w-full bg-[#0A0A0A]/60 backdrop-blur-xl border border-white/10 rounded-xl px-5 py-4 text-white focus:outline-none focus:border-[#00FF7F]/50 transition-colors text-base"
-                  placeholder="How can we help?"
+                  className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3.5 text-sm text-white placeholder-[#71717A] focus:outline-none focus:border-[#00C878] focus:ring-1 focus:ring-[#00C878]/30 transition-all"
+                  placeholder="e.g. Tournament Registration Inquiry"
                 />
               </div>
 
               <div>
-                <label className="block text-gray-300 mb-3 font-medium text-base">
-                  Message
+                <label className="block text-xs font-semibold text-[#A1A1AA] mb-2 uppercase tracking-wider">
+                  Message Details
                 </label>
                 <textarea
                   name="message"
                   value={formData.message}
                   onChange={handleChange}
                   required
-                  rows={5}
-                  className="w-full bg-[#0A0A0A]/60 backdrop-blur-xl border border-white/10 rounded-xl px-5 py-4 text-white focus:outline-none focus:border-[#00FF7F]/50 transition-colors resize-none text-base"
-                  placeholder="Tell us more about your inquiry..."
+                  rows={4}
+                  className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3.5 text-sm text-white placeholder-[#71717A] focus:outline-none focus:border-[#00C878] focus:ring-1 focus:ring-[#00C878]/30 transition-all resize-none"
+                  placeholder="Describe your question or tournament details..."
                 />
               </div>
 
               <button
                 type="submit"
-                className="w-full bg-[#00FF7F]/90 backdrop-blur-xl text-black px-8 py-5 rounded-2xl font-bold text-lg hover:bg-[#00FF7F] transition-all duration-300 flex items-center justify-center gap-3 shadow-2xl shadow-[#00FF7F]/30 hover:shadow-[#00FF7F]/50 border border-[#00FF7F]/30 hover:scale-105"
+                className="w-full min-h-[48px] bg-[#00C878] hover:bg-[#00A865] active:scale-[0.98] text-[#101214] py-3.5 rounded-xl font-bold text-sm transition-all duration-200 flex items-center justify-center gap-2 shadow-lg shadow-[#00C878]/25 cursor-pointer border border-[#00C878]/40"
               >
-                <Send className="w-5 h-5" />
-                Send Message
+                <Send className="w-4 h-4" />
+                Submit Message
               </button>
             </form>
           </div>
 
-          <div className="space-y-8">
-            <div className="bg-[#1E1E1E]/40 backdrop-blur-2xl p-10 md:p-12 rounded-3xl border border-white/10 shadow-2xl">
-              <h3 className="text-2xl font-bold text-white mb-5">
-                Business Inquiries
+          {/* Business & Social Channels */}
+          <div className="space-y-6">
+            <div className="premium-card p-6 sm:p-8 rounded-3xl relative overflow-hidden">
+              <h3 className="text-xl font-bold text-white mb-3 font-heading">
+                Organizer & Guild Partnerships
               </h3>
-              <p className="text-gray-400 mb-8 leading-relaxed text-base">
-                Interested in partnerships, sponsorships, or business
-                collaborations? Get in touch with our business development team.
+              <p className="text-[#A1A1AA] text-sm leading-relaxed mb-6">
+                Are you a Free Fire guild leader, university esports society, or content creator? Partner with ArenaX to host sponsored tournaments with customized branding and automated escrow payouts.
               </p>
               <a
-                href="mailto:arenasupprt@gmail.com"
-                className="inline-block bg-[#121212]/60 backdrop-blur-xl text-white px-8 py-4 rounded-2xl font-semibold hover:bg-[#121212]/80 transition-colors border border-white/10 hover:border-white/20"
+                href="mailto:arenasupport@gmail.com?subject=Organizer%20Partnership"
+                className="inline-flex min-h-[44px] items-center bg-white/[0.04] hover:bg-white/[0.08] text-[#00C878] px-6 py-3 rounded-xl font-bold text-xs border border-white/10 hover:border-[#00C878]/40 transition-all"
               >
-                arenasupprt@gmail.com
+                Inquire via arenasupport@gmail.com
               </a>
             </div>
 
-            <div className="bg-[#1E1E1E]/40 backdrop-blur-2xl p-10 md:p-12 rounded-3xl border border-white/10 shadow-2xl">
-              <h3 className="text-2xl font-bold text-white mb-5">
-                Follow Us
+            <div className="premium-card p-6 sm:p-8 rounded-3xl relative overflow-hidden">
+              <h3 className="text-xl font-bold text-white mb-2 font-heading">
+                Follow ArenaX Online
               </h3>
-              <p className="text-gray-400 mb-8 text-base">
-                Stay updated with the latest tournaments and news
+              <p className="text-[#A1A1AA] text-xs mb-6">
+                Get notified about major weekend tournaments, patch updates, and giveaway announcements:
               </p>
-              <div className="flex gap-4">
+              <div className="flex gap-3 flex-wrap">
                 <a
-                  href="#"
-                  className="w-14 h-14 bg-[#0A0A0A]/60 backdrop-blur-xl rounded-2xl flex items-center justify-center hover:bg-[#00FF7F]/20 transition-all group border border-white/10 hover:border-[#00FF7F]/30 shadow-lg"
+                  href="https://www.facebook.com/share/17NfG8Syiq/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-12 h-12 bg-white/[0.04] hover:bg-[#1877F2]/20 rounded-xl flex items-center justify-center border border-white/10 hover:border-[#1877F2]/40 transition-all shadow-md group"
+                  aria-label="Facebook"
                 >
-                  <span className="text-2xl group-hover:scale-110 transition-transform">
-                    📘
-                  </span>
+                  <Facebook className="w-5 h-5 text-[#A1A1AA] group-hover:text-[#1877F2]" />
                 </a>
                 <a
-                  href="#"
-                  className="w-14 h-14 bg-[#0A0A0A]/60 backdrop-blur-xl rounded-2xl flex items-center justify-center hover:bg-[#00BFFF]/20 transition-all group border border-white/10 hover:border-[#00BFFF]/30 shadow-lg"
+                  href="https://www.instagram.com/arenaxbattlefield"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-12 h-12 bg-white/[0.04] hover:bg-[#E4405F]/20 rounded-xl flex items-center justify-center border border-white/10 hover:border-[#E4405F]/40 transition-all shadow-md group"
+                  aria-label="Instagram"
                 >
-                  <span className="text-2xl group-hover:scale-110 transition-transform">
-                    🐦
-                  </span>
+                  <Instagram className="w-5 h-5 text-[#A1A1AA] group-hover:text-[#E4405F]" />
                 </a>
                 <a
-                  href="#"
-                  className="w-14 h-14 bg-[#0A0A0A]/60 backdrop-blur-xl rounded-2xl flex items-center justify-center hover:bg-[#00FF7F]/20 transition-all group border border-white/10 hover:border-[#00FF7F]/30 shadow-lg"
+                  href="https://www.tiktok.com/@arenax_15"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-12 h-12 bg-white/[0.04] hover:bg-[#FF0050]/20 rounded-xl flex items-center justify-center border border-white/10 hover:border-[#FF0050]/40 transition-all shadow-md group"
+                  aria-label="TikTok"
                 >
-                  <span className="text-2xl group-hover:scale-110 transition-transform">
-                    📸
-                  </span>
+                  <svg className="w-5 h-5 text-[#A1A1AA] group-hover:text-[#FF0050] fill-current" viewBox="0 0 24 24">
+                    <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-5.2 1.74 2.89 2.89 0 012.31-4.64 2.93 2.93 0 01.88.13V9.4a6.84 6.84 0 00-1-.05A6.33 6.33 0 005 20.1a6.34 6.34 0 0010.86-4.43v-7a8.16 8.16 0 004.77 1.52v-3.4a4.85 4.85 0 01-1-.1z"/>
+                  </svg>
                 </a>
                 <a
-                  href="#"
-                  className="w-14 h-14 bg-[#0A0A0A]/60 backdrop-blur-xl rounded-2xl flex items-center justify-center hover:bg-[#00BFFF]/20 transition-all group border border-white/10 hover:border-[#00BFFF]/30 shadow-lg"
+                  href="https://youtube.com/@arenax_15"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-12 h-12 bg-white/[0.04] hover:bg-[#FF0000]/20 rounded-xl flex items-center justify-center border border-white/10 hover:border-[#FF0000]/40 transition-all shadow-md group"
+                  aria-label="YouTube"
                 >
-                  <span className="text-2xl group-hover:scale-110 transition-transform">
-                    💬
-                  </span>
+                  <Youtube className="w-5 h-5 text-[#A1A1AA] group-hover:text-[#FF0000]" />
                 </a>
               </div>
             </div>

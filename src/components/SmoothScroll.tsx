@@ -26,16 +26,19 @@ export default function SmoothScroll() {
         };
         const rafId = requestAnimationFrame(raf);
 
-        // 3. Handle Anchor Links
-        // This allows standard <a href="#target"> to work smoothly with Lenis
+        // 3. Handle Anchor Links safely
         const handleAnchorClick = (e: MouseEvent) => {
             const target = e.target as HTMLElement;
             const anchor = target.closest('a');
-            if (anchor && anchor.hash && anchor.hash.startsWith('#')) {
-                const element = document.querySelector(anchor.hash);
-                if (element) {
-                    e.preventDefault();
-                    lenis.scrollTo(element as HTMLElement);
+            if (anchor && anchor.hash && anchor.hash.length > 1 && anchor.hash.startsWith('#')) {
+                try {
+                    const element = document.querySelector(anchor.hash);
+                    if (element) {
+                        e.preventDefault();
+                        lenis.scrollTo(element as HTMLElement);
+                    }
+                } catch {
+                    // Ignore invalid selector queries safely
                 }
             }
         };
@@ -51,8 +54,6 @@ export default function SmoothScroll() {
     }, []);
 
     // 5. Intelligent Pause/Resume via MutationObserver
-    // This watches for 'overflow: hidden' on the body (e.g., when Modals or Mobile Menus open)
-    // and automatically pauses Lenis to prevent scroll conflicts.
     useLayoutEffect(() => {
         const observer = new MutationObserver((mutations) => {
             mutations.forEach((mutation) => {
@@ -69,11 +70,11 @@ export default function SmoothScroll() {
 
         observer.observe(document.body, {
             attributes: true,
-            attributeFilter: ['style', 'class'], // Watch for style or class changes that might affect overflow
+            attributeFilter: ['style', 'class'],
         });
 
         return () => observer.disconnect();
     }, []);
 
-    return null; // This component is logic-only, renders nothing
+    return null;
 }

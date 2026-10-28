@@ -2,6 +2,15 @@ import { useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
 import SmoothScroll from './components/SmoothScroll';
 import Hero from './components/Hero';
+import TrustBar from './components/TrustBar';
+import TournamentModes from './components/TournamentModes';
+import AIVisionShowcase from './components/AIVisionShowcase';
+import LeaderboardTiers from './components/LeaderboardTiers';
+import WalletSection from './components/WalletSection';
+import OrganizerProgram from './components/OrganizerProgram';
+import HowItWorks from './components/HowItWorks';
+import ScoutRewards from './components/ScoutRewards';
+import PlatformComparison from './components/PlatformComparison';
 import Features from './components/Features';
 import Download from './components/Download';
 import About from './components/About';
@@ -40,14 +49,14 @@ function App() {
     switch (currentPage) {
       case 'home':
         return {
-          title: 'ArenaX - Best Free Fire & PUBG Mobile Tournament Platform in Pakistan | Win Real Cash',
-          description: 'Join ArenaX, Pakistan\'s #1 mobile esports tournament platform. Play Free Fire & PUBG tournaments daily, compete with 10,000+ players, win real cash prizes. Safe payments, instant withdrawals. Download now!',
-          keywords: 'ArenaX, Arena X, Marena, Marenax, Free Fire tournament, PUBG Mobile tournament, esports Pakistan, gaming tournament, mobile gaming, win cash prizes, online tournament, battle royale',
+          title: 'ArenaX - Premier Free Fire Tournament Platform in Pakistan | Win Real Cash',
+          description: 'Join ArenaX, Pakistan\'s #1 Free Fire esports tournament platform. Compete daily in Bermuda Battle Royale & Clash Squad 4v4 brackets. AI-verified scoreboards, Two-Wallet security, and instant JazzCash/EasyPaisa payouts.',
+          keywords: 'ArenaX, Arena X, Marena, Free Fire tournament Pakistan, Bermuda Battle Royale, Clash Squad 4v4, esports Pakistan, gaming tournament, win cash prizes, Free Fire esports Pakistan, JazzCash gaming',
           canonical: 'https://marenax.com/',
           schema: {
             '@context': 'https://schema.org',
             '@type': 'WebPage',
-            name: 'ArenaX - Mobile Tournament Platform',
+            name: 'ArenaX - Free Fire Tournament Platform',
             description: 'Pakistan\'s premier mobile esports tournament platform',
             url: 'https://marenax.com/'
           }
@@ -55,8 +64,8 @@ function App() {
       case 'about':
         return {
           title: 'About ArenaX - Pakistan\'s Leading Mobile Esports Platform | Our Story',
-          description: 'Learn about ArenaX, Pakistan\'s fastest-growing mobile esports platform. Discover our mission to democratize competitive gaming and provide fair tournaments for Free Fire and PUBG players.',
-          keywords: 'ArenaX about, mobile esports Pakistan, gaming platform, tournament platform, Free Fire Pakistan, PUBG Pakistan, esports company',
+          description: 'Learn about ArenaX, Pakistan\'s premier mobile esports platform. Discover our mission to democratize competitive Free Fire tournaments with dispute-free ArenaX Vision Engine and transparent payouts.',
+          keywords: 'ArenaX about, mobile esports Pakistan, gaming platform, tournament platform, Free Fire Pakistan, esports company',
           canonical: 'https://marenax.com/about',
           schema: {
             '@context': 'https://schema.org',
@@ -68,9 +77,9 @@ function App() {
         };
       case 'faq':
         return {
-          title: 'FAQ - Frequently Asked Questions | ArenaX Tournament Help Center',
-          description: 'Find answers to common questions about ArenaX tournaments, payments, withdrawals, game rules, and more. Get help with Free Fire and PUBG tournament registration, prize distribution, and account issues.',
-          keywords: 'ArenaX FAQ, tournament help, gaming questions, Free Fire tournament help, PUBG tournament FAQ, payment help, withdrawal help',
+          title: 'FAQ - Frequently Asked Questions | ArenaX Help Center',
+          description: 'Find answers about ArenaX Free Fire tournaments, AI-powered scoreboard verification, Two-Wallet isolation, deposits, and 24h JazzCash/EasyPaisa cashouts.',
+          keywords: 'ArenaX FAQ, tournament help, gaming questions, Free Fire tournament help, payment help, withdrawal help, Two-Wallet system',
           canonical: 'https://marenax.com/faq',
           schema: {
             '@context': 'https://schema.org',
@@ -81,9 +90,9 @@ function App() {
         };
       case 'contact':
         return {
-          title: 'Contact ArenaX - Get Support | 24/7 Gaming Tournament Help',
-          description: 'Contact ArenaX support team for tournament queries, technical issues, payment problems, or partnership opportunities. Email, phone, and live chat support available 24/7.',
-          keywords: 'ArenaX contact, gaming support, tournament help, customer service, technical support, gaming platform contact',
+          title: 'Contact ArenaX - 24/7 Player & Organizer Support Desk',
+          description: 'Contact ArenaX support team for tournament queries, room credentials, deposit verification, or organizer partnership opportunities. WhatsApp and email helpdesk available.',
+          keywords: 'ArenaX contact, gaming support, tournament help, customer service, organizer partnerships',
           canonical: 'https://marenax.com/contact',
           schema: {
             '@context': 'https://schema.org',
@@ -94,9 +103,9 @@ function App() {
         };
       case 'terms':
         return {
-          title: 'Terms & Conditions - ArenaX Tournament Platform Rules & Policies',
-          description: 'Read ArenaX terms and conditions, tournament rules, fair play policy, payment terms, and user agreement. Understand your rights and responsibilities on Pakistan\'s leading mobile esports platform.',
-          keywords: 'ArenaX terms, tournament rules, gaming policy, terms and conditions, user agreement, fair play policy',
+          title: 'Terms & Conditions - ArenaX Rules, Fair Play & User Agreement',
+          description: 'Read ArenaX terms and conditions, authoritative combat scoring rules, anti-cheat policy, Two-Wallet rules, and legal disclosures governed under the laws of Pakistan.',
+          keywords: 'ArenaX terms, tournament rules, gaming policy, fair play policy, Pakistan arbitration',
           canonical: 'https://marenax.com/terms',
           schema: {
             '@context': 'https://schema.org',
@@ -107,8 +116,8 @@ function App() {
         };
       default:
         return {
-          title: 'ArenaX - Best Free Fire & PUBG Mobile Tournament Platform in Pakistan',
-          description: 'Join Pakistan\'s #1 mobile esports tournament platform. Play Free Fire & PUBG tournaments daily, win real cash prizes!',
+          title: 'ArenaX - Premier Free Fire Tournament Platform in Pakistan',
+          description: 'Join Pakistan\'s #1 mobile esports tournament platform. Play Free Fire tournaments daily, win real cash prizes!',
           canonical: 'https://marenax.com/'
         };
     }
@@ -120,6 +129,15 @@ function App() {
         return (
           <>
             <Hero />
+            <TrustBar />
+            <TournamentModes />
+            <AIVisionShowcase />
+            <LeaderboardTiers />
+            <WalletSection />
+            <OrganizerProgram />
+            <HowItWorks />
+            <ScoutRewards />
+            <PlatformComparison />
             <Features />
             <Download />
           </>
@@ -136,6 +154,15 @@ function App() {
         return (
           <>
             <Hero />
+            <TrustBar />
+            <TournamentModes />
+            <AIVisionShowcase />
+            <LeaderboardTiers />
+            <WalletSection />
+            <OrganizerProgram />
+            <HowItWorks />
+            <ScoutRewards />
+            <PlatformComparison />
             <Features />
             <Download />
           </>
@@ -144,7 +171,7 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#121212]">
+    <div className="min-h-screen bg-[#101214] text-[#F3F4F6]">
       <SmoothScroll />
       <SEO {...getSEOProps()} />
       <Navbar currentPage={currentPage} setCurrentPage={setCurrentPage} />

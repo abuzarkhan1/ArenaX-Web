@@ -11,7 +11,7 @@ const DotMaterial = shaderMaterial(
     time: 0,
     resolution: new THREE.Vector2(),
     dotColor: new THREE.Color('#FFFFFF'),
-    bgColor: new THREE.Color('#121212'),
+    bgColor: new THREE.Color('#101214'),
     mouseTrail: null,
     render: 0,
     rotation: 0,
@@ -112,7 +112,7 @@ function Scene() {
       case 'dark':
         return {
           dotColor: '#FFFFFF',
-          bgColor: '#121212',
+          bgColor: '#101214',
           dotOpacity: 0.025
         }
       case 'light':
@@ -122,11 +122,9 @@ function Scene() {
           dotOpacity: 0.15
         }
       default:
-        // Default to dark theme style regardless of system preference for the Hero section if desired,
-        // but sticking to provided logic:
         return {
           dotColor: '#FFFFFF',
-          bgColor: '#121212',
+          bgColor: '#101214',
           dotOpacity: 0.05
         }
     }
@@ -143,9 +141,6 @@ function Scene() {
       return x < 0.5 ? (1 - Math.sqrt(1 - Math.pow(2 * x, 2))) / 2 : (Math.sqrt(1 - Math.pow(-2 * x + 2, 2)) + 1) / 2
     }
   })
-
-  // We need to extend the material so R3F knows about it, but shaderMaterial creates a class.
-  // We can use it directly via primitive or extend. The provided code does new DotMaterial in useMemo.
 
   const dotMaterial = useMemo(() => {
     return new DotMaterial()
@@ -202,9 +197,9 @@ export const DotScreenShader = () => {
         outputColorSpace: THREE.SRGBColorSpace,
         toneMapping: THREE.NoToneMapping
       }}
-      dpr={[1, 1.5]} // Clamp pixel ratio for performance
-      camera={{ position: [0, 0, 1] }} // Ensure camera is positioned to see the plane
-      style={{ background: '#121212' }} // Fallback background
+      dpr={[1, 1.5]}
+      camera={{ position: [0, 0, 1] }}
+      style={{ background: '#101214' }}
     >
       <Scene />
     </Canvas>

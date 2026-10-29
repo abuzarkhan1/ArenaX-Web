@@ -1,7 +1,9 @@
 import { useState } from 'react';
-import { ChevronDown } from 'lucide-react';
+import { ChevronDown, Headset } from 'lucide-react';
 import { Pill } from './primitives/Pill';
 import { Button } from './primitives/Button';
+import { HudCorners } from './primitives/HudCorners';
+import { IconOrb } from './primitives/IconOrb';
 import { SEO } from './SEO';
 
 export default function FAQ() {
@@ -68,13 +70,16 @@ export default function FAQ() {
         canonical="https://marenax.site/faq"
       />
 
-      <div className="pt-28 sm:pt-36 pb-20 bg-bg-1 min-h-screen">
-        <div className="max-w-[1200px] mx-auto px-6">
+      <div className="relative isolate min-h-screen overflow-hidden bg-bg-1 pt-28 pb-20 sm:pt-36">
+        <div aria-hidden="true" className="hud-grid pointer-events-none absolute inset-x-0 top-0 h-[420px] opacity-40" />
+        <div aria-hidden="true" className="ambient-glow left-1/2 top-16 h-64 w-[36rem] max-w-[90vw] -translate-x-1/2" />
+
+        <div className="relative z-10 max-w-[1200px] mx-auto px-6">
           {/* Header */}
           <div className="mb-14 sm:mb-20 text-center max-w-3xl mx-auto">
             <Pill dot={true} label="SUPPORT KNOWLEDGE BASE" />
             <h1 className="text-4xl sm:text-6xl font-extrabold uppercase tracking-tight text-text-1 font-heading mt-4">
-              Frequently Asked <span className="text-accent">Questions</span>
+              Frequently Asked <span className="text-accent text-glow-accent">Questions</span>
             </h1>
             <p className="text-base sm:text-lg text-text-2 mt-3 leading-relaxed">
               Find transparent answers regarding tournaments, payouts, rules, and account security.
@@ -89,10 +94,22 @@ export default function FAQ() {
               return (
                 <div
                   key={index}
-                  className={`hud-card rounded-card overflow-hidden transition-all duration-200 ${
-                    isOpen ? 'border-line-strong' : ''
-                  }`}
+                  className="group hud-card relative overflow-hidden rounded-card transition-all duration-300 ease-out hover:-translate-y-0.5"
                 >
+                  {isOpen && (
+                    <span
+                      aria-hidden="true"
+                      className="pointer-events-none absolute inset-0 z-10 rounded-card border border-emerald-500/30 bg-emerald-500/[0.02] shadow-[0_12px_24px_-10px_rgba(0,255,163,0.15)]"
+                    />
+                  )}
+                  {isOpen && (
+                    <span
+                      aria-hidden="true"
+                      className="pointer-events-none absolute inset-y-0 left-0 w-[2px] bg-gradient-to-b from-emerald-400/80 via-emerald-500/40 to-transparent"
+                    />
+                  )}
+                  {isOpen && <HudCorners tone="emerald" size="sm" inset />}
+
                   <button
                     onClick={() => setOpenIndex(isOpen ? null : index)}
                     className="w-full min-h-[56px] p-5 sm:p-6 text-left flex justify-between items-center gap-4 cursor-pointer"
@@ -101,30 +118,50 @@ export default function FAQ() {
                     <span className="text-base sm:text-lg font-bold font-heading text-text-1">
                       {faq.question}
                     </span>
-                    <ChevronDown
-                      className={`w-5 h-5 text-accent flex-shrink-0 transition-transform duration-200 ${
-                        isOpen ? 'rotate-180' : ''
+                    <span
+                      className={`flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full border transition-colors duration-200 ease-out ${
+                        isOpen
+                          ? 'border-emerald-500/40 bg-emerald-500/10 text-emerald-400'
+                          : 'border-white/[0.08] bg-white/[0.03] text-text-2 group-hover:border-emerald-500/40 group-hover:text-emerald-400'
                       }`}
-                    />
+                    >
+                      <ChevronDown
+                        className={`h-4 w-4 transition-transform duration-300 ease-out ${
+                          isOpen ? 'rotate-180' : ''
+                        }`}
+                        strokeWidth={1.5}
+                      />
+                    </span>
                   </button>
 
-                  {isOpen && (
-                    <div className="px-5 sm:px-6 pb-6 pt-1 border-t border-line">
-                      <p className="text-[15px] sm:text-base text-text-2 leading-relaxed">
-                        {faq.answer}
-                      </p>
+                  <div
+                    className={`grid transition-[grid-template-rows,opacity] duration-300 ease-out ${
+                      isOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'
+                    }`}
+                    aria-hidden={!isOpen}
+                  >
+                    <div className="overflow-hidden">
+                      <div className="border-t border-line px-5 sm:px-6 pb-6 pt-5">
+                        <p className="text-[15px] sm:text-base text-text-2 leading-relaxed">
+                          {faq.answer}
+                        </p>
+                      </div>
                     </div>
-                  )}
+                  </div>
                 </div>
               );
             })}
           </div>
 
           {/* Need Further Support Card */}
-          <div className="hud-card p-8 rounded-card text-center max-w-2xl mx-auto space-y-4">
+          <div className="hud-card relative mx-auto max-w-2xl space-y-4 overflow-hidden rounded-card p-8 text-center transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-lift">
+            <HudCorners tone="neutral" size="sm" inset />
+            <div className="flex justify-center">
+              <IconOrb icon={Headset} tone="emerald" size="md" />
+            </div>
             <h3 className="text-xl font-bold font-heading text-text-1">Still Have Questions?</h3>
             <p className="text-sm text-text-2 leading-relaxed">
-              Our 24/7 Pakistani customer support team is available via email and WhatsApp.
+              Our <span className="font-mono tracking-tight tabular-nums text-white/80">24/7</span> Pakistani customer support team is available via email and WhatsApp.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
               <Button

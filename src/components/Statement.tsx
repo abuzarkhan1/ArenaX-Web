@@ -95,11 +95,17 @@ export const Statement = () => {
             <div
               key={item.num}
               data-statement-row={index}
-              className="py-8 sm:py-12 group transition-all duration-300 flex flex-col md:flex-row md:items-baseline justify-between gap-4 md:gap-8"
+              className="group relative py-8 sm:py-12 transition-colors duration-300 hover:bg-emerald-500/[0.025] flex flex-col md:flex-row md:items-baseline justify-between gap-4 md:gap-8"
             >
+              {/* Emerald hairline accent on hover */}
+              <span
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-emerald-500/50 via-emerald-500/10 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+              />
+
               {/* Row Left: Mono Number + Statement Words */}
               <div className="flex items-baseline gap-4 sm:gap-6 flex-grow">
-                <span className="font-mono text-sm sm:text-base font-bold text-accent tracking-[0.1em] flex-shrink-0">
+                <span className="font-mono text-sm sm:text-base font-bold text-accent tracking-[0.1em] tabular-nums flex-shrink-0 transition-colors duration-300 group-hover:text-emerald-300">
                   /{item.num}
                 </span>
                 <h2 className="text-2xl sm:text-4xl md:text-5xl font-extrabold text-text-1 font-heading tracking-tight leading-[1.08]">

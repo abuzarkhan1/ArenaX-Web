@@ -1,7 +1,11 @@
 import { useState } from 'react';
-import { Sliders, ArrowRight } from 'lucide-react';
+import { Sliders, ArrowRight, ScanLine, Wallet, Star } from 'lucide-react';
 import { Pill } from './primitives/Pill';
 import { Button } from './primitives/Button';
+import { HudCorners } from './primitives/HudCorners';
+import { IconOrb } from './primitives/IconOrb';
+
+const CAPABILITY_ICONS = [Sliders, ScanLine, Wallet, Star];
 
 export const OrganizerProgram = () => {
   const [participants, setParticipants] = useState(48);
@@ -64,44 +68,55 @@ export const OrganizerProgram = () => {
         {/* ASYMMETRIC COMPOSITION: List Left, Simulator Right       */}
         {/* ======================================================== */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
-          {/* Left Column: Plain List with Hairlines (No cards, no colored icons) */}
+          {/* Left Column: Plain List with Hairlines & Glowing Icon Orbs */}
           <div className="lg:col-span-6 divide-y divide-line border-y border-line">
-            {capabilities.map((cap) => (
-              <div key={cap.num} className="py-6 sm:py-8 group">
-                <div className="flex items-baseline gap-3 mb-2">
-                  <span className="font-mono text-xs font-bold text-accent tracking-widest">
-                    /{cap.num}
-                  </span>
-                  <h3 className="text-lg sm:text-xl font-bold font-heading text-text-1">
-                    {cap.title}
-                  </h3>
+            {capabilities.map((cap, index) => (
+              <div key={cap.num} className="py-6 sm:py-8 group flex items-start gap-4 sm:gap-5">
+                <IconOrb
+                  icon={CAPABILITY_ICONS[index]}
+                  tone="emerald"
+                  size="sm"
+                  className="mt-1"
+                />
+                <div className="min-w-0">
+                  <div className="flex items-baseline gap-3 mb-2">
+                    <span className="font-mono text-xs font-bold text-accent tracking-widest tabular-nums">
+                      /{cap.num}
+                    </span>
+                    <h3 className="text-lg sm:text-xl font-bold font-heading text-text-1 transition-colors group-hover:text-accent">
+                      {cap.title}
+                    </h3>
+                  </div>
+                  <p className="text-sm text-text-2 leading-relaxed font-normal">
+                    {cap.desc}
+                  </p>
                 </div>
-                <p className="text-sm text-text-2 pl-7 leading-relaxed font-normal">
-                  {cap.desc}
-                </p>
               </div>
             ))}
           </div>
 
           {/* Right Column: Earnings Simulator as the ONE Highlighted Card */}
-          <div className="lg:col-span-6 hud-card-highlight p-6 sm:p-8 rounded-card space-y-6">
-            <div className="flex items-center justify-between pb-4 border-b border-line">
-              <div className="flex items-center gap-2">
-                <Sliders className="w-4 h-4 text-accent stroke-[2]" />
+          <div className="lg:col-span-6 hud-card-highlight relative p-6 sm:p-8 rounded-card space-y-6 transition-all duration-200 ease-out hover:shadow-lift-strong">
+            <HudCorners tone="emerald" size="md" inset />
+            <div className="flex items-center justify-between gap-3 pb-4 border-b border-line">
+              <div className="flex items-center gap-3">
+                <IconOrb icon={Sliders} tone="emerald" size="sm" />
                 <h3 className="text-lg font-bold font-heading text-text-1 uppercase tracking-wider">
                   Host Earnings Simulator
                 </h3>
               </div>
-              <span className="text-xs font-mono text-text-3">10% Platform Rake</span>
+              <span className="text-xs font-mono text-text-3 whitespace-nowrap tracking-tight tabular-nums">
+                10% Platform Rake
+              </span>
             </div>
 
             {/* Sliders with 48px touch target height */}
             <div className="space-y-5">
               {/* Slider 1: Participants */}
-              <div className="p-4 rounded-control bg-bg-1 border border-line">
+              <div className="p-4 rounded-control bg-bg-1/70 backdrop-blur-sm border border-line transition-colors hover:border-line-strong">
                 <div className="flex justify-between items-center text-xs font-mono mb-2">
                   <span className="text-text-3 uppercase font-bold">Lobby Size</span>
-                  <span className="text-text-1 font-bold">{participants} Players</span>
+                  <span className="text-text-1 font-bold tracking-tight tabular-nums">{participants} Players</span>
                 </div>
                 <input
                   type="range"
@@ -110,9 +125,9 @@ export const OrganizerProgram = () => {
                   value={participants}
                   onChange={(e) => setParticipants(parseInt(e.target.value, 10))}
                   aria-label="Tournament participants count"
-                  className="w-full h-3 bg-bg-3 rounded-control appearance-none cursor-pointer accent-accent"
+                  className="w-full h-3 bg-bg-3 rounded-control appearance-none cursor-pointer accent-accent transition-shadow hover:accent-emerald-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/60 focus-visible:ring-offset-2 focus-visible:ring-offset-bg-1"
                 />
-                <div className="flex justify-between text-[11px] font-mono text-text-3 mt-1.5">
+                <div className="flex justify-between text-[11px] font-mono text-text-3 mt-1.5 tracking-tight tabular-nums">
                   <span>10 (CS)</span>
                   <span>24 (Duo)</span>
                   <span>48 (Bermuda)</span>
@@ -120,10 +135,10 @@ export const OrganizerProgram = () => {
               </div>
 
               {/* Slider 2: Entry Fee */}
-              <div className="p-4 rounded-control bg-bg-1 border border-line">
+              <div className="p-4 rounded-control bg-bg-1/70 backdrop-blur-sm border border-line transition-colors hover:border-line-strong">
                 <div className="flex justify-between items-center text-xs font-mono mb-2">
                   <span className="text-text-3 uppercase font-bold">Entry Fee</span>
-                  <span className="text-text-1 font-bold">{entryFee} AX ({entryFee} PKR)</span>
+                  <span className="text-text-1 font-bold tracking-tight tabular-nums">{entryFee} AX ({entryFee} PKR)</span>
                 </div>
                 <input
                   type="range"
@@ -133,9 +148,9 @@ export const OrganizerProgram = () => {
                   value={entryFee}
                   onChange={(e) => setEntryFee(parseInt(e.target.value, 10))}
                   aria-label="Entry fee per player"
-                  className="w-full h-3 bg-bg-3 rounded-control appearance-none cursor-pointer accent-accent"
+                  className="w-full h-3 bg-bg-3 rounded-control appearance-none cursor-pointer accent-accent transition-shadow hover:accent-emerald-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/60 focus-visible:ring-offset-2 focus-visible:ring-offset-bg-1"
                 />
-                <div className="flex justify-between text-[11px] font-mono text-text-3 mt-1.5">
+                <div className="flex justify-between text-[11px] font-mono text-text-3 mt-1.5 tracking-tight tabular-nums">
                   <span>50 PKR (Entry)</span>
                   <span>200 PKR</span>
                   <span>500 PKR (High Stakes)</span>
@@ -143,10 +158,10 @@ export const OrganizerProgram = () => {
               </div>
 
               {/* Slider 3: Host Cut */}
-              <div className="p-4 rounded-control bg-bg-1 border border-line">
+              <div className="p-4 rounded-control bg-bg-1/70 backdrop-blur-sm border border-line transition-colors hover:border-line-strong">
                 <div className="flex justify-between items-center text-xs font-mono mb-2">
                   <span className="text-text-3 uppercase font-bold">Organizer Cut</span>
-                  <span className="text-accent font-bold">{hostCutPercent}% of Entry Revenue</span>
+                  <span className="text-accent font-bold tracking-tight tabular-nums">{hostCutPercent}% of Entry Revenue</span>
                 </div>
                 <input
                   type="range"
@@ -156,9 +171,9 @@ export const OrganizerProgram = () => {
                   value={hostCutPercent}
                   onChange={(e) => setHostCutPercent(parseInt(e.target.value, 10))}
                   aria-label="Organizer commission percentage"
-                  className="w-full h-3 bg-bg-3 rounded-control appearance-none cursor-pointer accent-accent"
+                  className="w-full h-3 bg-bg-3 rounded-control appearance-none cursor-pointer accent-accent transition-shadow hover:accent-emerald-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/60 focus-visible:ring-offset-2 focus-visible:ring-offset-bg-1"
                 />
-                <div className="flex justify-between text-[11px] font-mono text-text-3 mt-1.5">
+                <div className="flex justify-between text-[11px] font-mono text-text-3 mt-1.5 tracking-tight tabular-nums">
                   <span>0% (Community)</span>
                   <span>10% (Standard)</span>
                   <span>20% (Max Cut)</span>
@@ -167,42 +182,45 @@ export const OrganizerProgram = () => {
             </div>
 
             {/* Economics Breakdown */}
-            <div className="p-4 rounded-control bg-bg-1 border border-line space-y-2 text-xs font-mono">
+            <div className="p-4 rounded-control bg-bg-1/70 backdrop-blur-sm border border-line space-y-2 text-xs font-mono tracking-tight">
               <div className="flex justify-between py-1 border-b border-line">
-                <span className="text-text-3">TOTAL REVENUE</span>
-                <span className="text-text-1 font-bold">{totalRevenue.toLocaleString()} PKR</span>
+                <span className="text-text-2">TOTAL REVENUE</span>
+                <span className="text-text-1 font-bold tabular-nums">{totalRevenue.toLocaleString()} PKR</span>
               </div>
               <div className="flex justify-between py-1 border-b border-line">
-                <span className="text-text-3">PLATFORM FEE (10%)</span>
-                <span className="text-text-3">{adminFee.toLocaleString()} PKR</span>
+                <span className="text-text-2">PLATFORM FEE (10%)</span>
+                <span className="text-text-3 tabular-nums">{adminFee.toLocaleString()} PKR</span>
               </div>
               <div className="flex justify-between py-1">
-                <span className="text-text-3">PRIZE POOL ({playerPrizePercent}%)</span>
-                <span className="text-text-1 font-bold">{playerPrizePool.toLocaleString()} PKR</span>
+                <span className="text-text-2">PRIZE POOL ({playerPrizePercent}%)</span>
+                <span className="text-text-1 font-bold tabular-nums">{playerPrizePool.toLocaleString()} PKR</span>
               </div>
             </div>
 
             {/* Net Host Payout (Outfit 800) */}
-            <div className="p-5 rounded-control bg-bg-1 border border-line-accent">
-              <span className="text-xs font-mono text-accent font-bold uppercase tracking-wider block">
-                Net Organizer Payout
-              </span>
-              <div className="flex items-baseline gap-2 mt-1">
-                <span className="text-4xl sm:text-5xl font-extrabold font-heading text-text-1 tracking-tight">
-                  {hostEarnings.toLocaleString()}
+            <div className="relative overflow-hidden p-5 rounded-control bg-bg-1 border border-line-accent shadow-glow">
+              <div aria-hidden="true" className="ambient-glow -right-10 -top-12 h-40 w-40" />
+              <div className="relative z-10">
+                <span className="text-xs font-mono text-accent font-bold uppercase tracking-wider block">
+                  Net Organizer Payout
                 </span>
-                <span className="text-sm font-mono font-bold text-accent">PKR / Match</span>
+                <div className="flex items-baseline gap-2 mt-1">
+                  <span className="text-4xl sm:text-5xl font-extrabold font-heading text-text-1 tracking-tight tabular-nums">
+                    {hostEarnings.toLocaleString()}
+                  </span>
+                  <span className="text-sm font-mono font-bold text-accent tracking-tight">PKR / Match</span>
+                </div>
+                <p className="text-xs text-text-2 mt-2 leading-normal">
+                  Credited directly to your dedicated Organizer Wallet upon match settlement.
+                </p>
               </div>
-              <p className="text-xs text-text-3 mt-2 leading-normal">
-                Credited directly to your dedicated Organizer Wallet upon match settlement.
-              </p>
             </div>
 
             <Button
               variant="primary"
               fullWidth
               onClick={scrollToDownload}
-              icon={<ArrowRight className="w-4 h-4 stroke-[2]" />}
+              icon={<ArrowRight className="w-4 h-4" strokeWidth={1.5} />}
             >
               Apply to Host Scrims
             </Button>

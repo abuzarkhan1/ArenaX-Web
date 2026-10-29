@@ -2,7 +2,9 @@ import { useState, useRef, useLayoutEffect } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Pill } from './primitives/Pill';
-import { ChevronLeft, ChevronRight, Target, Zap, ShieldCheck } from 'lucide-react';
+import { HudCorners } from './primitives/HudCorners';
+import { IconOrb } from './primitives/IconOrb';
+import { ChevronLeft, ChevronRight, Target, Trophy, ShieldCheck } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -92,7 +94,7 @@ export const LeaderboardTiers = () => {
 
           {/* Broadcast Telemetry Pill & Navigation */}
           <div className="tier-reveal flex items-center gap-3 self-start md:self-end">
-            <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-control bg-bg-2 border border-line text-xs font-mono text-text-3">
+            <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-control bg-bg-2 border border-line text-xs font-mono text-text-3 tracking-tight tabular-nums">
               <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
               <span>8 TIERS // ACTIVE CIRCUIT</span>
             </div>
@@ -100,18 +102,18 @@ export const LeaderboardTiers = () => {
               <button
                 type="button"
                 onClick={() => scrollTrack('left')}
-                className="w-10 h-10 rounded-control border border-line bg-bg-2 hover:bg-bg-3 hover:border-line-strong text-text-2 hover:text-text-1 transition-all flex items-center justify-center cursor-pointer active:scale-95"
+                className="w-10 h-10 rounded-control border border-line bg-bg-2 hover:bg-bg-3 hover:border-line-strong text-text-2 hover:text-text-1 transition-all duration-200 flex items-center justify-center cursor-pointer active:scale-[0.98]"
                 aria-label="Scroll ranks left"
               >
-                <ChevronLeft className="w-5 h-5" />
+                <ChevronLeft className="w-5 h-5" strokeWidth={1.5} />
               </button>
               <button
                 type="button"
                 onClick={() => scrollTrack('right')}
-                className="w-10 h-10 rounded-control border border-line bg-bg-2 hover:bg-bg-3 hover:border-line-strong text-text-2 hover:text-text-1 transition-all flex items-center justify-center cursor-pointer active:scale-95"
+                className="w-10 h-10 rounded-control border border-line bg-bg-2 hover:bg-bg-3 hover:border-line-strong text-text-2 hover:text-text-1 transition-all duration-200 flex items-center justify-center cursor-pointer active:scale-[0.98]"
                 aria-label="Scroll ranks right"
               >
-                <ChevronRight className="w-5 h-5" />
+                <ChevronRight className="w-5 h-5" strokeWidth={1.5} />
               </button>
             </div>
           </div>
@@ -142,14 +144,16 @@ export const LeaderboardTiers = () => {
                   tabIndex={0}
                   role="button"
                   aria-pressed={isSelected}
-                  className={`w-[200px] sm:w-[220px] p-5 rounded-card transition-all duration-300 border flex flex-col justify-between cursor-pointer relative group text-left select-none outline-none focus-visible:ring-2 focus-visible:ring-accent ${
+                  className={`w-[200px] sm:w-[220px] p-5 rounded-card transition-all duration-200 ease-out border flex flex-col justify-between cursor-pointer relative group text-left select-none outline-none focus-visible:ring-2 focus-visible:ring-accent bg-bg-2 bg-gradient-to-b from-white/[0.03] via-transparent to-transparent backdrop-blur-sm ${
                     isSelected
-                      ? 'bg-bg-2 border-accent shadow-[0_0_28px_rgba(0,200,120,0.18)] -translate-y-1.5'
+                      ? 'border-accent shadow-lift -translate-y-1.5'
                       : isGrandmaster
-                      ? 'bg-bg-2 border-line-accent hover:border-accent hover:-translate-y-1'
-                      : 'bg-bg-2 border-line hover:border-line-strong hover:-translate-y-1'
+                      ? 'border-line-accent hover:border-accent hover:-translate-y-1 hover:shadow-lift'
+                      : 'border-line hover:border-line-strong hover:-translate-y-1 hover:shadow-lift'
                   }`}
                 >
+                  {(isSelected || isGrandmaster) && <HudCorners tone="emerald" size="sm" inset />}
+
                   {/* Subtle apex ambient light for Grandmaster */}
                   {isGrandmaster && (
                     <div className="absolute inset-0 rounded-card bg-[radial-gradient(ellipse_at_top,rgba(0,200,120,0.10),transparent_70%)] pointer-events-none" />
@@ -158,7 +162,7 @@ export const LeaderboardTiers = () => {
                   {/* Card Header: Monospace Counter & Tag */}
                   <div>
                     <div className="flex justify-between items-center mb-1">
-                      <span className="text-[11px] font-mono text-text-3 font-semibold">
+                      <span className="text-[11px] font-mono text-text-3 font-semibold tracking-tight tabular-nums">
                         {String(idx + 1).padStart(2, '0')} / 08
                       </span>
                       {isGrandmaster ? (
@@ -205,12 +209,12 @@ export const LeaderboardTiers = () => {
                     <h4 className="text-lg sm:text-xl font-extrabold font-heading text-text-1 group-hover:text-accent transition-colors">
                       {tier.name}
                     </h4>
-                    <span className="text-xs font-mono text-text-3 block mt-0.5">
+                    <span className="text-xs font-mono text-text-3 block mt-0.5 tracking-tight tabular-nums">
                       {tier.range}
                     </span>
 
                     {/* Requirement tag */}
-                    <div className="mt-2.5 inline-block px-2 py-0.5 rounded bg-bg-1 border border-line text-[11px] font-mono font-bold text-text-2">
+                    <div className="mt-2.5 inline-block px-2 py-0.5 rounded bg-bg-1 border border-line text-[11px] font-mono font-bold text-text-2 tracking-tight tabular-nums">
                       {tier.pts}
                     </div>
                   </div>
@@ -221,7 +225,7 @@ export const LeaderboardTiers = () => {
                       Promotion Reward
                     </span>
                     <span
-                      className={`text-xs sm:text-sm font-mono font-bold block mt-0.5 ${
+                      className={`text-xs sm:text-sm font-mono font-bold block mt-0.5 tracking-tight tabular-nums ${
                         isGrandmaster || isSelected ? 'text-accent' : 'text-text-1'
                       }`}
                     >
@@ -237,21 +241,28 @@ export const LeaderboardTiers = () => {
         {/* ======================================================== */}
         {/* RANK-GAP TACTICAL SIMULATOR (Cardless HUD Layout)       */}
         {/* ======================================================== */}
-        <div className="border border-line rounded-card bg-bg-2/50 backdrop-blur-sm p-6 sm:p-8 max-w-4xl mx-auto">
+        <div className="relative">
+          <div
+            aria-hidden="true"
+            className="ambient-glow left-1/2 top-1/2 h-[420px] w-[680px] max-w-[90vw] -translate-x-1/2 -translate-y-1/2"
+          />
+          <div className="relative z-10 border border-line rounded-card bg-bg-2/60 backdrop-blur-sm p-6 sm:p-8 max-w-4xl mx-auto">
           {/* Header Bar */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-5 border-b border-line gap-3 mb-8">
-            <div>
-              <span className="text-xs font-mono font-bold uppercase text-accent tracking-widest flex items-center gap-2">
-                <Target className="w-4 h-4 text-accent" />
-                // TACTICAL PROMOTION SIMULATOR
-              </span>
-              <h3 className="text-xl sm:text-2xl font-bold font-heading text-text-1 mt-1">
-                Calculate Gap to Next Promotion
-              </h3>
+            <div className="flex items-start gap-3">
+              <IconOrb icon={Target} tone="emerald" size="sm" className="mt-0.5" />
+              <div>
+                <span className="text-xs font-mono font-bold uppercase text-accent tracking-widest">
+                  // TACTICAL PROMOTION SIMULATOR
+                </span>
+                <h3 className="text-xl sm:text-2xl font-bold font-heading text-text-1 mt-1">
+                  Calculate Gap to Next Promotion
+                </h3>
+              </div>
             </div>
             <div className="flex items-center gap-2 px-3 py-1.5 rounded-control bg-bg-1 border border-line self-start sm:self-auto">
-              <Zap className="w-3.5 h-3.5 text-accent" />
-              <span className="text-xs font-mono text-text-2">1 Booyah = +20 PTS</span>
+              <Trophy className="w-3.5 h-3.5 text-accent" strokeWidth={1.5} />
+              <span className="text-xs font-mono text-text-2 tracking-tight tabular-nums">1 Booyah = +20 PTS</span>
             </div>
           </div>
 
@@ -263,7 +274,7 @@ export const LeaderboardTiers = () => {
                 <div className="flex justify-between items-baseline text-xs font-mono mb-2.5">
                   <span className="text-text-3 uppercase font-semibold">Your Current Rating</span>
                   <div className="flex items-center gap-2">
-                    <span className="text-base font-bold font-mono text-accent">
+                    <span className="text-base font-bold font-mono text-accent tracking-tight tabular-nums">
                       {currentPts.toLocaleString()}
                     </span>
                     <span className="text-text-3">PTS</span>
@@ -278,30 +289,30 @@ export const LeaderboardTiers = () => {
                   value={currentPts}
                   onChange={(e) => setCurrentPts(parseInt(e.target.value, 10))}
                   aria-label="Current Points Rating"
-                  className="w-full h-2.5 bg-bg-1 rounded-control appearance-none cursor-pointer accent-accent"
+                  className="w-full h-2.5 bg-bg-1 rounded-control appearance-none cursor-pointer accent-accent transition-shadow hover:accent-emerald-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/60 focus-visible:ring-offset-2 focus-visible:ring-offset-bg-1"
                 />
 
                 {/* Quick Presets */}
-                <div className="flex justify-between items-center text-[11px] font-mono text-text-3 mt-2 px-1">
+                <div className="flex justify-between items-center text-[11px] font-mono text-text-3 mt-2 px-1 tracking-tight tabular-nums">
                   <span>0 PTS</span>
                   <button
                     type="button"
                     onClick={() => setCurrentPts(2500)}
-                    className="hover:text-accent transition-colors cursor-pointer"
+                    className="hover:text-accent transition-all duration-100 cursor-pointer tabular-nums active:scale-[0.98]"
                   >
                     2.5K
                   </button>
                   <button
                     type="button"
                     onClick={() => setCurrentPts(5000)}
-                    className="hover:text-accent transition-colors cursor-pointer"
+                    className="hover:text-accent transition-all duration-100 cursor-pointer tabular-nums active:scale-[0.98]"
                   >
                     5.0K
                   </button>
                   <button
                     type="button"
                     onClick={() => setCurrentPts(7500)}
-                    className="hover:text-accent transition-colors cursor-pointer"
+                    className="hover:text-accent transition-all duration-100 cursor-pointer tabular-nums active:scale-[0.98]"
                   >
                     7.5K
                   </button>
@@ -314,7 +325,7 @@ export const LeaderboardTiers = () => {
                 <span className="text-xs font-mono text-text-3 uppercase font-semibold block mb-2.5">
                   Select Target Promotion Tier
                 </span>
-                <div className="grid grid-cols-4 sm:grid-cols-8 gap-1.5">
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                   {RANK_TIERS.map((t) => {
                     const isCurrent = targetTier === t.name;
                     return (
@@ -322,7 +333,7 @@ export const LeaderboardTiers = () => {
                         key={t.name}
                         type="button"
                         onClick={() => setTargetTier(t.name)}
-                        className={`py-2 px-1 rounded-control text-[10px] font-mono font-bold uppercase transition-all cursor-pointer flex flex-col items-center gap-1.5 ${
+                        className={`py-2 px-2 rounded-control text-[10px] font-mono font-bold uppercase leading-tight transition-all duration-100 cursor-pointer flex flex-col items-center gap-1.5 active:scale-[0.98] tabular-nums ${
                           isCurrent
                             ? 'bg-accent text-bg-1 shadow-sm'
                             : 'bg-bg-1 text-text-3 border border-line hover:text-text-1 hover:border-line-strong'
@@ -360,31 +371,31 @@ export const LeaderboardTiers = () => {
                   <div className="text-xl sm:text-2xl font-extrabold font-heading text-text-1">
                     {selectedTier.name}
                   </div>
-                  <span className="text-xs font-mono text-accent">
+                  <span className="text-xs font-mono text-accent tracking-tight tabular-nums">
                     {selectedTier.targetMin.toLocaleString()} PTS REQUIRED
                   </span>
                 </div>
               </div>
 
               {/* Telemetry Metrics */}
-              <div className="space-y-2.5 pt-2 border-t border-line font-mono text-xs">
+              <div className="space-y-2.5 pt-2 border-t border-line font-mono text-xs tracking-tight">
                 <div className="flex justify-between items-center py-1">
                   <span className="text-text-3 uppercase">Points Needed:</span>
-                  <span className="text-sm font-bold text-accent">
+                  <span className="text-sm font-bold text-accent tabular-nums">
                     {ptsNeeded > 0 ? `${ptsNeeded.toLocaleString()} PTS` : 'QUALIFIED'}
                   </span>
                 </div>
 
                 <div className="flex justify-between items-center py-1">
                   <span className="text-text-3 uppercase">Booyahs Required:</span>
-                  <span className="text-sm font-bold text-text-1">
+                  <span className="text-sm font-bold text-text-1 tabular-nums">
                     {ptsNeeded > 0 ? `~${booyahsNeeded} Clean Matches` : 'Promotion Ready'}
                   </span>
                 </div>
 
                 <div className="flex justify-between items-center py-1">
                   <span className="text-text-3 uppercase">Bonus Deposit:</span>
-                  <span className="text-sm font-bold text-accent">
+                  <span className="text-sm font-bold text-accent tabular-nums">
                     {selectedTier.reward}
                   </span>
                 </div>
@@ -392,24 +403,27 @@ export const LeaderboardTiers = () => {
 
               {/* Progress to Target Bar */}
               <div className="pt-2">
-                <div className="flex justify-between text-[11px] font-mono text-text-3 mb-1.5">
+                <div className="flex justify-between text-[11px] font-mono text-text-3 mb-1.5 tracking-tight tabular-nums">
                   <span>Progress to {selectedTier.name}</span>
                   <span className="text-text-1 font-bold">{progressPercent}%</span>
                 </div>
                 <div className="h-2 w-full bg-bg-1 rounded-full overflow-hidden border border-line">
                   <div
-                    className="h-full bg-accent transition-all duration-300 rounded-full"
+                    className="h-full bg-accent transition-all duration-300 rounded-full shadow-[0_0_12px_rgba(0,200,120,0.45)]"
                     style={{ width: `${progressPercent}%` }}
                   />
                 </div>
               </div>
 
               {/* Guarantee Note */}
-              <div className="flex items-center gap-2 pt-1 text-[11px] font-mono text-text-3">
-                <ShieldCheck className="w-3.5 h-3.5 text-accent shrink-0" />
+              <div className="flex items-center gap-2.5 pt-1 text-[11px] font-mono text-text-3">
+                <span className="inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-md border border-emerald-500/20 bg-emerald-500/10 text-emerald-400">
+                  <ShieldCheck className="w-3.5 h-3.5" strokeWidth={1.5} />
+                </span>
                 <span>Instant Winning Wallet credit upon verification.</span>
               </div>
             </div>
+          </div>
           </div>
         </div>
       </div>

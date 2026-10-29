@@ -4,6 +4,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Download, UserPlus, Users, Swords, Trophy, Banknote, ArrowRight } from 'lucide-react';
 import { Pill } from './primitives/Pill';
 import { Button } from './primitives/Button';
+import { HudCorners, IconOrb } from './primitives';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -119,12 +120,16 @@ export const HowItWorks = () => {
       className="py-[clamp(80px,10vw,140px)] bg-bg-1 border-b border-line relative overflow-hidden"
       aria-label="How It Works Timeline"
     >
+      <div
+        aria-hidden="true"
+        className="ambient-glow left-[6%] top-[42%] h-[420px] w-[420px] opacity-60"
+      />
       <div className="max-w-[1200px] mx-auto px-6 relative z-10">
         {/* Header */}
         <div className="mb-14 sm:mb-18">
           <Pill dot={true} label="PLAYER ONBOARDING" />
           <h2 className="text-3xl sm:text-5xl md:text-6xl font-extrabold uppercase tracking-tight text-text-1 font-heading mt-4">
-            Road to <span className="text-accent">Booyah</span>
+            Road to <span className="text-accent text-glow-accent">Booyah</span>
           </h2>
           <p className="text-base sm:text-lg text-text-2 max-w-2xl mt-3 leading-relaxed">
             From downloading the APK to 24-hour JazzCash or EasyPaisa payouts in 6 transparent steps.
@@ -138,6 +143,12 @@ export const HowItWorks = () => {
           ref={timelineRef}
           className="relative pl-6 sm:pl-10 space-y-6 sm:space-y-8 max-w-3xl perspective-1200"
         >
+          {/* Soft ambient backlight behind the timeline track */}
+          <div
+            aria-hidden="true"
+            className="ambient-glow -left-20 top-24 h-[380px] w-[380px] opacity-70"
+          />
+
           {/* Base Vertical Line Track */}
           <div className="absolute left-0 top-0 bottom-0 w-[1px] bg-line pointer-events-none">
             {/* Animated Emerald Fill Line */}
@@ -147,30 +158,29 @@ export const HowItWorks = () => {
             />
           </div>
 
-          {STEPS.map((item) => {
+          {STEPS.map((item, index) => {
             const Icon = item.icon;
 
             return (
               <div key={item.step} className="relative group">
                 {/* Node Dot on the Timeline */}
-                <div className="absolute -left-[31px] sm:-left-[47px] top-6 w-3.5 h-3.5 rounded-full bg-bg-1 border-2 border-accent transition-all group-hover:scale-125 z-10" />
+                <div className="absolute -left-[31px] sm:-left-[47px] top-6 w-3.5 h-3.5 rounded-full bg-bg-1 border-2 border-accent shadow-[0_0_12px_rgba(0,200,120,0.55)] transition-all group-hover:scale-125 group-hover:shadow-[0_0_18px_rgba(0,200,120,0.85)] z-10" />
 
                 {/* Base Card for Step with 3D rotate in */}
-                <div className="timeline-step-card hud-card p-6 sm:p-7 rounded-card flex flex-col sm:flex-row sm:items-center justify-between gap-4 preserve-3d">
+                <div className="timeline-step-card hud-card relative z-10 p-6 sm:p-7 rounded-card flex flex-col sm:flex-row sm:items-center justify-between gap-4 preserve-3d duration-200 ease-out hover:shadow-lift">
+                  {index === 0 && <HudCorners tone="emerald" size="sm" inset className="opacity-60" />}
                   <div className="flex items-start gap-4">
-                    <div className="w-10 h-10 rounded-control bg-accent-dim border border-line-accent flex items-center justify-center flex-shrink-0 text-accent mt-0.5">
-                      <Icon className="w-5 h-5 stroke-[1.5]" />
-                    </div>
+                    <IconOrb icon={Icon} tone="emerald" size="md" className="mt-0.5" />
                     <div>
                       <div className="flex items-center gap-2 mb-1">
-                        <span className="text-xs font-mono font-bold text-accent">/{item.step}</span>
+                        <span className="text-xs font-mono font-bold text-accent tabular-nums tracking-tight">/{item.step}</span>
                         <h3 className="text-lg font-bold font-heading text-text-1">{item.title}</h3>
                       </div>
                       <p className="text-sm text-text-2 leading-relaxed max-w-xl">{item.desc}</p>
                     </div>
                   </div>
 
-                  <span className="text-xs font-mono text-text-3 px-3 py-1 rounded-control bg-bg-1 border border-line whitespace-nowrap self-start sm:self-auto">
+                  <span className="text-xs font-mono text-text-3 tabular-nums tracking-tight px-3 py-1 rounded-control bg-bg-1/70 border border-line whitespace-nowrap self-start sm:self-auto transition-colors duration-200 group-hover:border-line-accent group-hover:text-text-2">
                     {item.spec}
                   </span>
                 </div>
@@ -184,7 +194,7 @@ export const HowItWorks = () => {
           <Button
             variant="primary"
             onClick={scrollToDownload}
-            icon={<ArrowRight className="w-4 h-4 stroke-[2]" />}
+            icon={<ArrowRight className="w-4 h-4" strokeWidth={1.5} />}
           >
             Download Direct APK
           </Button>

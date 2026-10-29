@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { Mail, MessageSquare, Phone, Send, CheckCircle2, AlertCircle } from 'lucide-react';
 import { Pill } from './primitives/Pill';
 import { Button } from './primitives/Button';
+import { HudCorners } from './primitives/HudCorners';
+import { IconOrb } from './primitives/IconOrb';
 import { SEO } from './SEO';
 
 export const Contact = () => {
@@ -60,6 +62,9 @@ export const Contact = () => {
     });
   };
 
+  const fieldClassName =
+    'w-full min-h-[48px] px-4 rounded-control bg-bg-2/60 backdrop-blur-xl border border-white/[0.08] text-text-1 text-sm placeholder:text-text-3 transition-colors duration-200 focus:border-emerald-500/50 focus:ring-2 focus:ring-emerald-500/20 focus:outline-none';
+
   return (
     <>
       <SEO
@@ -68,13 +73,16 @@ export const Contact = () => {
         canonical="https://marenax.site/contact"
       />
 
-      <div className="pt-28 sm:pt-36 pb-20 bg-bg-1 min-h-screen">
-        <div className="max-w-[1200px] mx-auto px-6">
+      <div className="relative isolate min-h-screen overflow-hidden bg-bg-1 pt-28 pb-20 sm:pt-36">
+        <div aria-hidden="true" className="hud-grid pointer-events-none absolute inset-x-0 top-0 h-[420px] opacity-40" />
+        <div aria-hidden="true" className="ambient-glow left-1/2 top-16 h-64 w-[36rem] max-w-[90vw] -translate-x-1/2" />
+
+        <div className="relative z-10 max-w-[1200px] mx-auto px-6">
           {/* Header */}
           <div className="mb-14 sm:mb-20 text-center max-w-3xl mx-auto">
             <Pill dot={true} label="24/7 PLAYER HELPDESK" />
             <h1 className="text-4xl sm:text-6xl font-extrabold uppercase tracking-tight text-text-1 font-heading mt-4">
-              Get in <span className="text-accent">Touch</span>
+              Get in <span className="text-accent text-glow-accent">Touch</span>
             </h1>
             <p className="text-base sm:text-lg text-text-2 mt-3 leading-relaxed">
               Have questions about a Free Fire tournament, need deposit assistance, or interested in organizing community scrims? We are here to help.
@@ -84,42 +92,55 @@ export const Contact = () => {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 max-w-5xl mx-auto">
             {/* Contact Channels Card */}
             <div className="lg:col-span-5 space-y-4">
-              <div className="hud-card p-6 rounded-card">
-                <Mail className="w-5 h-5 text-accent mb-3 stroke-[2]" />
-                <h3 className="text-base font-bold font-heading text-text-1">Official Support Email</h3>
-                <p className="text-xs text-text-3 font-mono mt-1 mb-3">Direct helpdesk & dispute escalation</p>
-                <a
-                  href="mailto:arenasupport@gmail.com"
-                  className="text-sm font-bold text-accent hover:underline font-mono"
-                >
-                  arenasupport@gmail.com
-                </a>
+              <div className="hud-card group relative overflow-hidden rounded-card p-6 transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-lift">
+                <div className="flex items-start gap-4">
+                  <IconOrb icon={Mail} tone="emerald" size="md" />
+                  <div className="min-w-0">
+                    <h3 className="text-base font-bold font-heading text-text-1">Official Support Email</h3>
+                    <p className="text-xs text-text-2 font-mono mt-1 mb-3">Direct helpdesk &amp; dispute escalation</p>
+                    <a
+                      href="mailto:arenasupport@gmail.com"
+                      className="link-underline inline-block text-sm font-bold text-accent hover:text-accent-hover font-mono tracking-tight tabular-nums transition-[color,transform] duration-200 active:scale-[0.98] active:duration-100"
+                    >
+                      arenasupport@gmail.com
+                    </a>
+                  </div>
+                </div>
               </div>
 
-              <div className="hud-card p-6 rounded-card">
-                <MessageSquare className="w-5 h-5 text-accent mb-3 stroke-[2]" />
-                <h3 className="text-base font-bold font-heading text-text-1">WhatsApp Live Support</h3>
-                <p className="text-xs text-text-3 font-mono mt-1 mb-3">Instant answers for tournament registrations</p>
-                <a
-                  href="https://wa.me/+923367135319"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-sm font-bold text-accent hover:underline font-mono"
-                >
-                  +92 336 7135319
-                </a>
+              <div className="hud-card group relative overflow-hidden rounded-card p-6 transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-lift">
+                <div className="flex items-start gap-4">
+                  <IconOrb icon={MessageSquare} tone="emerald" size="md" />
+                  <div className="min-w-0">
+                    <h3 className="text-base font-bold font-heading text-text-1">WhatsApp Live Support</h3>
+                    <p className="text-xs text-text-2 font-mono mt-1 mb-3">Instant answers for tournament registrations</p>
+                    <a
+                      href="https://wa.me/+923367135319"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="link-underline inline-block text-sm font-bold text-accent hover:text-accent-hover font-mono tracking-tight tabular-nums transition-[color,transform] duration-200 active:scale-[0.98] active:duration-100"
+                    >
+                      +92 336 7135319
+                    </a>
+                  </div>
+                </div>
               </div>
 
-              <div className="hud-card p-6 rounded-card">
-                <Phone className="w-5 h-5 text-accent mb-3 stroke-[2]" />
-                <h3 className="text-base font-bold font-heading text-text-1">Operational Response SLA</h3>
-                <p className="text-xs text-text-3 font-mono mt-1">Ticket turnaround within 2 hours</p>
-                <span className="text-xs font-mono text-text-2 block mt-2">Active: Monday – Sunday (24/7 PKT)</span>
+              <div className="hud-card group relative overflow-hidden rounded-card p-6 transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-lift">
+                <div className="flex items-start gap-4">
+                  <IconOrb icon={Phone} tone="emerald" size="md" />
+                  <div className="min-w-0">
+                    <h3 className="text-base font-bold font-heading text-text-1">Operational Response SLA</h3>
+                    <p className="text-xs text-text-2 font-mono mt-1 tracking-tight tabular-nums">Ticket turnaround within 2 hours</p>
+                    <span className="text-xs font-mono text-text-3 block mt-2 tracking-tight tabular-nums">Active: Monday – Sunday (24/7 PKT)</span>
+                  </div>
+                </div>
               </div>
             </div>
 
             {/* Contact Form */}
-            <div className="lg:col-span-7 hud-card p-6 sm:p-8 rounded-card">
+            <div className="lg:col-span-7 hud-card relative overflow-hidden rounded-card p-6 sm:p-8">
+              <HudCorners tone="neutral" size="sm" inset />
               <h2 className="text-2xl font-bold font-heading text-text-1 mb-2">Send Direct Message</h2>
               <p className="text-sm text-text-2 mb-6">
                 Fill out the form below. Your ticket connects directly to our tournament support desk.
@@ -127,7 +148,7 @@ export const Contact = () => {
 
               {status === 'success' && (
                 <div className="mb-6 p-4 rounded-control bg-accent-dim border border-line-accent flex items-start gap-3 text-accent text-sm">
-                  <CheckCircle2 className="w-5 h-5 flex-shrink-0 mt-0.5 stroke-[2]" />
+                  <CheckCircle2 className="w-5 h-5 flex-shrink-0 mt-0.5" strokeWidth={1.5} />
                   <div>
                     <span className="font-bold block">Message Prepared</span>
                     <span>Your inquiry has been queued or transferred to your email client. Our team will review promptly.</span>
@@ -137,7 +158,7 @@ export const Contact = () => {
 
               {status === 'error' && (
                 <div className="mb-6 p-4 rounded-control bg-danger/15 border border-danger/40 flex items-start gap-3 text-danger text-sm">
-                  <AlertCircle className="w-5 h-5 flex-shrink-0 mt-0.5 stroke-[2]" />
+                  <AlertCircle className="w-5 h-5 flex-shrink-0 mt-0.5" strokeWidth={1.5} />
                   <div>
                     <span className="font-bold block">Submission Error</span>
                     <span>{errorMessage || 'Unable to submit form. Please use WhatsApp or email directly.'}</span>
@@ -158,7 +179,7 @@ export const Contact = () => {
                       value={formData.name}
                       onChange={handleChange}
                       placeholder="e.g. Asad Khan"
-                      className="w-full min-h-[48px] px-4 rounded-control bg-bg-1 border border-line text-text-1 text-sm focus:border-line-accent focus:outline-none"
+                      className={fieldClassName}
                     />
                   </div>
 
@@ -173,7 +194,7 @@ export const Contact = () => {
                       value={formData.email}
                       onChange={handleChange}
                       placeholder="your.email@example.com"
-                      className="w-full min-h-[48px] px-4 rounded-control bg-bg-1 border border-line text-text-1 text-sm focus:border-line-accent focus:outline-none"
+                      className={fieldClassName}
                     />
                   </div>
                 </div>
@@ -187,7 +208,7 @@ export const Contact = () => {
                     required
                     value={formData.subject}
                     onChange={handleChange}
-                    className="w-full min-h-[48px] px-4 rounded-control bg-bg-1 border border-line text-text-1 text-sm focus:border-line-accent focus:outline-none cursor-pointer"
+                    className={`${fieldClassName} cursor-pointer [&>option]:bg-bg-2 [&>option]:text-text-1`}
                   >
                     <option value="">Select a topic</option>
                     <option value="Deposit & Wallet Issue">Deposit & Wallet Issue</option>
@@ -209,7 +230,7 @@ export const Contact = () => {
                     value={formData.message}
                     onChange={handleChange}
                     placeholder="Describe your issue or inquiry with relevant match IDs..."
-                    className="w-full p-4 rounded-control bg-bg-1 border border-line text-text-1 text-sm focus:border-line-accent focus:outline-none resize-none"
+                    className={`${fieldClassName} resize-none`}
                   />
                 </div>
 
@@ -218,7 +239,7 @@ export const Contact = () => {
                   variant="primary"
                   fullWidth
                   disabled={status === 'submitting'}
-                  icon={<Send className="w-4 h-4 stroke-[2]" />}
+                  icon={<Send className="w-4 h-4" strokeWidth={1.5} />}
                 >
                   {status === 'submitting' ? 'Submitting...' : 'Send Message'}
                 </Button>

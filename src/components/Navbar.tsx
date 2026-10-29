@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
-import { Menu, X, Download } from 'lucide-react';
+import { Menu, X, DownloadCloud } from 'lucide-react';
 import { Button } from './primitives/Button';
 
 export const Navbar = () => {
@@ -22,6 +22,10 @@ export const Navbar = () => {
 
       // Simple active section detection on home page
       if (isHomePage) {
+        if (window.scrollY < 160) {
+          setActiveSection('home');
+          return;
+        }
         const sections = ['home', 'tournaments', 'ai-vision', 'wallet', 'ranks', 'organizers', 'how-it-works'];
         for (const sec of sections) {
           const el = document.getElementById(sec);
@@ -92,7 +96,7 @@ export const Navbar = () => {
   };
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-bg-1/90 backdrop-blur-2xl border-b border-line transition-all duration-200">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-bg-0/70 backdrop-blur-xl border-b border-white/[0.08] transition-colors duration-300">
       <div className="max-w-[1200px] mx-auto px-6">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
@@ -104,7 +108,7 @@ export const Navbar = () => {
             }}
             className="flex items-center gap-3 group cursor-pointer"
           >
-            <div className="w-9 h-9 rounded-control overflow-hidden border border-line-accent bg-bg-2 flex items-center justify-center transition-transform group-hover:scale-105 shadow-sm">
+            <div className="w-9 h-9 rounded-control overflow-hidden border border-line-accent bg-white/[0.02] flex items-center justify-center transition-[transform,border-color,box-shadow] duration-300 group-hover:scale-105 group-hover:border-emerald-500/50 shadow-[0_0_24px_-12px_rgba(0,200,120,0.6)]">
               <img src="/logo.webp" alt="ArenaX Logo" width={36} height={36} className="w-full h-full object-cover" />
             </div>
             <div className="flex flex-col">
@@ -129,7 +133,8 @@ export const Navbar = () => {
                 <button
                   key={item.id}
                   onClick={() => handleNavClick(item)}
-                  className={`px-3 py-1.5 text-xs font-mono uppercase tracking-wider rounded-control transition-colors cursor-pointer ${
+                  data-active={isActive}
+                  className={`link-underline px-3 py-1.5 text-xs font-mono uppercase tracking-wider rounded-control transition-colors cursor-pointer ${
                     isActive
                       ? 'text-accent font-bold bg-accent-dim'
                       : 'text-text-2 hover:text-text-1 hover:bg-bg-2'
@@ -147,7 +152,7 @@ export const Navbar = () => {
               variant="primary"
               size="sm"
               onClick={handleDownloadClick}
-              icon={<Download className="w-3.5 h-3.5 stroke-[2]" />}
+              icon={<DownloadCloud className="w-3.5 h-3.5" strokeWidth={1.5} />}
               className="hidden sm:inline-flex"
             >
               Download App
@@ -156,64 +161,80 @@ export const Navbar = () => {
             {/* Mobile Menu Hamburger */}
             <button
               onClick={toggleMobileMenu}
-              className="lg:hidden w-11 h-11 flex items-center justify-center bg-bg-2 hover:bg-bg-3 rounded-control border border-line text-text-1 cursor-pointer transition-colors"
+              className="lg:hidden w-11 h-11 flex items-center justify-center bg-white/[0.03] hover:bg-white/[0.06] rounded-control border border-white/[0.08] hover:border-emerald-500/40 text-text-1 cursor-pointer transition-[background-color,border-color,transform] duration-200 active:scale-[0.98]"
               aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
               aria-expanded={mobileMenuOpen}
             >
-              {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+              {mobileMenuOpen ? <X size={20} strokeWidth={1.5} /> : <Menu size={20} strokeWidth={1.5} />}
             </button>
           </div>
         </div>
       </div>
 
       {/* Emerald Scroll Progress Line */}
-      <div className="w-full bg-line h-[2px]">
+      <div className="w-full bg-white/[0.06] h-[2px]">
         <div
-          className="bg-accent h-[2px] transition-all duration-150 ease-out"
+          className="bg-gradient-to-r from-emerald-500 via-emerald-400 to-emerald-300 h-[2px] shadow-[0_0_10px_rgba(16,185,129,0.6)] transition-all duration-150 ease-out"
           style={{ width: `${scrollProgress}%` }}
         />
       </div>
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="lg:hidden bg-bg-1/98 backdrop-blur-3xl border-t border-line shadow-broadcast">
+        <div className="lg:hidden bg-bg-0/95 backdrop-blur-2xl border-t border-white/[0.08] shadow-broadcast">
           <div className="px-6 py-6 space-y-2 max-w-md mx-auto">
-            {navItems.map((item) => (
-              <button
-                key={item.id}
-                onClick={() => handleNavClick(item)}
-                className="block w-full min-h-[48px] text-left px-4 py-3 rounded-control text-sm font-mono uppercase tracking-wider text-text-2 hover:text-accent hover:bg-bg-2 transition-colors cursor-pointer"
-              >
-                {item.label}
-              </button>
-            ))}
+            {navItems.map((item) => {
+              const isActive =
+                item.path && location.pathname === item.path
+                  ? true
+                  : isHomePage && item.isSection && activeSection === item.id;
 
-            <div className="pt-3 border-t border-line flex flex-wrap gap-2">
+              return (
+                <button
+                  key={item.id}
+                  onClick={() => handleNavClick(item)}
+                  className={`block w-full min-h-[48px] text-left px-4 py-3 rounded-control text-sm font-mono uppercase tracking-wider transition-colors cursor-pointer border-l-2 ${
+                    isActive
+                      ? 'text-accent bg-accent-dim border-emerald-500/60'
+                      : 'text-text-2 hover:text-accent hover:bg-bg-2 border-transparent'
+                  }`}
+                >
+                  {item.label}
+                </button>
+              );
+            })}
+
+            <div className="pt-3 border-t border-white/[0.08] flex flex-wrap gap-2">
               <Link
                 to="/about"
                 onClick={() => setMobileMenuOpen(false)}
-                className="px-3.5 py-2 rounded-control bg-bg-2 border border-line text-xs font-mono text-text-2 hover:text-text-1"
+                className="px-3.5 py-2 rounded-control bg-white/[0.03] border border-white/[0.08] text-xs font-mono text-text-2 hover:text-text-1 hover:border-emerald-500/40 transition-colors active:scale-[0.98]"
               >
                 About
               </Link>
               <Link
                 to="/contact"
                 onClick={() => setMobileMenuOpen(false)}
-                className="px-3.5 py-2 rounded-control bg-bg-2 border border-line text-xs font-mono text-text-2 hover:text-text-1"
+                className="px-3.5 py-2 rounded-control bg-white/[0.03] border border-white/[0.08] text-xs font-mono text-text-2 hover:text-text-1 hover:border-emerald-500/40 transition-colors active:scale-[0.98]"
               >
                 Contact
               </Link>
               <Link
                 to="/terms"
                 onClick={() => setMobileMenuOpen(false)}
-                className="px-3.5 py-2 rounded-control bg-bg-2 border border-line text-xs font-mono text-text-2 hover:text-text-1"
+                className="px-3.5 py-2 rounded-control bg-white/[0.03] border border-white/[0.08] text-xs font-mono text-text-2 hover:text-text-1 hover:border-emerald-500/40 transition-colors active:scale-[0.98]"
               >
                 Terms
               </Link>
             </div>
 
             <div className="pt-3">
-              <Button variant="primary" fullWidth onClick={handleDownloadClick}>
+              <Button
+                variant="primary"
+                fullWidth
+                onClick={handleDownloadClick}
+                icon={<DownloadCloud className="w-4 h-4" strokeWidth={1.5} />}
+              >
                 Download APK (v2.6)
               </Button>
             </div>

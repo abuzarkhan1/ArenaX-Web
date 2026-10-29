@@ -1,7 +1,8 @@
-import { Download as DownloadIcon, Smartphone, Clock, QrCode, CheckCircle2 } from 'lucide-react';
+import { DownloadCloud, Smartphone, Clock, QrCode, CheckCircle2 } from 'lucide-react';
 import { trackDownload } from '../utils/analytics';
 import { Pill } from './primitives/Pill';
 import { Button } from './primitives/Button';
+import { Badge, HudCorners, IconOrb } from './primitives';
 
 export const Download = () => {
   const downloadUrl = 'https://github.com/abuzarkhan1/ArenaX-Web/releases/download/v2.6/ArenaX.apk';
@@ -44,7 +45,7 @@ export const Download = () => {
         <div className="text-center mb-14 -mt-10 sm:-mt-16">
           <Pill dot={true} label="OFFICIAL RELEASE v2.6.0" />
           <h2 className="text-3xl sm:text-5xl md:text-6xl font-extrabold uppercase tracking-tight text-text-1 font-heading mt-4">
-            Download <span className="text-accent">ArenaX</span>
+            Download <span className="text-accent text-glow-accent">ArenaX</span>
           </h2>
           <p className="text-base sm:text-lg text-text-2 max-w-2xl mx-auto mt-3 leading-relaxed">
             Get started in seconds. Download our official Android application and start competing in Free Fire tournaments today.
@@ -52,36 +53,40 @@ export const Download = () => {
         </div>
 
         {/* Dual Release Cards: Android Primary & iOS Secondary */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 max-w-4xl mx-auto mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 max-w-4xl mx-auto mb-16 relative isolate">
+          <div
+            aria-hidden="true"
+            className="ambient-glow left-4 top-6 h-[300px] w-[300px] opacity-80"
+          />
+
           {/* Card 1: Android APK (Highlighted Card) */}
-          <div className="hud-card-highlight p-6 sm:p-8 rounded-card flex flex-col justify-between">
+          <div className="hud-card-highlight relative z-10 p-6 sm:p-8 rounded-card flex flex-col justify-between transition-[transform,box-shadow] duration-200 ease-out hover:-translate-y-1 hover:shadow-lift-strong">
+            <HudCorners tone="emerald" size="md" inset className="opacity-60" />
             <div>
               <div className="flex items-center justify-between pb-4 border-b border-line mb-6">
                 <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 rounded-control bg-accent-dim border border-line-accent flex items-center justify-center text-accent">
-                    <Smartphone className="w-6 h-6 stroke-[1.5]" />
-                  </div>
+                  <IconOrb icon={Smartphone} tone="emerald" size="lg" />
                   <div>
                     <h3 className="text-2xl font-bold font-heading text-text-1">Android Client</h3>
-                    <span className="text-xs font-mono text-accent">Package: com.arenax.app</span>
+                    <span className="text-xs font-mono text-accent tabular-nums tracking-tight">Package: com.arenax.app</span>
                   </div>
                 </div>
-                <span className="px-2.5 py-1 rounded-control text-xs font-mono font-bold bg-accent text-bg-1">
+                <Badge tone="emerald" dot>
                   v2.6.0
-                </span>
+                </Badge>
               </div>
 
-              <div className="space-y-3 font-mono text-xs text-text-2 mb-8">
+              <div className="space-y-3 font-mono text-xs text-text-2 mb-8 tabular-nums">
                 <div className="flex items-center gap-2.5">
-                  <CheckCircle2 className="w-4 h-4 text-accent flex-shrink-0 stroke-[2]" />
+                  <CheckCircle2 className="w-4 h-4 text-accent flex-shrink-0" strokeWidth={1.5} />
                   <span>Compatible with Android 8.0 through Android 15</span>
                 </div>
                 <div className="flex items-center gap-2.5">
-                  <CheckCircle2 className="w-4 h-4 text-accent flex-shrink-0 stroke-[2]" />
+                  <CheckCircle2 className="w-4 h-4 text-accent flex-shrink-0" strokeWidth={1.5} />
                   <span>Build Size: ~45–55 MB (Native optimized client)</span>
                 </div>
                 <div className="flex items-center gap-2.5">
-                  <CheckCircle2 className="w-4 h-4 text-accent flex-shrink-0 stroke-[2]" />
+                  <CheckCircle2 className="w-4 h-4 text-accent flex-shrink-0" strokeWidth={1.5} />
                   <span>Google Play Protect compatible & SHA-256 verified</span>
                 </div>
               </div>
@@ -93,13 +98,13 @@ export const Download = () => {
                 size="lg"
                 fullWidth
                 onClick={handleDownload}
-                icon={<DownloadIcon className="w-5 h-5 stroke-[2]" />}
+                icon={<DownloadCloud className="w-5 h-5" strokeWidth={1.5} />}
               >
                 Download Direct APK
               </Button>
 
               {/* QR Code for Desktop Users */}
-              <div className="hidden sm:flex items-center justify-between p-3.5 rounded-control bg-bg-1 border border-line">
+              <div className="hidden sm:flex items-center justify-between p-3.5 rounded-control bg-bg-1/70 border border-line transition-colors duration-200 hover:border-emerald-500/25">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 bg-white rounded p-0.5 flex items-center justify-center flex-shrink-0">
                     <svg viewBox="0 0 100 100" className="w-full h-full text-bg-1 fill-current">
@@ -121,43 +126,39 @@ export const Download = () => {
                   </div>
                   <div>
                     <span className="text-xs font-bold text-text-1 block">Scan on Android Phone</span>
-                    <span className="text-[10px] font-mono text-text-3">Direct APK download link</span>
+                    <span className="text-[10px] font-mono text-text-3 tabular-nums">Direct APK download link</span>
                   </div>
                 </div>
-                <QrCode className="w-4 h-4 text-accent" />
+                <QrCode className="w-4 h-4 text-accent" strokeWidth={1.5} />
               </div>
             </div>
           </div>
 
           {/* Card 2: iOS Client (Muted Secondary Card) */}
-          <div className="hud-card p-6 sm:p-8 rounded-card flex flex-col justify-between opacity-80">
+          <div className="hud-card relative z-10 p-6 sm:p-8 rounded-card flex flex-col justify-between opacity-80 transition-[transform,border-color,box-shadow] duration-200 ease-out hover:-translate-y-1 hover:shadow-lift">
             <div>
               <div className="flex items-center justify-between pb-4 border-b border-line mb-6">
                 <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 rounded-control bg-bg-1 border border-line flex items-center justify-center text-text-3">
-                    <Smartphone className="w-6 h-6 stroke-[1.5]" />
-                  </div>
+                  <IconOrb icon={Smartphone} tone="neutral" size="lg" />
                   <div>
                     <h3 className="text-2xl font-bold font-heading text-text-1">Apple iOS</h3>
                     <span className="text-xs font-mono text-text-3">Native iOS Client</span>
                   </div>
                 </div>
-                <span className="px-2.5 py-1 rounded-control text-xs font-mono font-bold bg-bg-3 text-text-3 border border-line">
-                  Coming Soon
-                </span>
+                <Badge tone="neutral">Coming Soon</Badge>
               </div>
 
-              <div className="space-y-3 font-mono text-xs text-text-3 mb-8">
+              <div className="space-y-3 font-mono text-xs text-text-3 mb-8 tabular-nums">
                 <div className="flex items-center gap-2.5">
-                  <Clock className="w-4 h-4 text-text-3 flex-shrink-0" />
+                  <Clock className="w-4 h-4 text-text-3 flex-shrink-0" strokeWidth={1.5} />
                   <span>Apple App Store submission in review</span>
                 </div>
                 <div className="flex items-center gap-2.5">
-                  <Clock className="w-4 h-4 text-text-3 flex-shrink-0" />
+                  <Clock className="w-4 h-4 text-text-3 flex-shrink-0" strokeWidth={1.5} />
                   <span>Requires iOS 15.0 or later</span>
                 </div>
                 <div className="flex items-center gap-2.5">
-                  <Clock className="w-4 h-4 text-text-3 flex-shrink-0" />
+                  <Clock className="w-4 h-4 text-text-3 flex-shrink-0" strokeWidth={1.5} />
                   <span>Cross-platform scrim matchmaking with Android</span>
                 </div>
               </div>
@@ -170,18 +171,21 @@ export const Download = () => {
         </div>
 
         {/* 4 Install Steps as a Simple Numbered Row */}
-        <div className="p-6 sm:p-8 rounded-card bg-bg-2 border border-line max-w-4xl mx-auto">
-          <span className="text-xs font-mono font-bold uppercase text-accent tracking-widest block mb-6 text-center">
+        <div className="p-6 sm:p-8 rounded-card bg-bg-2/70 border border-line max-w-4xl mx-auto backdrop-blur-xl relative">
+          <span className="text-xs font-mono font-bold uppercase text-accent tracking-widest tabular-nums block mb-6 text-center">
             FOUR-STEP INSTALLATION GUIDE
           </span>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
             {installSteps.map((step) => (
-              <div key={step.num} className="p-4 rounded-control bg-bg-1 border border-line flex flex-col justify-between">
-                <span className="text-xs font-mono font-bold text-accent mb-2">/{step.num}</span>
+              <div
+                key={step.num}
+                className="p-4 rounded-control bg-bg-1/70 border border-line backdrop-blur-sm flex flex-col justify-between transition-[transform,border-color,background-color,box-shadow] duration-200 ease-out hover:-translate-y-1 hover:border-emerald-500/25 hover:bg-bg-2/70"
+              >
+                <span className="text-xs font-mono font-bold text-accent tabular-nums tracking-tight mb-2">/{step.num}</span>
                 <div>
                   <h4 className="text-sm font-bold text-text-1 font-heading mb-1">{step.title}</h4>
-                  <p className="text-xs text-text-2 leading-relaxed">{step.desc}</p>
+                  <p className="text-xs text-text-2 leading-relaxed tabular-nums">{step.desc}</p>
                 </div>
               </div>
             ))}

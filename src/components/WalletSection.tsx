@@ -1,8 +1,11 @@
 import { useRef, useLayoutEffect } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ArrowRight, CheckCircle2 } from 'lucide-react';
+import { ArrowRight, CheckCircle2, ShieldCheck, Wallet, Zap } from 'lucide-react';
 import { Pill } from './primitives/Pill';
+import { Badge } from './primitives/Badge';
+import { HudCorners } from './primitives/HudCorners';
+import { IconOrb } from './primitives/IconOrb';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -57,9 +60,12 @@ export const WalletSection = () => {
         {/* Header */}
         <div className="mb-12 sm:mb-16">
           <Pill dot={true} label="FINANCIAL ARCHITECTURE" />
-          <h2 className="text-3xl sm:text-5xl md:text-6xl font-extrabold uppercase tracking-tight text-text-1 font-heading mt-4">
-            Two-Vault <span className="text-accent">Security</span>
-          </h2>
+          <div className="flex items-center gap-3 sm:gap-4 mt-4">
+            <IconOrb icon={ShieldCheck} tone="emerald" size="lg" className="hidden sm:inline-flex" />
+            <h2 className="text-3xl sm:text-5xl md:text-6xl font-extrabold uppercase tracking-tight text-text-1 font-heading">
+              Two-Vault <span className="text-accent">Security</span>
+            </h2>
+          </div>
           <p className="text-base sm:text-lg text-text-2 max-w-2xl mt-3 leading-relaxed">
             Tournament entry balances are strictly isolated from verified prize money, guaranteeing 1 AX = 1 PKR parity.
           </p>
@@ -68,7 +74,7 @@ export const WalletSection = () => {
         {/* ======================================================== */}
         {/* HORIZONTAL FLOW DIAGRAM WITH LINE-DRAW ON SCROLL        */}
         {/* ======================================================== */}
-        <div ref={flowContainerRef} className="mb-14 sm:mb-18 p-6 sm:p-8 rounded-card bg-bg-2 border border-line relative">
+        <div ref={flowContainerRef} className="mb-14 sm:mb-18 p-6 sm:p-8 rounded-card bg-bg-2/70 backdrop-blur-sm border border-line relative">
           <span className="text-xs font-mono font-bold uppercase text-accent tracking-widest block mb-6">
             CAPITAL FLOW LIFECYCLE
           </span>
@@ -85,16 +91,19 @@ export const WalletSection = () => {
             {FLOW_NODES.map((node, i) => (
               <div key={node.step} className="flex flex-col relative">
                 {/* Node Box */}
-                <div className="p-4 rounded-control bg-bg-1 border border-line hover:border-line-accent transition-colors flex flex-col justify-between h-full">
+                <div className="glass-panel group p-4 rounded-control flex flex-col justify-between h-full transition-all duration-200 ease-out hover:-translate-y-0.5 hover:border-accent/40 hover:shadow-lift">
                   <div className="flex justify-between items-center mb-2">
-                    <span className="text-[10px] font-mono font-bold text-accent">/{node.step}</span>
+                    <span className="text-[10px] font-mono font-bold text-accent tracking-tight tabular-nums">/{node.step}</span>
                     {i < FLOW_NODES.length - 1 && (
-                      <ArrowRight className="w-3.5 h-3.5 text-text-3 hidden sm:block stroke-[1.5]" />
+                      <ArrowRight
+                        className="w-3.5 h-3.5 text-text-3 hidden sm:block transition-colors group-hover:text-accent"
+                        strokeWidth={1.5}
+                      />
                     )}
                   </div>
                   <div>
                     <span className="text-sm font-bold text-text-1 block font-heading">{node.title}</span>
-                    <span className="text-xs text-text-3 font-mono">{node.sub}</span>
+                    <span className="text-xs text-text-3 font-mono tracking-tight tabular-nums">{node.sub}</span>
                   </div>
                 </div>
               </div>
@@ -106,19 +115,25 @@ export const WalletSection = () => {
         {/* TWO PANELS AT DIFFERENT DEPTHS                           */}
         {/* Play Wallet (base card) & Winning Wallet (highlighted)   */}
         {/* ======================================================== */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 items-stretch">
+        <div className="relative">
+          <div aria-hidden="true" className="ambient-glow -left-16 top-0 h-72 w-72" />
+          <div aria-hidden="true" className="ambient-glow -right-12 bottom-0 h-80 w-80" />
+          <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 items-stretch">
           {/* Panel 1: Play Wallet (Base Card, slightly behind) */}
-          <div className="hud-card p-6 sm:p-8 rounded-card flex flex-col justify-between">
+          <div className="hud-card relative p-6 sm:p-8 rounded-card flex flex-col justify-between transition-all duration-200 ease-out hover:-translate-y-1">
             <div>
-              <div className="flex justify-between items-start pb-4 border-b border-line mb-5">
-                <div>
-                  <span className="text-xs font-mono text-text-3 uppercase tracking-wider block">
-                    VAULT 01
-                  </span>
-                  <h3 className="text-2xl font-bold font-heading text-text-1 mt-1">Play Wallet</h3>
-                  <span className="text-xs font-mono text-text-3">Entry Registration Balance</span>
+              <div className="flex justify-between items-start gap-4 pb-4 border-b border-line mb-5">
+                <div className="flex items-start gap-3">
+                  <IconOrb icon={Wallet} tone="emerald" size="sm" className="mt-0.5" />
+                  <div>
+                    <span className="text-xs font-mono text-text-3 uppercase tracking-wider block">
+                      VAULT 01
+                    </span>
+                    <h3 className="text-2xl font-bold font-heading text-text-1 mt-1">Play Wallet</h3>
+                    <span className="text-xs font-mono text-text-3 tracking-tight">Entry Registration Balance</span>
+                  </div>
                 </div>
-                <span className="px-2.5 py-1 rounded-control text-xs font-mono font-bold bg-bg-3 text-text-2 border border-line">
+                <span className="shrink-0 px-2.5 py-1 rounded-control text-xs font-mono font-bold bg-bg-3 text-text-2 border border-line tracking-tight tabular-nums">
                   Non-Withdrawable
                 </span>
               </div>
@@ -129,38 +144,42 @@ export const WalletSection = () => {
 
               <div className="space-y-3 font-mono text-xs text-text-2">
                 <div className="flex items-center gap-2.5">
-                  <CheckCircle2 className="w-4 h-4 text-accent flex-shrink-0 stroke-[2]" />
-                  <span>Instant registration deduction with 0% surcharge.</span>
+                  <CheckCircle2 className="w-4 h-4 text-accent flex-shrink-0" strokeWidth={1.5} />
+                  <span className="leading-relaxed">Instant registration deduction with 0% surcharge.</span>
                 </div>
                 <div className="flex items-center gap-2.5">
-                  <CheckCircle2 className="w-4 h-4 text-accent flex-shrink-0 stroke-[2]" />
-                  <span>100% automated refund to Play Wallet if match cancelled.</span>
+                  <CheckCircle2 className="w-4 h-4 text-accent flex-shrink-0" strokeWidth={1.5} />
+                  <span className="leading-relaxed">100% automated refund to Play Wallet if match cancelled.</span>
                 </div>
                 <div className="flex items-center gap-2.5">
-                  <CheckCircle2 className="w-4 h-4 text-accent flex-shrink-0 stroke-[2]" />
-                  <span>P2P coin transfer between squadmates.</span>
+                  <CheckCircle2 className="w-4 h-4 text-accent flex-shrink-0" strokeWidth={1.5} />
+                  <span className="leading-relaxed">P2P coin transfer between squadmates.</span>
                 </div>
               </div>
             </div>
 
-            <div className="pt-6 mt-6 border-t border-line flex justify-between text-xs font-mono text-text-3">
+            <div className="pt-6 mt-6 border-t border-line flex justify-between gap-3 text-xs font-mono text-text-2 tracking-tight tabular-nums">
               <span>Min Deposit: PKR 50</span>
-              <span>Protected Escrow</span>
+              <span className="text-text-3">Protected Escrow</span>
             </div>
           </div>
 
           {/* Panel 2: Winning Wallet (Highlighted Card, forward) */}
-          <div className="hud-card-highlight p-6 sm:p-8 rounded-card flex flex-col justify-between">
+          <div className="hud-card-highlight relative p-6 sm:p-8 rounded-card flex flex-col justify-between transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-lift-strong">
+            <HudCorners tone="emerald" size="md" inset />
             <div>
-              <div className="flex justify-between items-start pb-4 border-b border-line mb-5">
-                <div>
-                  <span className="text-xs font-mono text-accent uppercase tracking-wider block">
-                    VAULT 02 (PRIZE ESCROW)
-                  </span>
-                  <h3 className="text-2xl font-bold font-heading text-text-1 mt-1">Winning Wallet</h3>
-                  <span className="text-xs font-mono text-accent">1 AX Coin = 1 PKR Cash</span>
+              <div className="flex justify-between items-start gap-4 pb-4 border-b border-line mb-5">
+                <div className="flex items-start gap-3">
+                  <IconOrb icon={ShieldCheck} tone="emerald" size="sm" className="mt-0.5" />
+                  <div>
+                    <span className="text-xs font-mono text-accent uppercase tracking-wider block">
+                      VAULT 02 (PRIZE ESCROW)
+                    </span>
+                    <h3 className="text-2xl font-bold font-heading text-text-1 mt-1">Winning Wallet</h3>
+                    <span className="text-xs font-mono text-accent tracking-tight tabular-nums">1 AX Coin = 1 PKR Cash</span>
+                  </div>
                 </div>
-                <span className="px-2.5 py-1 rounded-control text-xs font-mono font-bold bg-accent-dim text-accent border border-line-accent">
+                <span className="shrink-0 px-2.5 py-1 rounded-control text-xs font-mono font-bold bg-accent-dim text-accent border border-line-accent tracking-tight tabular-nums">
                   100% Withdrawable
                 </span>
               </div>
@@ -171,24 +190,30 @@ export const WalletSection = () => {
 
               <div className="space-y-3 font-mono text-xs text-text-1">
                 <div className="flex items-center gap-2.5">
-                  <CheckCircle2 className="w-4 h-4 text-accent flex-shrink-0 stroke-[2]" />
-                  <span>Direct cashout to JazzCash, EasyPaisa, or Pakistani banks.</span>
+                  <CheckCircle2 className="w-4 h-4 text-accent flex-shrink-0" strokeWidth={1.5} />
+                  <span className="leading-relaxed">Direct cashout to JazzCash, EasyPaisa, or Pakistani banks.</span>
                 </div>
                 <div className="flex items-center gap-2.5">
-                  <CheckCircle2 className="w-4 h-4 text-accent flex-shrink-0 stroke-[2]" />
-                  <span>Secondary 6-digit fund security password required.</span>
+                  <CheckCircle2 className="w-4 h-4 text-accent flex-shrink-0" strokeWidth={1.5} />
+                  <span className="leading-relaxed">Secondary 6-digit fund security password required.</span>
                 </div>
                 <div className="flex items-center gap-2.5">
-                  <CheckCircle2 className="w-4 h-4 text-accent flex-shrink-0 stroke-[2]" />
-                  <span>Minimum cashout threshold: 100 AX Coins (PKR 100).</span>
+                  <CheckCircle2 className="w-4 h-4 text-accent flex-shrink-0" strokeWidth={1.5} />
+                  <span className="leading-relaxed">Minimum cashout threshold: 100 AX Coins (PKR 100).</span>
                 </div>
               </div>
             </div>
 
-            <div className="pt-6 mt-6 border-t border-line flex justify-between text-xs font-mono text-accent">
-              <span>Payout SLA: &lt; 24 Hours</span>
-              <span>Zero Hidden Commissions</span>
+            <div className="pt-6 mt-6 border-t border-line flex flex-wrap items-center justify-between gap-3 text-xs font-mono text-accent">
+              <Badge tone="amber" className="!normal-case !tracking-wide">
+                <span className="inline-flex items-center gap-1.5">
+                  <Zap className="w-3 h-3" strokeWidth={1.5} />
+                  <span className="tracking-tight tabular-nums">Payout SLA: &lt; 24 Hours</span>
+                </span>
+              </Badge>
+              <span className="text-text-2">Zero Hidden Commissions</span>
             </div>
+          </div>
           </div>
         </div>
       </div>

@@ -4,6 +4,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Copy, Check, Eye, Shield, KeyRound } from 'lucide-react';
 import { Pill } from './primitives/Pill';
 import { Button } from './primitives/Button';
+import { Badge, HudCorners, IconOrb } from './primitives';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -96,7 +97,7 @@ export const AppExperienceShowcase = () => {
     >
       {/* Background Ambient Radial Glow (Emerald Only, Max 8%) */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
-        <div className="absolute top-1/3 right-1/4 w-[600px] h-[500px] bg-accent/6 rounded-full blur-[140px]" />
+        <div className="absolute top-1/3 right-1/4 w-[600px] h-[500px] bg-accent/[0.06] rounded-full blur-[140px]" />
       </div>
 
       <div className="max-w-[1200px] mx-auto px-6 relative z-10">
@@ -124,16 +125,23 @@ export const AppExperienceShowcase = () => {
                 <div
                   key={chapter.id}
                   onClick={() => setActiveTab(chapter.id as 'match' | 'ocr' | 'wallet')}
-                  className={`p-6 sm:p-7 rounded-card transition-all duration-300 cursor-pointer border ${
+                  className={`group relative overflow-hidden p-6 sm:p-7 rounded-card transition-all duration-300 cursor-pointer border ${
                     isActive
-                      ? 'bg-bg-2 border-line-accent shadow-broadcast'
-                      : 'bg-transparent border-line hover:border-line-strong opacity-60 hover:opacity-100'
+                      ? 'bg-bg-2/80 border-emerald-500/[0.35] shadow-[0_18px_40px_-18px_rgba(16,185,129,0.35),inset_0_0_26px_-16px_rgba(16,185,129,0.55)]'
+                      : 'bg-white/[0.015] border-white/[0.07] hover:border-white/[0.15] hover:bg-white/[0.03] hover:-translate-y-1 hover:shadow-lift opacity-60 hover:opacity-100'
                   }`}
                 >
+                  {isActive && <HudCorners tone="emerald" size="sm" inset />}
+                  {isActive && (
+                    <div
+                      aria-hidden="true"
+                      className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-emerald-400/40 to-transparent"
+                    />
+                  )}
                   <div className="flex items-center gap-3 mb-2.5">
                     <span
-                      className={`text-xs font-mono font-bold tracking-widest ${
-                        isActive ? 'text-accent' : 'text-text-3'
+                      className={`text-xs font-mono font-bold tracking-widest tabular-nums ${
+                        isActive ? 'text-emerald-400' : 'text-text-2'
                       }`}
                     >
                       CHAPTER {chapter.num}
@@ -156,17 +164,22 @@ export const AppExperienceShowcase = () => {
           {/* ======================================================== */}
           {/* RIGHT COLUMN: CSS 3D SMARTPHONE (Signature Scene 1)      */}
           {/* ======================================================== */}
-          <div className="lg:col-span-6 flex flex-col items-center justify-center perspective-1200">
+          <div className="lg:col-span-6 relative flex flex-col items-center justify-center perspective-1200">
+            {/* Ambient emerald bloom behind the device */}
+            <div
+              aria-hidden="true"
+              className="ambient-glow left-1/2 top-[56%] h-[480px] w-[340px] -translate-x-1/2 -translate-y-1/2 opacity-90"
+            />
             {/* Quick Interactive Screen Switcher Tabs */}
-            <div className="flex items-center gap-1.5 p-1 rounded-control bg-bg-2 border border-line mb-6 shadow-sm">
+            <div className="relative z-10 flex items-center gap-1.5 p-1 rounded-control bg-bg-2/80 backdrop-blur-xl border border-white/[0.08] mb-6 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]">
               {CHAPTERS.map((c) => (
                 <button
                   key={c.id}
                   onClick={() => setActiveTab(c.id as 'match' | 'ocr' | 'wallet')}
-                  className={`min-h-[40px] px-3.5 py-1.5 rounded-control text-xs font-mono font-bold uppercase tracking-wider transition-all cursor-pointer ${
+                  className={`min-h-[40px] px-3.5 py-1.5 rounded-control text-xs font-mono font-bold uppercase tracking-wider transition-all duration-200 active:scale-[0.98] active:duration-100 cursor-pointer ${
                     activeTab === c.id
-                      ? 'bg-accent text-bg-1 shadow-sm'
-                      : 'text-text-2 hover:text-text-1'
+                      ? 'bg-accent text-bg-1 shadow-[0_0_20px_-6px_rgba(16,185,129,0.55)] ring-1 ring-emerald-300/30'
+                      : 'text-text-2 hover:bg-white/[0.04] hover:text-text-1'
                   }`}
                 >
                   {c.id === 'match' ? 'Lobby' : c.id === 'ocr' ? 'Scanner' : 'Wallet'}
@@ -177,7 +190,7 @@ export const AppExperienceShowcase = () => {
             {/* 3D Physical Smartphone Frame with CSS perspective */}
             <div
               ref={phoneRef}
-              className="relative w-[300px] sm:w-[320px] max-w-[calc(100vw-3rem)] rounded-[44px] p-3 bg-gradient-to-b from-[#2A3035] via-[#1B1F22] to-[#101214] border-2 border-white/20 shadow-broadcast transition-transform duration-500 ease-out preserve-3d"
+              className="relative z-10 w-[300px] sm:w-[320px] max-w-[calc(100vw-3rem)] rounded-[44px] p-3 bg-gradient-to-b from-[#2A3035] via-[#1B1F22] to-[#101214] border-2 border-white/[0.15] ring-1 ring-emerald-500/[0.15] shadow-broadcast transition-transform duration-500 ease-out preserve-3d"
               style={{
                 transform: 'rotateY(-12deg) rotateX(4deg)',
               }}
@@ -189,12 +202,12 @@ export const AppExperienceShowcase = () => {
               </div>
 
               {/* Inner OLED Phone Screen */}
-              <div className="rounded-[36px] bg-bg-0 overflow-hidden text-left relative flex flex-col justify-between min-h-[560px] border border-line">
+              <div className="rounded-[36px] bg-bg-0 overflow-hidden text-left relative flex flex-col justify-between min-h-[560px] border border-white/[0.07] ring-1 ring-inset ring-emerald-500/10 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]">
                 {/* Status Bar */}
                 <div className="px-6 pt-3 pb-2 flex justify-between items-center text-xs font-semibold text-text-1 select-none">
-                  <span className="font-mono">09:41</span>
+                  <span className="font-mono tracking-tight tabular-nums">09:41</span>
                   <div className="flex items-center gap-1.5">
-                    <span className="text-[10px] font-mono text-text-3">5G</span>
+                    <span className="text-[10px] font-mono text-text-2">5G</span>
                     <div className="w-5 h-2.5 rounded-sm border border-white/50 p-0.5 flex items-center">
                       <div className="w-full h-full bg-accent rounded-[1px]" />
                     </div>
@@ -216,8 +229,8 @@ export const AppExperienceShowcase = () => {
                     </div>
                   </div>
                   <div className="text-right">
-                    <span className="text-[10px] text-text-3 font-mono block">BALANCE</span>
-                    <span className="text-xs font-extrabold text-text-1 font-mono">1,450 AX</span>
+                    <span className="text-[10px] text-text-2 font-mono block">BALANCE</span>
+                    <span className="text-xs font-extrabold text-text-1 font-mono tracking-tight tabular-nums">1,450 AX</span>
                   </div>
                 </div>
 
@@ -234,47 +247,49 @@ export const AppExperienceShowcase = () => {
                   {/* TAB 1: Match Lobby */}
                   {!REAL_SCREENSHOTS[activeTab] && activeTab === 'match' && (
                     <div className="space-y-3 animate-in fade-in duration-200">
-                      <div className="p-3.5 rounded-card bg-bg-2 border border-line">
-                        <div className="flex justify-between items-center mb-1.5">
-                          <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-accent-dim text-accent uppercase">
+                      <div className="p-3.5 rounded-card bg-bg-2/80 border border-white/[0.08] relative overflow-hidden">
+                        <div className="flex justify-between items-center mb-1.5 gap-2">
+                          <Badge tone="emerald" dot pulse className="px-2 py-0 text-[9px]">
                             Live Scrim
-                          </span>
-                          <span className="text-xs font-mono text-text-3">Starts 21:00 PKT</span>
+                          </Badge>
+                          <span className="text-xs font-mono tracking-tight tabular-nums text-text-2">Starts 21:00 PKT</span>
                         </div>
                         <h4 className="text-sm font-extrabold text-text-1 font-heading">
                           Bermuda Championship #402
                         </h4>
-                        <div className="flex justify-between text-xs text-text-2 mt-1">
+                        <div className="flex justify-between text-xs font-mono tracking-tight tabular-nums text-text-2 mt-1">
                           <span>Entry: 50 AX</span>
-                          <span className="text-accent font-bold">Prize: 2,160 AX</span>
+                          <span className="text-emerald-400 font-bold">Prize: 2,160 AX</span>
                         </div>
                       </div>
 
                       {/* Locked vs Unlocked Credentials */}
-                      <div className="p-3.5 rounded-card bg-bg-2 border border-line-accent space-y-2">
-                        <div className="flex justify-between items-center">
-                          <span className="text-xs font-mono font-bold text-accent uppercase flex items-center gap-1.5">
-                            <KeyRound className="w-3.5 h-3.5" />
+                      <div className="p-3.5 rounded-card bg-bg-2/80 border border-emerald-500/25 space-y-2 shadow-[inset_0_0_24px_-16px_rgba(16,185,129,0.6)]">
+                        <div className="flex flex-wrap justify-between items-center gap-2">
+                          <span className="text-xs font-mono font-bold text-emerald-400 uppercase flex items-center gap-1.5">
+                            <KeyRound className="w-3.5 h-3.5" strokeWidth={1.5} />
                             Room Credentials
                           </span>
-                          <span className="text-[10px] font-mono text-accent bg-accent-dim px-2 py-0.5 rounded">
+                          <Badge tone="emerald" dot className="px-2 py-0 text-[9px]">
                             Unlocked
-                          </span>
+                          </Badge>
                         </div>
-                        <div className="p-2.5 rounded-control bg-bg-1 border border-line font-mono text-xs text-text-1 flex justify-between items-center">
+                        <div className="p-2.5 rounded-control bg-bg-1 border border-white/[0.08] font-mono text-xs tracking-tight tabular-nums text-text-1 flex justify-between items-center">
                           <span>ID: 884921 | Pass: arena77</span>
                           <button
                             onClick={copyRoomDetails}
-                            className="text-accent hover:text-accent-hover cursor-pointer p-1"
+                            className="text-emerald-400 hover:text-emerald-300 cursor-pointer p-1 transition-all duration-100 active:scale-90"
                             title="Copy credentials"
                           >
-                            {copiedRoomId ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
+                            {copiedRoomId ? <Check className="w-3.5 h-3.5" strokeWidth={1.5} /> : <Copy className="w-3.5 h-3.5" strokeWidth={1.5} />}
                           </button>
                         </div>
                       </div>
 
-                      <div className="p-3 rounded-card bg-bg-2 border border-line text-xs text-text-3 flex items-center gap-2">
-                        <Shield className="w-4 h-4 text-accent flex-shrink-0" />
+                      <div className="p-3 rounded-card bg-bg-2/60 border border-white/[0.07] text-xs text-text-2 flex items-center gap-2.5">
+                        <span className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-lg border border-emerald-500/[0.15] bg-emerald-500/[0.06]">
+                          <Shield className="w-4 h-4 text-emerald-400" strokeWidth={1.5} />
+                        </span>
                         <span>Room slots locked to verified player UIDs only.</span>
                       </div>
                     </div>
@@ -283,33 +298,35 @@ export const AppExperienceShowcase = () => {
                   {/* TAB 2: OCR Scanner */}
                   {!REAL_SCREENSHOTS[activeTab] && activeTab === 'ocr' && (
                     <div className="space-y-3 animate-in fade-in duration-200">
-                      <div className="p-3.5 rounded-card bg-bg-2 border border-line text-center">
-                        <Eye className="w-6 h-6 text-accent mx-auto mb-1.5" />
+                      <div className="p-3.5 rounded-card bg-bg-2/80 border border-white/[0.08] text-center">
+                        <div className="flex justify-center mb-2">
+                          <IconOrb icon={Eye} tone="emerald" size="sm" />
+                        </div>
                         <span className="text-xs font-mono font-bold text-text-1 uppercase block">
                           AI Scoreboard Verification
                         </span>
-                        <p className="text-xs text-text-3 mt-1">Multi-player end-match score extraction</p>
+                        <p className="text-xs text-text-2 mt-1">Multi-player end-match score extraction</p>
                       </div>
 
-                      <div className="p-3.5 rounded-card bg-bg-2 border border-line-accent space-y-1.5 text-xs font-mono">
+                      <div className="p-3.5 rounded-card bg-bg-2/80 border border-emerald-500/25 space-y-1.5 text-xs font-mono tracking-tight tabular-nums shadow-[inset_0_0_24px_-16px_rgba(16,185,129,0.6)]">
                         <div className="flex justify-between py-1 border-b border-line">
-                          <span className="text-text-3">PLAYER IGN</span>
+                          <span className="text-text-2">PLAYER IGN</span>
                           <span className="text-text-1 font-bold">AX_Sniper</span>
                         </div>
                         <div className="flex justify-between py-1 border-b border-line">
-                          <span className="text-text-3">BOOYAH RANK</span>
-                          <span className="text-accent font-bold">#1 Place (+20 PTS)</span>
+                          <span className="text-text-2">BOOYAH RANK</span>
+                          <span className="text-emerald-400 font-bold">#1 Place (+20 PTS)</span>
                         </div>
                         <div className="flex justify-between py-1 border-b border-line">
-                          <span className="text-text-3">CONFIRMED KILLS</span>
+                          <span className="text-text-2">CONFIRMED KILLS</span>
                           <span className="text-text-1 font-bold">14 Kills (+70 PTS)</span>
                         </div>
                         <div className="flex justify-between py-1 border-b border-line">
-                          <span className="text-text-3">MATCH SCORE</span>
-                          <span className="text-accent font-bold">90 PTS Total</span>
+                          <span className="text-text-2">MATCH SCORE</span>
+                          <span className="text-emerald-400 font-bold">90 PTS Total</span>
                         </div>
                         <div className="flex justify-between items-center pt-1">
-                          <span className="text-text-3">PROMOTED TIER</span>
+                          <span className="text-text-2">PROMOTED TIER</span>
                           <span className="text-text-1 font-bold flex items-center gap-1.5">
                             <img src="/ranks/heroic.webp?v=s4" alt="Heroic" className="w-4 h-4 object-contain inline" />
                             Heroic Tier I
@@ -317,8 +334,10 @@ export const AppExperienceShowcase = () => {
                         </div>
                       </div>
 
-                      <div className="p-2.5 rounded-control bg-accent-dim border border-line-accent text-center text-xs text-accent font-mono font-bold">
-                        Result Verified within Seconds
+                      <div className="flex justify-center">
+                        <Badge tone="emerald" dot pulse className="px-3 py-1 text-[10px]">
+                          Result Verified within Seconds
+                        </Badge>
                       </div>
                     </div>
                   )}
@@ -327,28 +346,28 @@ export const AppExperienceShowcase = () => {
                   {!REAL_SCREENSHOTS[activeTab] && activeTab === 'wallet' && (
                     <div className="space-y-3 animate-in fade-in duration-200">
                       {/* Play Wallet Card */}
-                      <div className="p-3.5 rounded-card bg-bg-2 border border-line">
+                      <div className="p-3.5 rounded-card bg-bg-2/80 border border-white/[0.08]">
                         <div className="flex justify-between text-xs mb-1">
-                          <span className="text-text-3 font-mono uppercase font-bold">Play Wallet</span>
-                          <span className="text-text-3 font-mono">Non-Withdrawable</span>
+                          <span className="text-text-2 font-mono uppercase font-bold">Play Wallet</span>
+                          <span className="text-text-2 font-mono">Non-Withdrawable</span>
                         </div>
-                        <span className="text-lg font-mono font-extrabold text-text-1 block">500 AX</span>
-                        <p className="text-[11px] text-text-3 mt-1">Used for match entry fees & bonuses</p>
+                        <span className="text-lg font-mono font-extrabold text-text-1 block tracking-tight tabular-nums">500 AX</span>
+                        <p className="text-[11px] text-text-2 mt-1">Used for match entry fees & bonuses</p>
                       </div>
 
                       {/* Winning Wallet Card */}
-                      <div className="p-3.5 rounded-card bg-bg-2 border border-line-accent">
+                      <div className="p-3.5 rounded-card bg-bg-2/80 border border-emerald-500/25 shadow-[inset_0_0_24px_-16px_rgba(16,185,129,0.6)]">
                         <div className="flex justify-between text-xs mb-1">
-                          <span className="text-accent font-mono uppercase font-bold">Winning Wallet</span>
-                          <span className="text-accent font-mono">100% Cash</span>
+                          <span className="text-emerald-400 font-mono uppercase font-bold">Winning Wallet</span>
+                          <span className="text-emerald-400 font-mono tabular-nums">100% Cash</span>
                         </div>
-                        <span className="text-lg font-mono font-extrabold text-accent block">
+                        <span className="text-lg font-mono font-extrabold text-emerald-400 block tracking-tight tabular-nums">
                           950 AX (PKR 950)
                         </span>
                         <p className="text-[11px] text-text-2 mt-1">Available for 24h JazzCash/EasyPaisa cashout</p>
                       </div>
 
-                      <div className="p-2.5 rounded-control bg-bg-2 border border-line text-center text-xs text-text-3 font-mono">
+                      <div className="p-2.5 rounded-control bg-bg-2/60 border border-white/[0.07] text-center text-xs text-text-2 font-mono tracking-tight tabular-nums">
                         Protected by 6-digit Fund Password
                       </div>
                     </div>

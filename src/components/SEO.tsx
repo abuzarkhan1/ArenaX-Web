@@ -9,7 +9,7 @@ interface SEOProps {
   schema?: object;
 }
 
-export default function SEO({ title, description, canonical, ogImage, keywords, schema }: SEOProps) {
+export function SEO({ title, description, canonical, ogImage, keywords, schema }: SEOProps) {
   const schemaStr = schema ? JSON.stringify(schema) : '';
 
   useEffect(() => {

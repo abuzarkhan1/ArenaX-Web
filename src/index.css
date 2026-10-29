@@ -1,105 +1,214 @@
-@import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600;700&family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  /* Surfaces */
+  --bg-0: #0B0D0E;   /* deepest: pinned scenes, footer */
+  --bg-1: #101214;   /* page base (same as hero) */
+  --bg-2: #15181B;   /* cards */
+  --bg-3: #1B1F22;   /* raised / hover */
+
+  /* Lines */
+  --line:        rgba(255, 255, 255, 0.08);
+  --line-strong: rgba(255, 255, 255, 0.16);
+  --line-accent: rgba(0, 200, 120, 0.35);
+
+  /* Text */
+  --text-1: #F3F4F6;
+  --text-2: #A1A1AA;
+  --text-3: #8A8A93;   /* min 12px mono, never below AA */
+
+  /* Accent (the ONLY accent) */
+  --accent:      #00C878;
+  --accent-hover:#00DB86;
+  --accent-dim:  rgba(0, 200, 120, 0.12);
+
+  /* Semantic only */
+  --danger:   #EF4444;  /* Criminal aura + errors only */
+  --whatsapp: #25D366;  /* WhatsApp button only */
+}
+
 @layer base {
+  html,
+  body {
+    overflow-x: hidden;
+    max-width: 100%;
+    background-color: var(--bg-1);
+    color: var(--text-1);
+    color-scheme: dark;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+
   * {
     @apply scroll-smooth;
   }
-  
-  body {
-    @apply antialiased bg-[#101214] text-[#F3F4F6];
-  }
 
   ::selection {
-    background-color: rgba(0, 200, 120, 0.35);
+    background-color: var(--accent-dim);
     color: #FFFFFF;
   }
 
   :focus-visible {
-    outline: 2px solid #00C878;
+    outline: 2px solid var(--accent);
     outline-offset: 2px;
   }
 }
 
-/* Glass morphism & Luxury cyber-carbon utilities */
 @layer utilities {
-  .glass {
-    @apply backdrop-blur-xl bg-white/[0.04] border border-white/10;
-  }
-  
-  .glass-dark {
-    @apply backdrop-blur-2xl bg-[#14171A]/85 border border-white/[0.08];
-  }
-
-  /* Luxury surface card with top specular hairline gleam */
-  .premium-card {
-    background: linear-gradient(180deg, rgba(26, 30, 34, 0.85) 0%, rgba(18, 21, 24, 0.95) 100%);
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-top: 1px solid rgba(255, 255, 255, 0.18);
-    box-shadow: 0 12px 36px -12px rgba(0, 0, 0, 0.6), inset 0 1px 0 0 rgba(255, 255, 255, 0.08);
-    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  /* Broadcast HUD Card: Max ONE style (+ highlighted) */
+  .hud-card {
+    background: var(--bg-2);
+    border: 1px solid var(--line);
+    border-top: 1px solid rgba(255, 255, 255, 0.10);
+    border-radius: 20px;
+    box-shadow: 0 24px 60px -24px rgba(0, 0, 0, 0.70);
+    transition: border-color 0.2s ease, transform 0.2s ease;
   }
 
-  .premium-card:hover {
-    border-color: rgba(0, 200, 120, 0.35);
-    border-top-color: rgba(0, 200, 120, 0.65);
-    box-shadow: 0 20px 45px -15px rgba(0, 200, 120, 0.15), inset 0 1px 0 0 rgba(0, 200, 120, 0.25);
-    transform: translateY(-2px);
+  .hud-card:hover {
+    border-color: var(--line-strong);
   }
 
-  .premium-card-accent {
-    background: linear-gradient(180deg, rgba(0, 200, 120, 0.08) 0%, rgba(18, 21, 24, 0.95) 100%);
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
-    border: 1px solid rgba(0, 200, 120, 0.25);
-    border-top: 1px solid rgba(0, 200, 120, 0.55);
-    box-shadow: 0 16px 40px -12px rgba(0, 200, 120, 0.18), inset 0 1px 0 0 rgba(0, 200, 120, 0.3);
+  .hud-card-highlight {
+    background: var(--bg-2);
+    border: 1px solid var(--line-accent);
+    border-top: 1px solid rgba(0, 200, 120, 0.50);
+    border-radius: 20px;
+    box-shadow: 0 24px 60px -24px rgba(0, 0, 0, 0.70);
   }
 
-  .premium-card-cyan {
-    background: linear-gradient(180deg, rgba(0, 210, 255, 0.08) 0%, rgba(18, 21, 24, 0.95) 100%);
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
-    border: 1px solid rgba(0, 210, 255, 0.25);
-    border-top: 1px solid rgba(0, 210, 255, 0.55);
-    box-shadow: 0 16px 40px -12px rgba(0, 210, 255, 0.18), inset 0 1px 0 0 rgba(0, 210, 255, 0.3);
+  /* CSS 3D Support */
+  .preserve-3d {
+    transform-style: preserve-3d;
   }
 
-  .premium-card-amber {
-    background: linear-gradient(180deg, rgba(245, 158, 11, 0.08) 0%, rgba(18, 21, 24, 0.95) 100%);
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
-    border: 1px solid rgba(245, 158, 11, 0.25);
-    border-top: 1px solid rgba(245, 158, 11, 0.55);
-    box-shadow: 0 16px 40px -12px rgba(245, 158, 11, 0.18), inset 0 1px 0 0 rgba(245, 158, 11, 0.3);
+  .perspective-1200 {
+    perspective: 1200px;
   }
 
-  .text-gradient-white {
-    background: linear-gradient(180deg, #FFFFFF 0%, #E2E8F0 60%, #94A3B8 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+  /* CineDaily Hero Animations */
+  .animate-cine-unfurl {
+    animation: cineUnfurl 1.1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
 
-  .text-gradient-emerald {
-    background: linear-gradient(180deg, #00FF9D 0%, #00C878 60%, #00965A 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+  .animate-cine-character {
+    animation: cineCharacterDrop 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.15s backwards;
+  }
+
+  .animate-cine-bloom {
+    animation: cineHaloBloom 1.4s ease-out 0.2s backwards;
+  }
+
+  .animate-cine-dock {
+    animation: cineDockElevate 1.0s cubic-bezier(0.16, 1, 0.3, 1) 0.3s backwards;
+  }
+
+  .animate-cine-top {
+    animation: cineTopSlide 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .animate-cine-badge-left {
+    animation: cineBadgeLeft 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.4s backwards;
+  }
+
+  .animate-cine-badge-right {
+    animation: cineBadgeRight 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.4s backwards;
+  }
+}
+
+@keyframes cineUnfurl {
+  0% {
+    opacity: 0;
+    transform: scale(0.92) translateY(30px);
+    filter: blur(12px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    filter: blur(0);
+  }
+}
+
+@keyframes cineCharacterDrop {
+  0% {
+    opacity: 0;
+    transform: translateY(60px) scale(0.94);
+    filter: brightness(0.6);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: brightness(1);
+  }
+}
+
+@keyframes cineHaloBloom {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  50% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+}
+
+@keyframes cineDockElevate {
+  0% {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes cineTopSlide {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes cineBadgeLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes cineBadgeRight {
+  0% {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
   }
 }
 
 /* Custom Tactical Scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
   height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #101214;
+  background: var(--bg-1);
 }
 
 ::-webkit-scrollbar-thumb {
@@ -108,7 +217,7 @@
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #00C878;
+  background: var(--accent);
 }
 
 .no-scrollbar::-webkit-scrollbar {

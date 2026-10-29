@@ -54,7 +54,7 @@ export const initGA = () => {
     if (ga && typeof ga.initialize === "function") {
       ga.initialize("G-TE33KZTQP0", {
         gtagOptions: {
-          debug_mode: true,
+          debug_mode: false,
         },
       });
     } else {

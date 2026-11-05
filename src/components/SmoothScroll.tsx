@@ -1,4 +1,5 @@
 import { useEffect, useLayoutEffect, useRef } from 'react';
+import { useLocation } from 'react-router-dom';
 import Lenis from 'lenis';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -7,6 +8,15 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function SmoothScroll() {
   const lenisRef = useRef<Lenis | null>(null);
+  const location = useLocation();
+
+  // Reset Lenis scroll position and refresh ScrollTrigger on route change
+  useEffect(() => {
+    if (lenisRef.current) {
+      lenisRef.current.scrollTo(0, { immediate: true });
+    }
+    ScrollTrigger.refresh();
+  }, [location.pathname]);
 
   useEffect(() => {
     // 1. Initialize Lenis

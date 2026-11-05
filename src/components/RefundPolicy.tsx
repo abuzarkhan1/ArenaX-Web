@@ -1,5 +1,4 @@
 import { ShieldCheck } from 'lucide-react';
-import { Pill } from './primitives/Pill';
 import { HudCorners } from './primitives/HudCorners';
 import { IconOrb } from './primitives/IconOrb';
 import { SEO } from './SEO';
@@ -22,11 +21,10 @@ export const RefundPolicy = () => {
 
         <div className="relative z-10 max-w-[1000px] mx-auto px-6">
           <div className="mb-12 sm:mb-16 text-center">
-            <div className="mb-5 flex items-center justify-center gap-3">
+            <div className="mb-5 flex items-center justify-center">
               <IconOrb icon={ShieldCheck} tone="emerald" size="md" />
-              <Pill dot={true} label="FINANCIAL PROTECTION" />
             </div>
-            <h1 className="text-4xl sm:text-6xl font-extrabold uppercase tracking-tight text-text-1 font-heading mt-4">
+            <h1 className="text-4xl sm:text-6xl font-extrabold uppercase tracking-tight text-text-1 font-heading">
               100% Refund <span className="text-accent text-glow-accent">Policy</span>
             </h1>
             <p className="text-sm font-mono text-text-3 mt-2 tracking-tight">
@@ -35,7 +33,7 @@ export const RefundPolicy = () => {
           </div>
 
           <div className="hud-card relative overflow-hidden rounded-card p-8 sm:p-12 space-y-8 text-base text-text-2 leading-relaxed">
-            <HudCorners tone="emerald" size="sm" inset />
+            <HudCorners tone="emerald" size="sm" />
             <section className="pb-6 border-b border-line">
               <h2 className="text-xl font-bold font-heading text-text-1 mb-3 leading-snug"><span className={sectionNumberClass}>1.</span>{' '}Automated Match Cancellation Refund</h2>
               <p>

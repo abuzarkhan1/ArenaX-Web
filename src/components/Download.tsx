@@ -1,6 +1,6 @@
 import { DownloadCloud, Smartphone, Clock, QrCode, CheckCircle2 } from 'lucide-react';
+import { QRCodeSVG } from 'qrcode.react';
 import { trackDownload } from '../utils/analytics';
-import { Pill } from './primitives/Pill';
 import { Button } from './primitives/Button';
 import { Badge, HudCorners, IconOrb } from './primitives';
 
@@ -43,8 +43,7 @@ export const Download = () => {
 
         {/* Header */}
         <div className="text-center mb-14 -mt-10 sm:-mt-16">
-          <Pill dot={true} label="OFFICIAL RELEASE v2.6.0" />
-          <h2 className="text-3xl sm:text-5xl md:text-6xl font-extrabold uppercase tracking-tight text-text-1 font-heading mt-4">
+          <h2 className="text-3xl sm:text-5xl md:text-6xl font-extrabold uppercase tracking-tight text-text-1 font-heading">
             Download <span className="text-accent text-glow-accent">ArenaX</span>
           </h2>
           <p className="text-base sm:text-lg text-text-2 max-w-2xl mx-auto mt-3 leading-relaxed">
@@ -61,7 +60,7 @@ export const Download = () => {
 
           {/* Card 1: Android APK (Highlighted Card) */}
           <div className="hud-card-highlight relative z-10 p-6 sm:p-8 rounded-card flex flex-col justify-between transition-[transform,box-shadow] duration-200 ease-out hover:-translate-y-1 hover:shadow-lift-strong">
-            <HudCorners tone="emerald" size="md" inset className="opacity-60" />
+            <HudCorners tone="emerald" size="md" className="opacity-60" />
             <div>
               <div className="flex items-center justify-between pb-4 border-b border-line mb-6">
                 <div className="flex items-center gap-3">
@@ -103,30 +102,22 @@ export const Download = () => {
                 Download Direct APK
               </Button>
 
-              {/* QR Code for Desktop Users */}
+              {/* QR Code for Desktop Users: scannable, encodes the live APK URL */}
               <div className="hidden sm:flex items-center justify-between p-3.5 rounded-control bg-bg-1/70 border border-line transition-colors duration-200 hover:border-emerald-500/25">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-white rounded p-0.5 flex items-center justify-center flex-shrink-0">
-                    <svg viewBox="0 0 100 100" className="w-full h-full text-bg-1 fill-current">
-                      <rect x="10" y="10" width="25" height="25" />
-                      <rect x="15" y="15" width="15" height="15" fill="#fff" />
-                      <rect x="18" y="18" width="9" height="9" />
-                      <rect x="65" y="10" width="25" height="25" />
-                      <rect x="70" y="15" width="15" height="15" fill="#fff" />
-                      <rect x="73" y="18" width="9" height="9" />
-                      <rect x="10" y="65" width="25" height="25" />
-                      <rect x="15" y="70" width="15" height="15" fill="#fff" />
-                      <rect x="18" y="73" width="9" height="9" />
-                      <rect x="42" y="15" width="8" height="8" />
-                      <rect x="42" y="32" width="16" height="8" />
-                      <rect x="42" y="60" width="8" height="20" />
-                      <rect x="60" y="45" width="15" height="8" />
-                      <rect x="70" y="65" width="20" height="8" />
-                    </svg>
+                  <div className="bg-white rounded-lg p-1 flex items-center justify-center flex-shrink-0 shadow-[inset_0_1px_0_rgba(255,255,255,0.3)]">
+                    <QRCodeSVG
+                      value={downloadUrl}
+                      size={48}
+                      level="L"
+                      bgColor="#FFFFFF"
+                      fgColor="#0B0D0E"
+                      includeMargin={true}
+                      aria-label="QR code: download ArenaX APK on your Android phone"
+                    />
                   </div>
                   <div>
                     <span className="text-xs font-bold text-text-1 block">Scan on Android Phone</span>
-                    <span className="text-[10px] font-mono text-text-3 tabular-nums">Direct APK download link</span>
                   </div>
                 </div>
                 <QrCode className="w-4 h-4 text-accent" strokeWidth={1.5} />
@@ -142,7 +133,6 @@ export const Download = () => {
                   <IconOrb icon={Smartphone} tone="neutral" size="lg" />
                   <div>
                     <h3 className="text-2xl font-bold font-heading text-text-1">Apple iOS</h3>
-                    <span className="text-xs font-mono text-text-3">Native iOS Client</span>
                   </div>
                 </div>
                 <Badge tone="neutral">Coming Soon</Badge>
@@ -165,16 +155,13 @@ export const Download = () => {
             </div>
 
             <Button variant="secondary" size="lg" fullWidth disabled>
-              In Development for iOS
+              Coming Soon for iOS
             </Button>
           </div>
         </div>
 
         {/* 4 Install Steps as a Simple Numbered Row */}
         <div className="p-6 sm:p-8 rounded-card bg-bg-2/70 border border-line max-w-4xl mx-auto backdrop-blur-xl relative">
-          <span className="text-xs font-mono font-bold uppercase text-accent tracking-widest tabular-nums block mb-6 text-center">
-            FOUR-STEP INSTALLATION GUIDE
-          </span>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
             {installSteps.map((step) => (

@@ -1,5 +1,4 @@
 import { CheckCircle2, X } from 'lucide-react';
-import { Pill } from './primitives/Pill';
 import { HudCorners } from './primitives';
 
 const COMPARISON_POINTS = [
@@ -45,8 +44,7 @@ export const PlatformComparison = () => {
       <div className="max-w-[1200px] mx-auto px-6 relative z-10">
         {/* Header */}
         <div className="mb-12 sm:mb-16">
-          <Pill dot={true} label="FAIR PLAY AUDIT" />
-          <h2 className="text-3xl sm:text-5xl md:text-6xl font-extrabold uppercase tracking-tight text-text-1 font-heading mt-4">
+          <h2 className="text-3xl sm:text-5xl md:text-6xl font-extrabold uppercase tracking-tight text-text-1 font-heading">
             Platform <span className="text-accent text-glow-accent">Integrity</span>
           </h2>
           <p className="text-base sm:text-lg text-text-2 max-w-2xl mt-3 leading-relaxed">
@@ -63,7 +61,7 @@ export const PlatformComparison = () => {
 
           {/* Desktop Table View */}
           <div className="hidden md:block hud-card rounded-card overflow-hidden relative z-10">
-            <HudCorners tone="emerald" size="sm" inset className="opacity-50" />
+            <HudCorners tone="emerald" size="sm" className="opacity-50" />
             <div className="overflow-x-auto">
               <table className="w-full text-left text-sm font-sans">
                 <thead>
@@ -116,7 +114,7 @@ export const PlatformComparison = () => {
                 key={index}
                 className="hud-card relative p-5 rounded-card space-y-3 transition-[transform,border-color,box-shadow] duration-200 ease-out hover:-translate-y-1 hover:shadow-lift"
               >
-                {index === 0 && <HudCorners tone="emerald" size="sm" inset className="opacity-50" />}
+                {index === 0 && <HudCorners tone="emerald" size="sm" className="opacity-50" />}
                 <span className="text-xs font-mono uppercase font-bold text-text-3 tracking-wider block">
                   {pt.dimension}
                 </span>

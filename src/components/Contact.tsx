@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Mail, MessageSquare, Phone, Send, CheckCircle2, AlertCircle } from 'lucide-react';
-import { Pill } from './primitives/Pill';
 import { Button } from './primitives/Button';
 import { HudCorners } from './primitives/HudCorners';
 import { IconOrb } from './primitives/IconOrb';
@@ -80,8 +79,7 @@ export const Contact = () => {
         <div className="relative z-10 max-w-[1200px] mx-auto px-6">
           {/* Header */}
           <div className="mb-14 sm:mb-20 text-center max-w-3xl mx-auto">
-            <Pill dot={true} label="24/7 PLAYER HELPDESK" />
-            <h1 className="text-4xl sm:text-6xl font-extrabold uppercase tracking-tight text-text-1 font-heading mt-4">
+            <h1 className="text-4xl sm:text-6xl font-extrabold uppercase tracking-tight text-text-1 font-heading">
               Get in <span className="text-accent text-glow-accent">Touch</span>
             </h1>
             <p className="text-base sm:text-lg text-text-2 mt-3 leading-relaxed">
@@ -93,14 +91,13 @@ export const Contact = () => {
             {/* Contact Channels Card */}
             <div className="lg:col-span-5 space-y-4">
               <div className="hud-card group relative overflow-hidden rounded-card p-6 transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-lift">
-                <div className="flex items-start gap-4">
+                <div className="flex items-center gap-4">
                   <IconOrb icon={Mail} tone="emerald" size="md" />
                   <div className="min-w-0">
-                    <h3 className="text-base font-bold font-heading text-text-1">Official Support Email</h3>
-                    <p className="text-xs text-text-2 font-mono mt-1 mb-3">Direct helpdesk &amp; dispute escalation</p>
+                    <h3 className="text-base font-bold font-heading text-text-1">Email Support</h3>
                     <a
                       href="mailto:arenasupport@gmail.com"
-                      className="link-underline inline-block text-sm font-bold text-accent hover:text-accent-hover font-mono tracking-tight tabular-nums transition-[color,transform] duration-200 active:scale-[0.98] active:duration-100"
+                      className="link-underline inline-block text-sm font-bold text-accent hover:text-accent-hover font-mono tracking-tight tabular-nums transition-[color,transform] duration-200 active:scale-[0.98] active:duration-100 mt-1"
                     >
                       arenasupport@gmail.com
                     </a>
@@ -109,16 +106,15 @@ export const Contact = () => {
               </div>
 
               <div className="hud-card group relative overflow-hidden rounded-card p-6 transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-lift">
-                <div className="flex items-start gap-4">
+                <div className="flex items-center gap-4">
                   <IconOrb icon={MessageSquare} tone="emerald" size="md" />
                   <div className="min-w-0">
                     <h3 className="text-base font-bold font-heading text-text-1">WhatsApp Live Support</h3>
-                    <p className="text-xs text-text-2 font-mono mt-1 mb-3">Instant answers for tournament registrations</p>
                     <a
                       href="https://wa.me/+923367135319"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="link-underline inline-block text-sm font-bold text-accent hover:text-accent-hover font-mono tracking-tight tabular-nums transition-[color,transform] duration-200 active:scale-[0.98] active:duration-100"
+                      className="link-underline inline-block text-sm font-bold text-accent hover:text-accent-hover font-mono tracking-tight tabular-nums transition-[color,transform] duration-200 active:scale-[0.98] active:duration-100 mt-1"
                     >
                       +92 336 7135319
                     </a>
@@ -127,12 +123,11 @@ export const Contact = () => {
               </div>
 
               <div className="hud-card group relative overflow-hidden rounded-card p-6 transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-lift">
-                <div className="flex items-start gap-4">
+                <div className="flex items-center gap-4">
                   <IconOrb icon={Phone} tone="emerald" size="md" />
                   <div className="min-w-0">
-                    <h3 className="text-base font-bold font-heading text-text-1">Operational Response SLA</h3>
-                    <p className="text-xs text-text-2 font-mono mt-1 tracking-tight tabular-nums">Ticket turnaround within 2 hours</p>
-                    <span className="text-xs font-mono text-text-3 block mt-2 tracking-tight tabular-nums">Active: Monday – Sunday (24/7 PKT)</span>
+                    <h3 className="text-base font-bold font-heading text-text-1">Helpdesk Availability</h3>
+                    <span className="text-xs font-mono text-text-2 block mt-1 tracking-tight tabular-nums">Monday – Sunday (24/7 PKT)</span>
                   </div>
                 </div>
               </div>
@@ -140,7 +135,7 @@ export const Contact = () => {
 
             {/* Contact Form */}
             <div className="lg:col-span-7 hud-card relative overflow-hidden rounded-card p-6 sm:p-8">
-              <HudCorners tone="neutral" size="sm" inset />
+              <HudCorners tone="neutral" size="sm" />
               <h2 className="text-2xl font-bold font-heading text-text-1 mb-2">Send Direct Message</h2>
               <p className="text-sm text-text-2 mb-6">
                 Fill out the form below. Your ticket connects directly to our tournament support desk.

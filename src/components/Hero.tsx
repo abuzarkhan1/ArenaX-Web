@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
-import { ChevronRight, Zap, Shield, DownloadCloud, Sparkles, Flame, CheckCircle2, Trophy } from 'lucide-react';
+import { ChevronRight, Zap, Shield, DownloadCloud, Flame, Trophy } from 'lucide-react';
 import { trackDownload } from '../utils/analytics';
-import { Button, Badge, HudCorners, IconOrb } from './primitives';
+import { Button, Badge, HudCorners, Stat } from './primitives';
 
 const CHARACTERS = {
   tactical: {
@@ -85,10 +85,10 @@ const Hero = () => {
   }, []);
 
   const metaPills = [
-    { label: 'Bermuda BR', id: 'tournaments', icon: Trophy, tone: 'emerald' as const },
-    { label: 'Clash Squad 4v4', id: 'tournaments', icon: Flame, tone: 'emerald' as const },
-    { label: 'AI Vision OCR', id: 'ai-vision', icon: Zap, tone: 'amber' as const },
-    { label: 'Two-Wallet Escrow', id: 'wallet', icon: Shield, tone: 'emerald' as const },
+    { label: 'Bermuda BR', id: 'tournaments', icon: Trophy },
+    { label: 'Clash Squad 4v4', id: 'tournaments', icon: Flame },
+    { label: 'AI Vision OCR', id: 'ai-vision', icon: Zap },
+    { label: 'Two-Wallet Escrow', id: 'wallet', icon: Shield },
   ];
 
   return (
@@ -119,7 +119,7 @@ const Hero = () => {
               pulse
               className="px-3.5 py-1.5 text-[11px] tracking-[0.08em] shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]"
             >
-              OFFICIAL CLIENT <span className="ml-0.5 text-emerald-300/90">• v2.6.0</span>
+              OFFICIAL CLIENT
             </Badge>
           </div>
 
@@ -131,12 +131,10 @@ const Hero = () => {
                 <button
                   key={i}
                   onClick={() => scrollToSection(pill.id)}
-                  className="whitespace-nowrap flex-shrink-0 px-3 py-1.5 rounded-control border border-white/[0.08] bg-bg-2/60 backdrop-blur-xl hover:border-emerald-500/40 text-text-2 hover:text-text-1 text-xs font-mono font-medium uppercase tracking-[0.06em] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] transition-[color,background-color,border-color,transform] duration-300 active:scale-[0.98] active:duration-100 flex items-center gap-1.5 cursor-pointer"
+                  className="whitespace-nowrap flex-shrink-0 px-3.5 min-h-[44px] py-2 sm:px-3 sm:py-1.5 sm:min-h-[32px] rounded-control border border-white/[0.08] bg-bg-2/60 backdrop-blur-xl hover:border-emerald-500/40 text-text-2 hover:text-text-1 text-xs font-mono font-medium uppercase tracking-[0.06em] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] transition-[color,background-color,border-color,transform] duration-300 active:scale-[0.98] active:duration-100 flex items-center gap-1.5 cursor-pointer"
                 >
                   <Icon
-                    className={`w-3.5 h-3.5 flex-shrink-0 ${
-                      pill.tone === 'amber' ? 'text-amber-400' : 'text-accent'
-                    }`}
+                    className="w-3.5 h-3.5 flex-shrink-0 text-accent"
                     strokeWidth={1.5}
                   />
                   <span>{pill.label}</span>
@@ -153,7 +151,7 @@ const Hero = () => {
                 <button
                   key={c.id}
                   onClick={() => setActiveCharacter(c.id as 'tactical' | 'rebel')}
-                  className={`px-3 py-1.5 min-h-[32px] rounded-control text-xs font-mono font-bold uppercase tracking-[0.06em] transition-all duration-200 cursor-pointer border active:scale-[0.98] ${
+                  className={`px-3.5 py-2 min-h-[44px] sm:px-3 sm:py-1.5 sm:min-h-[32px] rounded-control text-xs font-mono font-bold uppercase tracking-[0.06em] transition-all duration-200 cursor-pointer border active:scale-[0.98] ${
                     isActive
                       ? c.activeBtn
                       : 'border-transparent text-text-3 hover:text-text-1 hover:bg-bg-3'
@@ -185,26 +183,6 @@ const Hero = () => {
             <h1 className="text-[19vw] sm:text-[18vw] md:text-[17vw] lg:text-[16vw] font-extrabold uppercase tracking-tighter leading-none text-transparent bg-clip-text bg-gradient-to-b from-white/35 via-white/10 to-transparent font-heading whitespace-nowrap animate-cine-unfurl">
               ARENA<span className="text-accent/40">X</span>
             </h1>
-
-            {/* Corner Year Badge */}
-            <div className="absolute right-2 sm:right-6 top-1/2 -translate-y-1/2 hidden sm:flex flex-col items-end animate-cine-badge-right">
-              <Badge tone="emerald" className="px-2.5 py-1 tracking-[0.1em]">
-                [2026]
-              </Badge>
-              <span className="text-[10px] font-mono uppercase tracking-widest text-text-3 mt-1.5">
-                PK Esports Circuit
-              </span>
-            </div>
-
-            {/* Left Season Badge */}
-            <div className="absolute left-2 sm:left-6 top-1/2 -translate-y-1/2 hidden sm:flex flex-col items-start animate-cine-badge-left">
-              <Badge tone="neutral" className="px-2.5 py-1 tracking-[0.1em]">
-                SEASON 4
-              </Badge>
-              <span className="text-[10px] font-mono uppercase tracking-widest text-text-3 mt-1.5">
-                Free Fire Only
-              </span>
-            </div>
           </div>
 
           {/* ======================================================== */}
@@ -246,21 +224,10 @@ const Hero = () => {
         {/* OPEN BROADCAST ACTION & TELEMETRY REGION (Cardless Design) */}
         {/* ========================================================== */}
         <div className="relative z-30 mt-2 sm:mt-4 md:mt-6 max-w-4xl mx-auto w-full text-center pb-8 sm:pb-12">
-          {/* Welcome Bonus Callout Pill */}
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/[0.08] border border-emerald-500/25 backdrop-blur-xl mb-4 shadow-[0_0_28px_-14px_rgba(0,200,120,0.5)]">
-            <Sparkles className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" strokeWidth={1.5} />
-            <span className="text-xs font-mono font-bold uppercase tracking-wider text-emerald-400 tabular-nums">
-              25 AX Free Welcome Bonus For Referred Accounts
-            </span>
-          </div>
-
-          {/* Clean Open Headline */}
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-text-1 font-heading tracking-tight mb-3 text-balance">
+          {/* Headline */}
+          <h2 className="text-3xl sm:text-5xl md:text-6xl font-extrabold text-text-1 font-heading tracking-tight mb-8 text-balance">
             Pakistan's Premier <span className="text-accent">Free Fire</span> Platform
           </h2>
-          <p className="text-base sm:text-lg text-text-2 max-w-2xl mx-auto leading-relaxed mb-7 px-2">
-            Daily Bermuda BR & 4v4 Clash Squad scrims. Verified by AI vision in seconds, with 24-hour cash withdrawals to JazzCash & EasyPaisa.
-          </p>
 
           {/* Dual CTA Actions */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3.5 sm:gap-5 mb-10 sm:mb-14">
@@ -271,7 +238,7 @@ const Hero = () => {
               icon={<DownloadCloud className="w-4 h-4" strokeWidth={1.5} />}
               className="w-full sm:w-auto shadow-[0_12px_28px_rgba(0,200,120,0.22)]"
             >
-              Download Direct APK (v2.6)
+              Download APK
             </Button>
 
             <Button
@@ -281,46 +248,20 @@ const Hero = () => {
               icon={<ChevronRight className="w-4 h-4 text-accent" strokeWidth={1.5} />}
               className="w-full sm:w-auto"
             >
-              Explore Tournament Modes
+              Explore Tournaments
             </Button>
           </div>
 
-          {/* Open HUD Telemetry Ribbon (No cards, pure architectural lines) */}
-          <div className="pt-6 sm:pt-8 border-t border-white/[0.08] grid grid-cols-1 sm:grid-cols-3 gap-5 sm:gap-0 sm:divide-x sm:divide-line text-left">
-            <div className="flex items-start gap-3 sm:pr-6">
-              <IconOrb icon={Zap} tone="amber" size="sm" className="mt-0.5" />
-              <div>
-                <span className="text-[11px] text-text-3 font-mono uppercase font-bold tracking-wider block mb-0.5">
-                  AI Vision Engine
-                </span>
-                <span className="text-sm font-bold text-text-1 block tracking-tight">
-                  Scoreboards verified in seconds
-                </span>
-              </div>
+          {/* Open HUD Telemetry Ribbon (High-Contrast Quantitative Data) */}
+          <div className="pt-8 sm:pt-10 border-t border-white/[0.08] grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-0 sm:divide-x sm:divide-line text-left">
+            <div className="sm:pr-8">
+              <Stat value="< 15s" label="AI OCR Verification" accent />
             </div>
-
-            <div className="flex items-start gap-3 sm:px-6">
-              <IconOrb icon={Shield} tone="emerald" size="sm" className="mt-0.5" />
-              <div>
-                <span className="text-[11px] text-text-3 font-mono uppercase font-bold tracking-wider block mb-0.5">
-                  Two-Wallet Security
-                </span>
-                <span className="text-sm font-bold text-text-1 block font-mono tracking-tight tabular-nums">
-                  1 AX = 1 PKR cash parity
-                </span>
-              </div>
+            <div className="sm:px-8">
+              <Stat value="1:1" label="Cash Parity (PKR)" />
             </div>
-
-            <div className="flex items-start gap-3 sm:pl-6">
-              <IconOrb icon={CheckCircle2} tone="emerald" size="sm" className="mt-0.5" />
-              <div>
-                <span className="text-[11px] text-text-3 font-mono uppercase font-bold tracking-wider block mb-0.5">
-                  Solvency Guarantee
-                </span>
-                <span className="text-sm font-bold text-text-1 block font-mono tracking-tight tabular-nums">
-                  100% automated refund
-                </span>
-              </div>
+            <div className="sm:pl-8">
+              <Stat value="100%" label="Automated Refund" />
             </div>
           </div>
         </div>

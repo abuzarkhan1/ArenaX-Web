@@ -2,7 +2,6 @@ import { useState, useRef, useLayoutEffect } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Eye, CheckCircle2, Crosshair, ShieldCheck } from 'lucide-react';
-import { Pill } from './primitives/Pill';
 import { Badge, HudCorners, IconOrb } from './primitives';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -115,13 +114,9 @@ export const AIVisionShowcase = () => {
       <div className="max-w-[1200px] mx-auto px-6 relative z-10">
         {/* Section Header */}
         <div className="mb-12 sm:mb-16">
-          <Pill dot={true} label="COMPUTER VISION OCR" />
-          <h2 className="text-3xl sm:text-5xl md:text-6xl font-extrabold uppercase tracking-tight text-text-1 font-heading mt-4">
+          <h2 className="text-3xl sm:text-5xl md:text-6xl font-extrabold uppercase tracking-tight text-text-1 font-heading">
             Zero <span className="text-accent">Disputes</span>
           </h2>
-          <p className="text-base sm:text-lg text-text-2 max-w-2xl mt-3 leading-relaxed">
-            Players upload the scoreboard. AI reads it. Winners get paid.
-          </p>
         </div>
 
         {/* ======================================================== */}
@@ -142,7 +137,7 @@ export const AIVisionShowcase = () => {
                 transform: 'rotateX(14deg) rotateZ(-2deg)',
               }}
             >
-              <HudCorners tone="emerald" size="md" inset />
+              <HudCorners tone="emerald" size="md" />
               <div
                 aria-hidden="true"
                 className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-emerald-400/40 to-transparent"
@@ -159,14 +154,14 @@ export const AIVisionShowcase = () => {
                 <div className="flex flex-wrap justify-between items-center gap-2 pb-3 border-b border-line text-xs font-mono tracking-tight tabular-nums">
                   <span className="text-emerald-400 font-bold">MATCH #402 • BERMUDA</span>
                   <Badge tone="emerald" dot pulse className="px-2 py-0 text-[9px]">
-                    OCR STATUS: ACTIVE
+                    ACTIVE
                   </Badge>
                 </div>
 
                 {/* Scoreboard Row 1: Player with Bounding Box */}
                 <div className="p-3 rounded-control bg-emerald-500/[0.04] border border-emerald-500/25 relative shadow-[inset_0_0_24px_-14px_rgba(16,185,129,0.65)]">
                   <div className="absolute -top-2 right-2 px-1.5 py-0.5 bg-accent text-bg-1 text-[9px] font-mono font-bold rounded">
-                    <span className="hidden sm:inline">BOUNDING BOX: </span>UID MATCHED
+                    UID MATCHED
                   </div>
                   <div className="flex justify-between items-center text-xs font-mono tracking-tight tabular-nums">
                     <div className="flex items-center gap-2">
@@ -207,9 +202,9 @@ export const AIVisionShowcase = () => {
               <div className="mt-4 pt-3 border-t border-line flex flex-wrap items-center justify-between gap-1 text-[11px] font-mono tracking-tight text-text-2">
                 <span className="flex items-center gap-1.5">
                   <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" strokeWidth={1.5} />
-                  Anti-Photoshop Verification
+                  SHA-256 INTEGRITY
                 </span>
-                <span className="text-emerald-400 font-bold tabular-nums">SHA-256 Passed</span>
+                <span className="text-emerald-400 font-bold tabular-nums">VERIFIED</span>
               </div>
             </div>
           </div>
@@ -224,7 +219,7 @@ export const AIVisionShowcase = () => {
                 </h3>
               </div>
               <Badge tone="emerald" dot className="tabular-nums">
-                {confidence}% AI CONFIDENCE
+                {confidence}% CONFIDENCE
               </Badge>
             </div>
 
@@ -266,21 +261,13 @@ export const AIVisionShowcase = () => {
         {/* COMBAT POINTS CALCULATOR (Simplified monochrome card)   */}
         {/* ======================================================== */}
         <div className="hud-card p-6 sm:p-8 rounded-card max-w-4xl mx-auto">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-line gap-2 mb-6">
+          <div className="flex items-center justify-between pb-4 border-b border-line mb-6">
             <div className="flex items-center gap-3">
               <IconOrb icon={Crosshair} tone="emerald" size="sm" />
-              <div>
-                <span className="text-xs font-mono font-bold uppercase text-emerald-400 tracking-widest block">
-                  OFFICIAL SCORING FORMULA
-                </span>
-                <h3 className="text-xl sm:text-2xl font-bold font-heading text-text-1 mt-1">
-                  Combat Points Calculator
-                </h3>
-              </div>
+              <h3 className="text-xl sm:text-2xl font-bold font-heading text-text-1">
+                Combat Points Calculator
+              </h3>
             </div>
-            <span className="text-xs font-mono tracking-tight tabular-nums text-text-2">
-              1 Booyah = 20 PTS  •  1 Kill = 5 PTS
-            </span>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
@@ -291,23 +278,23 @@ export const AIVisionShowcase = () => {
                 <span className="text-xs font-mono font-bold uppercase text-text-2 block mb-2">
                   Match Placement
                 </span>
-                <div className="grid grid-cols-2 gap-2">
+                <div className="grid grid-cols-2 gap-2 p-1 bg-bg-1/80 rounded-control border border-white/[0.08]">
                   <button
                     onClick={() => setIsBooyah(true)}
-                    className={`min-h-[44px] py-2.5 px-3 rounded-control text-xs font-mono font-bold uppercase transition-all duration-200 active:scale-[0.98] active:duration-100 cursor-pointer ${
+                    className={`min-h-[40px] py-2 px-3 rounded-control text-xs font-mono font-bold uppercase transition-all duration-200 active:scale-[0.98] cursor-pointer ${
                       isBooyah
                         ? 'bg-accent text-bg-1 shadow-[0_0_20px_-6px_rgba(16,185,129,0.55)] ring-1 ring-emerald-300/30'
-                        : 'bg-bg-1/70 text-text-2 border border-white/[0.08] hover:border-emerald-500/25 hover:text-text-1'
+                        : 'text-text-2 hover:text-text-1'
                     }`}
                   >
                     Booyah (+20 PTS)
                   </button>
                   <button
                     onClick={() => setIsBooyah(false)}
-                    className={`min-h-[44px] py-2.5 px-3 rounded-control text-xs font-mono font-bold uppercase transition-all duration-200 active:scale-[0.98] active:duration-100 cursor-pointer ${
+                    className={`min-h-[40px] py-2 px-3 rounded-control text-xs font-mono font-bold uppercase transition-all duration-200 active:scale-[0.98] cursor-pointer ${
                       !isBooyah
                         ? 'bg-accent text-bg-1 shadow-[0_0_20px_-6px_rgba(16,185,129,0.55)] ring-1 ring-emerald-300/30'
-                        : 'bg-bg-1/70 text-text-2 border border-white/[0.08] hover:border-emerald-500/25 hover:text-text-1'
+                        : 'text-text-2 hover:text-text-1'
                     }`}
                   >
                     Top 2–48 (0 PTS)
@@ -320,7 +307,7 @@ export const AIVisionShowcase = () => {
                 <div className="flex justify-between items-center text-xs font-mono tracking-tight tabular-nums mb-2">
                   <span className="text-text-2 uppercase font-bold flex items-center gap-1.5">
                     <Crosshair className="w-3.5 h-3.5 text-emerald-400" strokeWidth={1.5} />
-                    Kills (5 PTS Each)
+                    Kills
                   </span>
                   <span className="text-text-1 font-bold">{kills} Kills ({kills * 5} PTS)</span>
                 </div>
@@ -338,17 +325,17 @@ export const AIVisionShowcase = () => {
                   <span>5</span>
                   <span>10</span>
                   <span>15</span>
-                  <span>20 Kills</span>
+                  <span>20</span>
                 </div>
               </div>
             </div>
 
             {/* Calculated Output with Rank Bar */}
             <div className="relative overflow-hidden p-5 rounded-card bg-gradient-to-b from-bg-1 to-bg-0 border border-emerald-500/20 space-y-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]">
-              <HudCorners tone="emerald" size="sm" inset />
+              <HudCorners tone="emerald" size="sm" />
               <div className="relative z-10 flex justify-between items-baseline">
                 <div>
-                  <span className="text-xs font-mono text-text-2 uppercase block">Calculated Rating</span>
+                  <span className="text-xs font-mono text-text-2 uppercase block">Combat Score</span>
                   <span className="text-4xl font-extrabold font-heading text-text-1 tracking-tight tabular-nums">
                     {totalPoints} <span className="text-base text-emerald-400 font-mono font-bold">PTS</span>
                   </span>
@@ -360,23 +347,22 @@ export const AIVisionShowcase = () => {
                     className="w-9 h-9 object-contain drop-shadow-[0_4px_8px_rgba(0,0,0,0.8)]"
                   />
                   <div>
-                    <span className="text-[10px] font-mono uppercase text-text-2 block">Projected Tier</span>
-                    <span className="text-sm font-bold text-text-1">{tier.name}</span>
+                    <span className="text-sm font-bold text-text-1 block">{tier.name}</span>
+                    <span className="text-[10px] font-mono text-emerald-400 font-bold tabular-nums">
+                      {tier.percent}%
+                    </span>
                   </div>
                 </div>
               </div>
 
               {/* Rank Progress Bar (Emerald Only) */}
-              <div className="relative z-10 space-y-1">
+              <div className="relative z-10">
                 <div className="w-full bg-bg-3 h-2 rounded-full overflow-hidden">
                   <div
                     className="bg-accent h-full transition-all duration-300 shadow-[0_0_12px_rgba(16,185,129,0.55)]"
                     style={{ width: `${tier.percent}%` }}
                   />
                 </div>
-                <span className="text-[10px] font-mono text-text-2 block text-right">
-                  Based on official rulebook formula
-                </span>
               </div>
             </div>
           </div>

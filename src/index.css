@@ -119,11 +119,6 @@
     @apply border border-white/[0.08];
   }
 
-  /* Compact tactical status pill */
-  .tactical-pill {
-    @apply inline-flex items-center gap-1.5 whitespace-nowrap rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2.5 py-0.5 font-mono text-[11px] font-semibold uppercase tracking-wider text-emerald-400 tabular-nums;
-  }
-
   /* Animated 2px emerald underline for navigation + footer links */
   .link-underline {
     position: relative;

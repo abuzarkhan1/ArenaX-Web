@@ -21,14 +21,9 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(
   ) => {
     const isHighlighted = variant === 'highlighted';
 
-    const baseClass =
-      'group relative overflow-hidden rounded-card p-6 sm:p-8 transition-all duration-300 ease-out shadow-broadcast backdrop-blur-xl';
-    const variantClass = isHighlighted
-      ? 'border border-emerald-500/35 border-t-emerald-400/50 bg-bg-2/60 hover:border-emerald-400/60 hover:shadow-lift-strong'
-      : 'border border-white/[0.08] border-t-white/[0.12] bg-bg-2/50 hover:border-emerald-500/40 hover:shadow-lift';
-    const interactiveClass = interactive
-      ? 'hover:-translate-y-1'
-      : '';
+    const baseClass = 'group relative overflow-hidden p-6 sm:p-8';
+    const variantClass = isHighlighted ? 'hud-card-highlight' : 'hud-card';
+    const interactiveClass = interactive ? 'hover:-translate-y-1' : '';
 
     return (
       <Component

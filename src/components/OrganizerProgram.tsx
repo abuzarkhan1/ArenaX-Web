@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Sliders, ArrowRight, ScanLine, Wallet, Star } from 'lucide-react';
-import { Pill } from './primitives/Pill';
 import { Button } from './primitives/Button';
 import { HudCorners } from './primitives/HudCorners';
 import { IconOrb } from './primitives/IconOrb';
@@ -27,22 +26,22 @@ export const OrganizerProgram = () => {
     {
       num: '01',
       title: 'Full Match & Bracket Customization',
-      desc: 'Configure Bermuda or Clash Squad formats, custom player limits (10–48), match schedules, and custom banners in-app.',
+      desc: 'Configure Bermuda or Clash Squad formats with custom player limits, schedules, and brackets.',
     },
     {
       num: '02',
       title: 'Automated Scoreboard Verification',
-      desc: 'No manual scoreboard tallying. AI vision scans player match screenshots automatically, eliminating host dispute overhead.',
+      desc: 'Computer vision scans match screenshots automatically, eliminating manual score tallying and disputes.',
     },
     {
       num: '03',
       title: 'Dedicated Organizer Wallet',
-      desc: 'Earn 0–20% commission on every match hosted. Your organizer earnings are segregated from player prize pools and withdrawable anytime.',
+      desc: 'Earn 0–20% commission on entry fees, segregated from prize pools and withdrawable anytime.',
     },
     {
       num: '04',
       title: 'Verified Participant Ratings',
-      desc: 'Build your organizer reputation with authentic 1–5 star reviews restricted exclusively to verified players who participated in your scrims.',
+      desc: 'Build host reputation with authentic verified player ratings from completed tournament matches.',
     },
   ];
 
@@ -55,12 +54,11 @@ export const OrganizerProgram = () => {
       <div className="max-w-[1200px] mx-auto px-6 relative z-10">
         {/* Header */}
         <div className="mb-12 sm:mb-16">
-          <Pill dot={true} label="ORGANIZER PROGRAM" />
-          <h2 className="text-3xl sm:text-5xl md:text-6xl font-extrabold uppercase tracking-tight text-text-1 font-heading mt-4">
+          <h2 className="text-3xl sm:text-5xl md:text-6xl font-extrabold uppercase tracking-tight text-text-1 font-heading">
             Host & Earn <span className="text-accent">Commission</span>
           </h2>
-          <p className="text-base sm:text-lg text-text-2 max-w-2xl mt-3 leading-relaxed">
-            Run competitive Free Fire tournaments with automated AI scoring and dedicated organizer earnings.
+          <p className="text-sm sm:text-base text-text-2 max-w-2xl mt-2">
+            Automated tournament operations with dedicated organizer commissions.
           </p>
         </div>
 
@@ -97,7 +95,7 @@ export const OrganizerProgram = () => {
 
           {/* Right Column: Earnings Simulator as the ONE Highlighted Card */}
           <div className="lg:col-span-6 hud-card-highlight relative p-6 sm:p-8 rounded-card space-y-6 transition-all duration-200 ease-out hover:shadow-lift-strong">
-            <HudCorners tone="emerald" size="md" inset />
+            <HudCorners tone="emerald" size="md" />
             <div className="flex items-center justify-between gap-3 pb-4 border-b border-line">
               <div className="flex items-center gap-3">
                 <IconOrb icon={Sliders} tone="emerald" size="sm" />
@@ -105,9 +103,6 @@ export const OrganizerProgram = () => {
                   Host Earnings Simulator
                 </h3>
               </div>
-              <span className="text-xs font-mono text-text-3 whitespace-nowrap tracking-tight tabular-nums">
-                10% Platform Rake
-              </span>
             </div>
 
             {/* Sliders with 48px touch target height */}
@@ -128,9 +123,9 @@ export const OrganizerProgram = () => {
                   className="w-full h-3 bg-bg-3 rounded-control appearance-none cursor-pointer accent-accent transition-shadow hover:accent-emerald-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/60 focus-visible:ring-offset-2 focus-visible:ring-offset-bg-1"
                 />
                 <div className="flex justify-between text-[11px] font-mono text-text-3 mt-1.5 tracking-tight tabular-nums">
-                  <span>10 (CS)</span>
-                  <span>24 (Duo)</span>
-                  <span>48 (Bermuda)</span>
+                  <span>10 CS</span>
+                  <span>24 Duo</span>
+                  <span>48 BR</span>
                 </div>
               </div>
 
@@ -151,9 +146,9 @@ export const OrganizerProgram = () => {
                   className="w-full h-3 bg-bg-3 rounded-control appearance-none cursor-pointer accent-accent transition-shadow hover:accent-emerald-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/60 focus-visible:ring-offset-2 focus-visible:ring-offset-bg-1"
                 />
                 <div className="flex justify-between text-[11px] font-mono text-text-3 mt-1.5 tracking-tight tabular-nums">
-                  <span>50 PKR (Entry)</span>
+                  <span>50 PKR</span>
                   <span>200 PKR</span>
-                  <span>500 PKR (High Stakes)</span>
+                  <span>500 PKR</span>
                 </div>
               </div>
 
@@ -174,9 +169,9 @@ export const OrganizerProgram = () => {
                   className="w-full h-3 bg-bg-3 rounded-control appearance-none cursor-pointer accent-accent transition-shadow hover:accent-emerald-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/60 focus-visible:ring-offset-2 focus-visible:ring-offset-bg-1"
                 />
                 <div className="flex justify-between text-[11px] font-mono text-text-3 mt-1.5 tracking-tight tabular-nums">
-                  <span>0% (Community)</span>
-                  <span>10% (Standard)</span>
-                  <span>20% (Max Cut)</span>
+                  <span>0%</span>
+                  <span>10%</span>
+                  <span>20%</span>
                 </div>
               </div>
             </div>
@@ -210,9 +205,6 @@ export const OrganizerProgram = () => {
                   </span>
                   <span className="text-sm font-mono font-bold text-accent tracking-tight">PKR / Match</span>
                 </div>
-                <p className="text-xs text-text-2 mt-2 leading-normal">
-                  Credited directly to your dedicated Organizer Wallet upon match settlement.
-                </p>
               </div>
             </div>
 

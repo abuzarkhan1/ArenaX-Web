@@ -2,7 +2,6 @@ import { useState, useRef, useLayoutEffect } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Copy, Check, Eye, Shield, KeyRound } from 'lucide-react';
-import { Pill } from './primitives/Pill';
 import { Button } from './primitives/Button';
 import { Badge, HudCorners, IconOrb } from './primitives';
 
@@ -19,31 +18,42 @@ const CHAPTERS = [
   {
     id: 'match',
     num: '01',
-    title: 'Match Lobby & Credentials',
-    tagline: 'Instant room locking with verified Free Fire UID matching.',
-    desc: 'Room ID and Password unlock strictly 10–15 minutes before the match countdown. Only verified registered roster slots can enter.',
+    title: 'Match Credentials',
+    desc: 'Automated room credential dispatch 15 minutes before match countdown. Roster-locked entry for verified player UIDs.',
   },
   {
     id: 'ocr',
     num: '02',
-    title: 'AI Vision Scoreboard OCR',
-    tagline: 'End-match screenshots parsed and verified within seconds.',
-    desc: 'Computer vision reads player in-game names, damage, kill tallies, and Booyah placement directly from victory screenshots with zero human host bias.',
+    title: 'AI Scoreboard',
+    desc: 'Computer vision extraction of player IGNs, placement rank, and kill counts directly from end-match screenshots.',
   },
   {
     id: 'wallet',
     num: '03',
-    title: 'Two-Vault Financial Rails',
-    tagline: '1 AX Coin = 1 PKR Cash parity with 24-hour payouts.',
-    desc: 'Entry balances are kept in the Play Wallet, while prize winnings credit automatically to the Winning Wallet, withdrawable to JazzCash or EasyPaisa.',
+    title: 'Dual-Vault Escrow',
+    desc: 'Segregated Play Wallet entry escrow and automated Winning Wallet prize routing with direct local cashout.',
   },
 ];
+
+const ROTATION_MAP: Record<string, { rotY: number; rotX: number; transZ: number }> = {
+  match: { rotY: -18, rotX: 6, transZ: 0 },
+  ocr: { rotY: -2, rotX: 1, transZ: 35 },
+  wallet: { rotY: 14, rotX: -4, transZ: 0 },
+};
 
 export const AppExperienceShowcase = () => {
   const [activeTab, setActiveTab] = useState<'match' | 'ocr' | 'wallet'>('match');
   const [copiedRoomId, setCopiedRoomId] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const phoneRef = useRef<HTMLDivElement>(null);
+
+  const handleTabSwitch = (tab: 'match' | 'ocr' | 'wallet') => {
+    setActiveTab(tab);
+    if (phoneRef.current && window.innerWidth >= 1024) {
+      const { rotY, rotX, transZ } = ROTATION_MAP[tab];
+      phoneRef.current.style.transform = `rotateY(${rotY}deg) rotateX(${rotX}deg) translateZ(${transZ}px)`;
+    }
+  };
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
@@ -101,15 +111,11 @@ export const AppExperienceShowcase = () => {
       </div>
 
       <div className="max-w-[1200px] mx-auto px-6 relative z-10">
-        {/* Section Pill & Heading */}
+        {/* Section Heading */}
         <div className="mb-12 sm:mb-16">
-          <Pill dot={true} label="INSIDE THE ANDROID CLIENT" />
-          <h2 className="text-3xl sm:text-5xl md:text-6xl font-extrabold uppercase tracking-tight text-text-1 font-heading mt-4">
+          <h2 className="text-3xl sm:text-5xl md:text-6xl font-extrabold uppercase tracking-tight text-text-1 font-heading">
             Engineered For <span className="text-accent">Esports</span>
           </h2>
-          <p className="text-base sm:text-lg text-text-2 max-w-2xl mt-3 leading-relaxed">
-            Experience the actual tournament workflow built into our native Android application.
-          </p>
         </div>
 
         {/* 2-Column Chapter Composition: Left Text Chapters, Right 3D Phone */}
@@ -124,14 +130,14 @@ export const AppExperienceShowcase = () => {
               return (
                 <div
                   key={chapter.id}
-                  onClick={() => setActiveTab(chapter.id as 'match' | 'ocr' | 'wallet')}
+                  onClick={() => handleTabSwitch(chapter.id as 'match' | 'ocr' | 'wallet')}
                   className={`group relative overflow-hidden p-6 sm:p-7 rounded-card transition-all duration-300 cursor-pointer border ${
                     isActive
                       ? 'bg-bg-2/80 border-emerald-500/[0.35] shadow-[0_18px_40px_-18px_rgba(16,185,129,0.35),inset_0_0_26px_-16px_rgba(16,185,129,0.55)]'
                       : 'bg-white/[0.015] border-white/[0.07] hover:border-white/[0.15] hover:bg-white/[0.03] hover:-translate-y-1 hover:shadow-lift opacity-60 hover:opacity-100'
                   }`}
                 >
-                  {isActive && <HudCorners tone="emerald" size="sm" inset />}
+                  {isActive && <HudCorners tone="emerald" size="sm" />}
                   {isActive && (
                     <div
                       aria-hidden="true"
@@ -144,7 +150,7 @@ export const AppExperienceShowcase = () => {
                         isActive ? 'text-emerald-400' : 'text-text-2'
                       }`}
                     >
-                      CHAPTER {chapter.num}
+                      /{chapter.num}
                     </span>
                     {isActive && <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />}
                   </div>
@@ -152,8 +158,6 @@ export const AppExperienceShowcase = () => {
                   <h3 className="text-xl sm:text-2xl font-bold font-heading text-text-1 mb-2">
                     {chapter.title}
                   </h3>
-
-                  <p className="text-sm font-medium text-accent mb-2">{chapter.tagline}</p>
 
                   <p className="text-sm text-text-2 leading-relaxed">{chapter.desc}</p>
                 </div>
@@ -175,7 +179,7 @@ export const AppExperienceShowcase = () => {
               {CHAPTERS.map((c) => (
                 <button
                   key={c.id}
-                  onClick={() => setActiveTab(c.id as 'match' | 'ocr' | 'wallet')}
+                  onClick={() => handleTabSwitch(c.id as 'match' | 'ocr' | 'wallet')}
                   className={`min-h-[40px] px-3.5 py-1.5 rounded-control text-xs font-mono font-bold uppercase tracking-wider transition-all duration-200 active:scale-[0.98] active:duration-100 cursor-pointer ${
                     activeTab === c.id
                       ? 'bg-accent text-bg-1 shadow-[0_0_20px_-6px_rgba(16,185,129,0.55)] ring-1 ring-emerald-300/30'
@@ -224,13 +228,13 @@ export const AppExperienceShowcase = () => {
                       <span className="text-xs font-bold text-text-1 block">AX_Sniper</span>
                       <span className="text-[10px] text-accent font-mono flex items-center gap-1">
                         <img src="/ranks/grandmaster.webp?v=s4" alt="Grandmaster" className="w-3.5 h-3.5 object-contain inline" />
-                        Grandmaster Contender
+                        Grandmaster
                       </span>
                     </div>
                   </div>
                   <div className="text-right">
-                    <span className="text-[10px] text-text-2 font-mono block">BALANCE</span>
-                    <span className="text-xs font-extrabold text-text-1 font-mono tracking-tight tabular-nums">1,450 AX</span>
+                    <span className="text-xs font-extrabold text-text-1 font-mono tracking-tight tabular-nums block">1,450 AX</span>
+                    <span className="text-[9px] text-emerald-400 font-mono tracking-wider uppercase">Verified</span>
                   </div>
                 </div>
 
@@ -244,7 +248,7 @@ export const AppExperienceShowcase = () => {
                     />
                   ) : null}
 
-                  {/* TAB 1: Match Lobby */}
+                  {/* TAB 1: Match Credentials */}
                   {!REAL_SCREENSHOTS[activeTab] && activeTab === 'match' && (
                     <div className="space-y-3 animate-in fade-in duration-200">
                       <div className="p-3.5 rounded-card bg-bg-2/80 border border-white/[0.08] relative overflow-hidden">
@@ -252,7 +256,7 @@ export const AppExperienceShowcase = () => {
                           <Badge tone="emerald" dot pulse className="px-2 py-0 text-[9px]">
                             Live Scrim
                           </Badge>
-                          <span className="text-xs font-mono tracking-tight tabular-nums text-text-2">Starts 21:00 PKT</span>
+                          <span className="text-xs font-mono tracking-tight tabular-nums text-text-2">21:00 PKT</span>
                         </div>
                         <h4 className="text-sm font-extrabold text-text-1 font-heading">
                           Bermuda Championship #402
@@ -278,34 +282,38 @@ export const AppExperienceShowcase = () => {
                           <span>ID: 884921 | Pass: arena77</span>
                           <button
                             onClick={copyRoomDetails}
-                            className="text-emerald-400 hover:text-emerald-300 cursor-pointer p-1 transition-all duration-100 active:scale-90"
+                            className="text-emerald-400 hover:text-emerald-300 cursor-pointer p-3.5 -m-3.5 transition-all duration-100 active:scale-90"
                             title="Copy credentials"
+                            aria-label="Copy room credentials"
                           >
                             {copiedRoomId ? <Check className="w-3.5 h-3.5" strokeWidth={1.5} /> : <Copy className="w-3.5 h-3.5" strokeWidth={1.5} />}
                           </button>
                         </div>
                       </div>
 
-                      <div className="p-3 rounded-card bg-bg-2/60 border border-white/[0.07] text-xs text-text-2 flex items-center gap-2.5">
-                        <span className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-lg border border-emerald-500/[0.15] bg-emerald-500/[0.06]">
-                          <Shield className="w-4 h-4 text-emerald-400" strokeWidth={1.5} />
-                        </span>
-                        <span>Room slots locked to verified player UIDs only.</span>
+                      {/* Self-Evident Slot Verification Status */}
+                      <div className="p-2.5 rounded-card bg-bg-2/60 border border-white/[0.07] flex items-center justify-between text-xs font-mono">
+                        <div className="flex items-center gap-2">
+                          <span className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-md border border-emerald-500/[0.2] bg-emerald-500/[0.08]">
+                            <Shield className="w-3.5 h-3.5 text-emerald-400" strokeWidth={1.5} />
+                          </span>
+                          <span className="text-text-1 font-semibold">Slot #12 Locked</span>
+                        </div>
+                        <span className="text-emerald-400 tabular-nums">UID 94829104</span>
                       </div>
                     </div>
                   )}
 
-                  {/* TAB 2: OCR Scanner */}
+                  {/* TAB 2: AI Scoreboard */}
                   {!REAL_SCREENSHOTS[activeTab] && activeTab === 'ocr' && (
                     <div className="space-y-3 animate-in fade-in duration-200">
                       <div className="p-3.5 rounded-card bg-bg-2/80 border border-white/[0.08] text-center">
-                        <div className="flex justify-center mb-2">
+                        <div className="flex justify-center mb-1.5">
                           <IconOrb icon={Eye} tone="emerald" size="sm" />
                         </div>
-                        <span className="text-xs font-mono font-bold text-text-1 uppercase block">
-                          AI Scoreboard Verification
+                        <span className="text-xs font-mono font-bold text-text-1 uppercase tracking-wide block">
+                          AI Scoreboard
                         </span>
-                        <p className="text-xs text-text-2 mt-1">Multi-player end-match score extraction</p>
                       </div>
 
                       <div className="p-3.5 rounded-card bg-bg-2/80 border border-emerald-500/25 space-y-1.5 text-xs font-mono tracking-tight tabular-nums shadow-[inset_0_0_24px_-16px_rgba(16,185,129,0.6)]">
@@ -315,11 +323,11 @@ export const AppExperienceShowcase = () => {
                         </div>
                         <div className="flex justify-between py-1 border-b border-line">
                           <span className="text-text-2">BOOYAH RANK</span>
-                          <span className="text-emerald-400 font-bold">#1 Place (+20 PTS)</span>
+                          <span className="text-emerald-400 font-bold">#1 (+20 PTS)</span>
                         </div>
                         <div className="flex justify-between py-1 border-b border-line">
                           <span className="text-text-2">CONFIRMED KILLS</span>
-                          <span className="text-text-1 font-bold">14 Kills (+70 PTS)</span>
+                          <span className="text-text-1 font-bold">14 (+70 PTS)</span>
                         </div>
                         <div className="flex justify-between py-1 border-b border-line">
                           <span className="text-text-2">MATCH SCORE</span>
@@ -334,41 +342,48 @@ export const AppExperienceShowcase = () => {
                         </div>
                       </div>
 
-                      <div className="flex justify-center">
-                        <Badge tone="emerald" dot pulse className="px-3 py-1 text-[10px]">
-                          Result Verified within Seconds
+                      {/* Authentic Verification Telemetry */}
+                      <div className="flex items-center justify-between px-2 text-[11px] font-mono text-text-2">
+                        <span>Latency: 1.2s</span>
+                        <Badge tone="emerald" dot className="px-2 py-0 text-[9px]">
+                          Certified
                         </Badge>
                       </div>
                     </div>
                   )}
 
-                  {/* TAB 3: Two-Vault Wallet */}
+                  {/* TAB 3: Dual-Vault Escrow */}
                   {!REAL_SCREENSHOTS[activeTab] && activeTab === 'wallet' && (
                     <div className="space-y-3 animate-in fade-in duration-200">
                       {/* Play Wallet Card */}
                       <div className="p-3.5 rounded-card bg-bg-2/80 border border-white/[0.08]">
-                        <div className="flex justify-between text-xs mb-1">
+                        <div className="flex justify-between items-center text-xs mb-1">
                           <span className="text-text-2 font-mono uppercase font-bold">Play Wallet</span>
-                          <span className="text-text-2 font-mono">Non-Withdrawable</span>
+                          <Badge tone="neutral" className="px-1.5 py-0 text-[9px]">Entry Vault</Badge>
                         </div>
-                        <span className="text-lg font-mono font-extrabold text-text-1 block tracking-tight tabular-nums">500 AX</span>
-                        <p className="text-[11px] text-text-2 mt-1">Used for match entry fees & bonuses</p>
+                        <span className="text-lg font-mono font-extrabold text-text-1 block tracking-tight tabular-nums">
+                          500 AX
+                        </span>
                       </div>
 
                       {/* Winning Wallet Card */}
                       <div className="p-3.5 rounded-card bg-bg-2/80 border border-emerald-500/25 shadow-[inset_0_0_24px_-16px_rgba(16,185,129,0.6)]">
-                        <div className="flex justify-between text-xs mb-1">
+                        <div className="flex justify-between items-center text-xs mb-1">
                           <span className="text-emerald-400 font-mono uppercase font-bold">Winning Wallet</span>
-                          <span className="text-emerald-400 font-mono tabular-nums">100% Cash</span>
+                          <Badge tone="emerald" dot className="px-1.5 py-0 text-[9px]">Withdrawable</Badge>
                         </div>
                         <span className="text-lg font-mono font-extrabold text-emerald-400 block tracking-tight tabular-nums">
-                          950 AX (PKR 950)
+                          950 AX <span className="text-xs text-text-2 font-normal font-sans">(PKR 950)</span>
                         </span>
-                        <p className="text-[11px] text-text-2 mt-1">Available for 24h JazzCash/EasyPaisa cashout</p>
                       </div>
 
-                      <div className="p-2.5 rounded-control bg-bg-2/60 border border-white/[0.07] text-center text-xs text-text-2 font-mono tracking-tight tabular-nums">
-                        Protected by 6-digit Fund Password
+                      {/* Security Telemetry */}
+                      <div className="flex items-center justify-between p-2 rounded-control bg-bg-2/60 border border-white/[0.07] text-xs font-mono text-text-2">
+                        <span className="flex items-center gap-1.5">
+                          <Shield className="w-3.5 h-3.5 text-emerald-400" />
+                          Fund Security
+                        </span>
+                        <span className="text-emerald-400">PIN Enabled</span>
                       </div>
                     </div>
                   )}

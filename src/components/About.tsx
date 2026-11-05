@@ -1,5 +1,4 @@
 import { ScanLine, ShieldCheck, Users, ShieldAlert } from 'lucide-react';
-import { Pill } from './primitives/Pill';
 import { Button } from './primitives/Button';
 import { HudCorners } from './primitives/HudCorners';
 import { IconOrb } from './primitives/IconOrb';
@@ -50,8 +49,7 @@ export const About = () => {
         <div className="relative z-10 max-w-[1200px] mx-auto px-6">
           {/* Header */}
           <div className="mb-14 sm:mb-20 text-center max-w-3xl mx-auto">
-            <Pill dot={true} label="ABOUT ARENAX" />
-            <h1 className="text-4xl sm:text-6xl font-extrabold uppercase tracking-tight text-text-1 font-heading mt-4">
+            <h1 className="text-4xl sm:text-6xl font-extrabold uppercase tracking-tight text-text-1 font-heading">
               Built For <span className="text-accent text-glow-accent">Players</span>
             </h1>
             <p className="text-base sm:text-lg text-text-2 mt-3 leading-relaxed">
@@ -61,7 +59,7 @@ export const About = () => {
 
           {/* Our Story Card */}
           <div className="hud-card relative mx-auto mb-16 max-w-4xl overflow-hidden rounded-card p-8 sm:p-12">
-            <HudCorners tone="neutral" size="sm" inset />
+            <HudCorners tone="neutral" size="sm" />
             <div
               aria-hidden="true"
               className="pointer-events-none absolute -right-20 -top-24 h-56 w-56 rounded-full bg-emerald-500/10 blur-3xl"
@@ -72,7 +70,6 @@ export const About = () => {
               </div>
               <div>
                 <h2 className="text-2xl font-bold font-heading text-text-1">Our Story</h2>
-                <span className="text-xs font-mono text-accent">Pakistan's Mobile Esports Platform</span>
               </div>
             </div>
 
@@ -88,9 +85,6 @@ export const About = () => {
 
           {/* Core Values 4-Column Grid */}
           <div className="mb-16">
-            <span className="text-xs font-mono font-bold uppercase text-accent tracking-widest block mb-8 text-center">
-              PLATFORM PILLARS
-            </span>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {values.map((val) => (
@@ -101,7 +95,6 @@ export const About = () => {
                   <HudCorners
                     tone="neutral"
                     size="sm"
-                    inset
                     className="opacity-0 transition-opacity duration-200 group-hover:opacity-100"
                   />
                   <div>
@@ -119,7 +112,7 @@ export const About = () => {
 
           {/* CTA Box */}
           <div className="hud-card-highlight relative mx-auto max-w-2xl space-y-4 overflow-hidden rounded-card p-8 text-center">
-            <HudCorners tone="emerald" size="sm" inset />
+            <HudCorners tone="emerald" size="sm" />
             <h3 className="text-2xl font-bold font-heading text-text-1">Ready to Compete?</h3>
             <p className="text-sm text-text-2">
               Download the official ArenaX application and register your squad for today's scrims.
@@ -131,7 +124,7 @@ export const About = () => {
               target="_blank"
               className="inline-flex"
             >
-              Download Direct APK (v2.6)
+              Download App
             </Button>
           </div>
         </div>

@@ -2,7 +2,6 @@ import { useRef, useLayoutEffect } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Download, UserPlus, Users, Swords, Trophy, Banknote, ArrowRight } from 'lucide-react';
-import { Pill } from './primitives/Pill';
 import { Button } from './primitives/Button';
 import { HudCorners, IconOrb } from './primitives';
 
@@ -14,42 +13,36 @@ const STEPS = [
     icon: Download,
     title: 'Download & Install APK',
     desc: 'Download the official ArenaX APK for Android. Register with a referral code to claim 25 AX starter coins immediately.',
-    spec: '25 AX Welcome Bonus',
   },
   {
     step: '02',
     icon: UserPlus,
     title: 'Link Your Free Fire UID',
     desc: 'Set up your player profile and connect your authentic Free Fire in-game name and UID for automated roster verification.',
-    spec: 'Automated UID Verification',
   },
   {
     step: '03',
     icon: Users,
     title: 'Assemble Your Squad',
     desc: 'Form Duo or Squad lineups in under 5 seconds using unique 6-digit squad codes, or enter tournaments as a Solo rogue.',
-    spec: '6-Digit Squad Codes',
   },
   {
     step: '04',
     icon: Swords,
     title: 'Register for Tournaments',
     desc: 'Browse daily Bermuda Battle Royale scrims and Clash Squad 4v4 brackets with entry fees starting from only 50 AX Coins.',
-    spec: 'Daily Scrims 24/7',
   },
   {
     step: '05',
     icon: Trophy,
     title: 'Drop & Dominate',
     desc: 'Room ID & password unlock inside the app 10–15 minutes before match countdown. Fight for the Booyah and rack up kill points.',
-    spec: '10–15m Credential Unlock',
   },
   {
     step: '06',
     icon: Banknote,
     title: 'AI Vision & 24h Cashout',
     desc: 'AI vision scans your victory scoreboard. Verified cash winnings credit directly to your Winning Wallet for 24h cashout.',
-    spec: '1 AX = 1 PKR Cash Parity',
   },
 ];
 
@@ -127,8 +120,7 @@ export const HowItWorks = () => {
       <div className="max-w-[1200px] mx-auto px-6 relative z-10">
         {/* Header */}
         <div className="mb-14 sm:mb-18">
-          <Pill dot={true} label="PLAYER ONBOARDING" />
-          <h2 className="text-3xl sm:text-5xl md:text-6xl font-extrabold uppercase tracking-tight text-text-1 font-heading mt-4">
+          <h2 className="text-3xl sm:text-5xl md:text-6xl font-extrabold uppercase tracking-tight text-text-1 font-heading">
             Road to <span className="text-accent text-glow-accent">Booyah</span>
           </h2>
           <p className="text-base sm:text-lg text-text-2 max-w-2xl mt-3 leading-relaxed">
@@ -167,22 +159,16 @@ export const HowItWorks = () => {
                 <div className="absolute -left-[31px] sm:-left-[47px] top-6 w-3.5 h-3.5 rounded-full bg-bg-1 border-2 border-accent shadow-[0_0_12px_rgba(0,200,120,0.55)] transition-all group-hover:scale-125 group-hover:shadow-[0_0_18px_rgba(0,200,120,0.85)] z-10" />
 
                 {/* Base Card for Step with 3D rotate in */}
-                <div className="timeline-step-card hud-card relative z-10 p-6 sm:p-7 rounded-card flex flex-col sm:flex-row sm:items-center justify-between gap-4 preserve-3d duration-200 ease-out hover:shadow-lift">
-                  {index === 0 && <HudCorners tone="emerald" size="sm" inset className="opacity-60" />}
-                  <div className="flex items-start gap-4">
-                    <IconOrb icon={Icon} tone="emerald" size="md" className="mt-0.5" />
-                    <div>
-                      <div className="flex items-center gap-2 mb-1">
-                        <span className="text-xs font-mono font-bold text-accent tabular-nums tracking-tight">/{item.step}</span>
-                        <h3 className="text-lg font-bold font-heading text-text-1">{item.title}</h3>
-                      </div>
-                      <p className="text-sm text-text-2 leading-relaxed max-w-xl">{item.desc}</p>
+                <div className="timeline-step-card hud-card relative z-10 p-6 sm:p-7 rounded-card flex items-start gap-4 preserve-3d duration-200 ease-out hover:shadow-lift">
+                  {index === 0 && <HudCorners tone="emerald" size="sm" className="opacity-60" />}
+                  <IconOrb icon={Icon} tone="emerald" size="md" className="mt-0.5 flex-shrink-0" />
+                  <div className="min-w-0 flex-grow">
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="text-xs font-mono font-bold text-accent tabular-nums tracking-tight">/{item.step}</span>
+                      <h3 className="text-lg font-bold font-heading text-text-1">{item.title}</h3>
                     </div>
+                    <p className="text-sm text-text-2 leading-relaxed">{item.desc}</p>
                   </div>
-
-                  <span className="text-xs font-mono text-text-3 tabular-nums tracking-tight px-3 py-1 rounded-control bg-bg-1/70 border border-line whitespace-nowrap self-start sm:self-auto transition-colors duration-200 group-hover:border-line-accent group-hover:text-text-2">
-                    {item.spec}
-                  </span>
                 </div>
               </div>
             );

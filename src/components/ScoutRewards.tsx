@@ -1,5 +1,4 @@
 import { ShoppingBag, Percent, Award } from 'lucide-react';
-import { Pill } from './primitives/Pill';
 import { Button } from './primitives/Button';
 import { HudCorners, IconOrb } from './primitives';
 
@@ -17,8 +16,7 @@ export const ScoutRewards = () => {
       <div className="max-w-[1200px] mx-auto px-6 relative z-10">
         {/* Header */}
         <div className="mb-12 sm:mb-16">
-          <Pill dot={true} label="COMMUNITY REWARDS" />
-          <h2 className="text-3xl sm:text-5xl md:text-6xl font-extrabold uppercase tracking-tight text-text-1 font-heading mt-4">
+          <h2 className="text-3xl sm:text-5xl md:text-6xl font-extrabold uppercase tracking-tight text-text-1 font-heading">
             Scout & <span className="text-accent text-glow-accent">Store</span>
           </h2>
           <p className="text-base sm:text-lg text-text-2 max-w-2xl mt-3 leading-relaxed">
@@ -32,7 +30,7 @@ export const ScoutRewards = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 items-stretch">
           {/* Card 1: Scout Program (Base Card) */}
           <div className="hud-card relative p-6 sm:p-8 rounded-card flex flex-col justify-between transition-[transform,border-color,box-shadow] duration-200 ease-out hover:-translate-y-1 hover:shadow-lift">
-            <HudCorners tone="emerald" size="sm" inset className="opacity-50" />
+            <HudCorners tone="emerald" size="sm" className="opacity-50" />
             <div>
               <div className="flex items-center gap-3 pb-4 border-b border-line mb-6">
                 <IconOrb icon={Percent} tone="emerald" size="md" />
@@ -76,10 +74,7 @@ export const ScoutRewards = () => {
               </p>
             </div>
 
-            <div className="space-y-4 pt-4 border-t border-line">
-              <span className="text-[11px] font-mono text-text-3 tabular-nums block leading-normal">
-                Enforced mathematical 50% lifetime platform rake circuit breaker guaranteeing platform solvency.
-              </span>
+            <div className="pt-4 border-t border-line">
               <Button variant="primary" size="md" onClick={scrollToDownload}>
                 Get Scout Code in App
               </Button>
@@ -128,10 +123,10 @@ export const ScoutRewards = () => {
               </div>
             </div>
 
-            <div className="pt-4 border-t border-line text-center">
-              <span className="text-[11px] font-mono text-text-3 tabular-nums block">
-                Digital top-ups delivered to registered player UID within 2 hours.
-              </span>
+            <div className="pt-4 border-t border-line">
+              <Button variant="secondary" size="md" onClick={scrollToDownload}>
+                Redeem in App
+              </Button>
             </div>
           </div>
         </div>

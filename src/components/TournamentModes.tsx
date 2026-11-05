@@ -1,8 +1,6 @@
 import { useState } from 'react';
-import { Trophy, Swords, ShieldAlert, CheckCircle2, ArrowRight } from 'lucide-react';
-import { Pill } from './primitives/Pill';
-import { Button } from './primitives/Button';
-import { Badge, HudCorners, IconOrb } from './primitives';
+import { Trophy, Swords, CheckCircle2, ArrowRight } from 'lucide-react';
+import { Button, Badge, HudCorners, IconOrb } from './primitives';
 
 export const TournamentModes = () => {
   const [activeTab, setActiveTab] = useState<'bermuda' | 'clashsquad'>('bermuda');
@@ -30,25 +28,50 @@ export const TournamentModes = () => {
       slots: '48 / 48 Slots',
       entry: '50 AX (50 PKR)',
       prizePool: '2,160 AX Cash',
-      desc: 'Individual survival glory. Every player fights for themselves.',
     },
     duo: {
       formatTitle: 'Duo Combat (24 Teams)',
       slots: '24 Teams (48 Players)',
       entry: '100 AX / Team',
       prizePool: '2,160 AX Cash',
-      desc: 'Pair up with your trusted partner using 6-digit squad codes.',
     },
     squad: {
       formatTitle: 'Squad 4v4v4 (12 Teams)',
       slots: '12 Squads (48 Players)',
       entry: '200 AX / Squad',
       prizePool: '2,160 AX Cash',
-      desc: 'Full 4-player team coordination. Captains manage rosters.',
+    },
+  };
+
+  const csStageData = {
+    quarters: {
+      team1: { name: 'Team Alpha (Squad A)', seed: 'Seed #1', wins: '4 Wins' },
+      team2: { name: 'Team Omega (Squad B)', seed: 'Seed #8', wins: '1 Win' },
+      slots: '8 Squads (32 Players)',
+      roster: '4v4 Squads',
+      entry: '400 AX / Squad',
+      prizePool: '2,880 AX Cash',
+    },
+    semis: {
+      team1: { name: 'Team Alpha (Squad A)', seed: 'Seed #1', wins: '4 Wins' },
+      team2: { name: 'Team Delta (Squad D)', seed: 'Seed #4', wins: '2 Wins' },
+      slots: '4 Squads (16 Players)',
+      roster: '4v4 Squads',
+      entry: '400 AX / Squad',
+      prizePool: '2,880 AX Cash',
+    },
+    finals: {
+      team1: { name: 'Team Alpha (Squad A)', seed: 'Seed #1', wins: '4 Wins' },
+      team2: { name: 'Team Phoenix (Squad C)', seed: 'Seed #2', wins: '3 Wins' },
+      slots: '2 Squads (8 Players)',
+      roster: '4v4 Squads',
+      entry: '400 AX / Squad',
+      prizePool: '2,880 AX Cash',
     },
   };
 
   const currentBermuda = bermudaData[bermudaFormat];
+  const currentCs = csStageData[csStage];
 
   const scrollToDownload = () => {
     document.getElementById('download')?.scrollIntoView({ behavior: 'smooth' });
@@ -66,15 +89,11 @@ export const TournamentModes = () => {
         className="ambient-glow -top-24 right-[6%] h-[460px] w-[460px] opacity-70"
       />
       <div className="max-w-[1200px] mx-auto px-6 relative z-10">
-        {/* Header */}
+        {/* Header with Clean Linear Switcher */}
         <div className="mb-12 sm:mb-16">
-          <Pill dot={true} label="SANCTIONED FORMATS" />
-          <h2 className="text-3xl sm:text-5xl md:text-6xl font-extrabold uppercase tracking-tight text-text-1 font-heading mt-4">
+          <h2 className="text-3xl sm:text-5xl md:text-6xl font-extrabold uppercase tracking-tight text-text-1 font-heading">
             Battle for the <span className="text-accent">Booyah</span>
           </h2>
-          <p className="text-base sm:text-lg text-text-2 max-w-2xl mt-3 leading-relaxed">
-            Choose your battlefield format. Whether a 48-player survival gauntlet or tactical 4v4 round brackets, every match is verified by AI vision.
-          </p>
 
           {/* Mode Switcher Tabs */}
           <div className="relative flex p-1 rounded-control bg-bg-2/80 backdrop-blur-xl border border-white/[0.08] mt-8 max-w-md gap-1 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]">
@@ -87,7 +106,7 @@ export const TournamentModes = () => {
               }`}
             >
               <Trophy className="w-4 h-4" strokeWidth={1.5} />
-              <span>Bermuda BR (48P)</span>
+              <span>Bermuda 48P</span>
             </button>
             <button
               onClick={() => setActiveTab('clashsquad')}
@@ -98,7 +117,7 @@ export const TournamentModes = () => {
               }`}
             >
               <Swords className="w-4 h-4" strokeWidth={1.5} />
-              <span>Clash Squad (4v4)</span>
+              <span>Clash Squad 4v4</span>
             </button>
           </div>
         </div>
@@ -108,44 +127,29 @@ export const TournamentModes = () => {
         {/* ======================================================== */}
         {activeTab === 'bermuda' && (
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-            {/* Left: Clean Rules List */}
+            {/* Left: Clean Platform Specifications */}
             <div className="lg:col-span-7 space-y-6">
               <div>
-                <span className="text-xs font-mono font-bold uppercase text-accent tracking-widest block mb-1">
-                  SURVIVAL FORMAT
-                </span>
                 <h3 className="text-2xl sm:text-3xl font-extrabold text-text-1 font-heading">
                   Bermuda 48-Player Survival
                 </h3>
-                <p className="text-sm sm:text-base text-text-2 mt-2 leading-relaxed">
-                  Drop into Bermuda in Solo, Duo, or Squad formats. Compete against verified players for real cash prize pools. Authoritative scoring: 20 points for Booyah and 5 points per kill.
-                </p>
               </div>
 
-              {/* Rules List with Hairlines */}
+              {/* High-Contrast Specifications with Hairlines */}
               <div className="divide-y divide-line border-y border-line">
-                <div className="py-3.5 flex items-start gap-3">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-400 flex-shrink-0 mt-0.5" strokeWidth={1.5} />
-                  <div>
-                    <span className="text-sm font-bold text-text-1 block">Verified Roster Matchmaking</span>
-                    <span className="text-xs text-text-2">Slots lock strictly to registered in-game UIDs.</span>
-                  </div>
+                <div className="py-3.5 flex items-center gap-3">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-400 flex-shrink-0" strokeWidth={1.5} />
+                  <span className="text-sm font-medium text-text-1">Verified In-Game UID Matchmaking</span>
                 </div>
 
-                <div className="py-3.5 flex items-start gap-3">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-400 flex-shrink-0 mt-0.5" strokeWidth={1.5} />
-                  <div>
-                    <span className="text-sm font-bold text-text-1 block">Automated AI Vision Verification</span>
-                    <span className="text-xs text-text-2">Scoreboard screenshots parsed and verified within seconds.</span>
-                  </div>
+                <div className="py-3.5 flex items-center gap-3">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-400 flex-shrink-0" strokeWidth={1.5} />
+                  <span className="text-sm font-medium text-text-1">Automated AI Vision Verification</span>
                 </div>
 
-                <div className="py-3.5 flex items-start gap-3">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-400 flex-shrink-0 mt-0.5" strokeWidth={1.5} />
-                  <div>
-                    <span className="text-sm font-bold text-text-1 block">Automated Refund Guarantee</span>
-                    <span className="text-xs text-text-2">100% fee refunded to Play Wallet if a match fails to start.</span>
-                  </div>
+                <div className="py-3.5 flex items-center gap-3">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-400 flex-shrink-0" strokeWidth={1.5} />
+                  <span className="text-sm font-medium text-text-1">Automated Play Wallet Refund Guarantee</span>
                 </div>
               </div>
 
@@ -170,7 +174,7 @@ export const TournamentModes = () => {
               }}
               className="lg:col-span-5 hud-card p-6 sm:p-7 space-y-5 relative overflow-hidden group hover:border-emerald-500/40 hover:shadow-lift-strong"
             >
-              <HudCorners tone="emerald" size="md" inset />
+              <HudCorners tone="emerald" size="md" />
               <div
                 aria-hidden="true"
                 className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-emerald-400/40 to-transparent"
@@ -187,9 +191,6 @@ export const TournamentModes = () => {
                 <div className="flex items-center gap-3">
                   <IconOrb icon={Trophy} tone="emerald" size="sm" />
                   <div>
-                    <span className="text-[11px] font-mono text-emerald-400 uppercase font-bold tracking-wider block">
-                      Interactive Preset
-                    </span>
                     <h4 className="text-text-1 font-bold text-lg font-heading">Bermuda Championship #104</h4>
                   </div>
                 </div>
@@ -204,7 +205,9 @@ export const TournamentModes = () => {
                   <button
                     key={fmt}
                     onClick={() => setBermudaFormat(fmt)}
-                    className={`py-1.5 rounded-control text-xs font-mono font-bold uppercase transition-all duration-200 active:scale-[0.98] active:duration-100 cursor-pointer ${
+                    aria-pressed={bermudaFormat === fmt}
+                    aria-label={`Select ${fmt} format`}
+                    className={`min-h-[44px] py-2 sm:py-1.5 sm:min-h-0 rounded-control text-xs font-mono font-bold uppercase transition-all duration-200 active:scale-[0.98] active:duration-100 cursor-pointer ${
                       bermudaFormat === fmt
                         ? 'bg-accent text-bg-1 shadow-[0_0_18px_-6px_rgba(16,185,129,0.55)] ring-1 ring-emerald-300/30'
                         : 'text-text-2 hover:bg-white/[0.04] hover:text-text-1'
@@ -215,25 +218,27 @@ export const TournamentModes = () => {
                 ))}
               </div>
 
-              <div className="space-y-2 text-xs font-mono tracking-tight tabular-nums">
-                <div className="flex justify-between py-2 border-b border-line">
-                  <span className="text-text-2">ROSTER</span>
-                  <span className="text-text-1 font-bold">{currentBermuda.formatTitle}</span>
+              {/* High-Contrast Match Specification Cards Grid */}
+              <div className="grid grid-cols-2 gap-2 text-xs font-mono tracking-tight tabular-nums">
+                <div className="p-3 rounded-control bg-bg-1/70 border border-white/[0.08]">
+                  <span className="text-[10px] text-text-2 uppercase tracking-wider block">SLOTS</span>
+                  <span className="text-emerald-400 font-bold block mt-1">{currentBermuda.slots}</span>
                 </div>
-                <div className="flex justify-between py-2 border-b border-line">
-                  <span className="text-text-2">SLOTS</span>
-                  <span className="text-emerald-400 font-bold">{currentBermuda.slots}</span>
+                <div className="p-3 rounded-control bg-bg-1/70 border border-white/[0.08]">
+                  <span className="text-[10px] text-text-2 uppercase tracking-wider block">ROSTER</span>
+                  <span className="text-text-1 font-bold block mt-1 truncate">{currentBermuda.formatTitle}</span>
                 </div>
-                <div className="flex justify-between py-2 border-b border-line">
-                  <span className="text-text-2">ENTRY FEE</span>
-                  <span className="text-text-1 font-bold">{currentBermuda.entry}</span>
+                <div className="p-3 rounded-control bg-bg-1/70 border border-white/[0.08]">
+                  <span className="text-[10px] text-text-2 uppercase tracking-wider block">ENTRY</span>
+                  <span className="text-text-1 font-bold block mt-1">{currentBermuda.entry}</span>
                 </div>
-                <div className="flex justify-between py-2">
-                  <span className="text-text-2">PRIZE POOL</span>
-                  <span className="text-emerald-400 font-bold text-sm">{currentBermuda.prizePool}</span>
+                <div className="p-3 rounded-control bg-emerald-500/[0.05] border border-emerald-500/25">
+                  <span className="text-[10px] text-emerald-400/80 uppercase tracking-wider block">PRIZE POOL</span>
+                  <span className="text-emerald-400 font-bold text-sm block mt-1">{currentBermuda.prizePool}</span>
                 </div>
               </div>
 
+              {/* Live Room Capacity Indicator */}
               <div className="p-3.5 rounded-control glass-panel space-y-1.5 text-xs font-mono tracking-tight tabular-nums">
                 <div className="flex flex-wrap justify-between items-center gap-2 font-bold">
                   <span className="text-text-2 flex items-center gap-1.5">
@@ -256,43 +261,29 @@ export const TournamentModes = () => {
         {/* ======================================================== */}
         {activeTab === 'clashsquad' && (
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-            {/* Left: Clean Rules List */}
+            {/* Left: Clean Platform Specifications */}
             <div className="lg:col-span-7 space-y-6">
               <div>
-                <span className="text-xs font-mono font-bold uppercase text-accent tracking-widest block mb-1">
-                  BRACKET ELIMINATION
-                </span>
                 <h3 className="text-2xl sm:text-3xl font-extrabold text-text-1 font-heading">
                   Clash Squad 4v4 Tournament Brackets
                 </h3>
-                <p className="text-sm sm:text-base text-text-2 mt-2 leading-relaxed">
-                  High-intensity squad tactical combat. Compete in single-elimination tournament brackets with automated round progression from Quarterfinals all the way to the Grand Finals.
-                </p>
               </div>
 
+              {/* High-Contrast Specifications with Hairlines */}
               <div className="divide-y divide-line border-y border-line">
-                <div className="py-3.5 flex items-start gap-3">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-400 flex-shrink-0 mt-0.5" strokeWidth={1.5} />
-                  <div>
-                    <span className="text-sm font-bold text-text-1 block">Live Bracket Tree Visualization</span>
-                    <span className="text-xs text-text-2">Round progression tracked directly inside the mobile app.</span>
-                  </div>
+                <div className="py-3.5 flex items-center gap-3">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-400 flex-shrink-0" strokeWidth={1.5} />
+                  <span className="text-sm font-medium text-text-1">Live Bracket Tree Visualization</span>
                 </div>
 
-                <div className="py-3.5 flex items-start gap-3">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-400 flex-shrink-0 mt-0.5" strokeWidth={1.5} />
-                  <div>
-                    <span className="text-sm font-bold text-text-1 block">6-Digit Squad Codes</span>
-                    <span className="text-xs text-text-2">Captains assemble their 4-player lineup in seconds.</span>
-                  </div>
+                <div className="py-3.5 flex items-center gap-3">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-400 flex-shrink-0" strokeWidth={1.5} />
+                  <span className="text-sm font-medium text-text-1">6-Digit Captain Squad Codes</span>
                 </div>
 
-                <div className="py-3.5 flex items-start gap-3">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-400 flex-shrink-0 mt-0.5" strokeWidth={1.5} />
-                  <div>
-                    <span className="text-sm font-bold text-text-1 block">Direct Cashout Settlement</span>
-                    <span className="text-xs text-text-2">Winning prize credits directly to Winning Wallet upon Finals victory.</span>
-                  </div>
+                <div className="py-3.5 flex items-center gap-3">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-400 flex-shrink-0" strokeWidth={1.5} />
+                  <span className="text-sm font-medium text-text-1">Direct Winning Wallet Settlement</span>
                 </div>
               </div>
 
@@ -317,7 +308,7 @@ export const TournamentModes = () => {
               }}
               className="lg:col-span-5 hud-card p-6 sm:p-7 space-y-5 relative overflow-hidden group hover:border-emerald-500/40 hover:shadow-lift-strong"
             >
-              <HudCorners tone="emerald" size="md" inset />
+              <HudCorners tone="emerald" size="md" />
               <div
                 aria-hidden="true"
                 className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-emerald-400/40 to-transparent"
@@ -331,9 +322,6 @@ export const TournamentModes = () => {
 
               <div className="relative z-10 flex flex-wrap justify-between items-center gap-3 pb-3 border-b border-line">
                 <div>
-                  <span className="text-[11px] font-mono text-emerald-400 uppercase font-bold tracking-wider block">
-                    Interactive Tree
-                  </span>
                   <div className="flex items-center gap-2 mt-0.5">
                     <span className="flex h-7 w-7 items-center justify-center rounded-lg border border-emerald-500/20 bg-emerald-500/10">
                       <img
@@ -356,7 +344,7 @@ export const TournamentModes = () => {
                   <button
                     key={stage}
                     onClick={() => setCsStage(stage)}
-                    className={`py-1.5 rounded-control text-xs font-mono font-bold uppercase transition-all duration-200 active:scale-[0.98] active:duration-100 cursor-pointer ${
+                    className={`min-h-[44px] py-2 sm:py-1.5 sm:min-h-0 rounded-control text-xs font-mono font-bold uppercase transition-all duration-200 active:scale-[0.98] active:duration-100 cursor-pointer ${
                       csStage === stage
                         ? 'bg-accent text-bg-1 shadow-[0_0_18px_-6px_rgba(16,185,129,0.55)] ring-1 ring-emerald-300/30'
                         : 'text-text-2 hover:bg-white/[0.04] hover:text-text-1'
@@ -367,7 +355,27 @@ export const TournamentModes = () => {
                 ))}
               </div>
 
-              {/* Bracket Round Visual */}
+              {/* High-Contrast Match Specification Cards Grid */}
+              <div className="grid grid-cols-2 gap-2 text-xs font-mono tracking-tight tabular-nums">
+                <div className="p-3 rounded-control bg-bg-1/70 border border-white/[0.08]">
+                  <span className="text-[10px] text-text-2 uppercase tracking-wider block">SLOTS</span>
+                  <span className="text-emerald-400 font-bold block mt-1">{currentCs.slots}</span>
+                </div>
+                <div className="p-3 rounded-control bg-bg-1/70 border border-white/[0.08]">
+                  <span className="text-[10px] text-text-2 uppercase tracking-wider block">ROSTER</span>
+                  <span className="text-text-1 font-bold block mt-1">{currentCs.roster}</span>
+                </div>
+                <div className="p-3 rounded-control bg-bg-1/70 border border-white/[0.08]">
+                  <span className="text-[10px] text-text-2 uppercase tracking-wider block">ENTRY</span>
+                  <span className="text-text-1 font-bold block mt-1">{currentCs.entry}</span>
+                </div>
+                <div className="p-3 rounded-control bg-emerald-500/[0.05] border border-emerald-500/25">
+                  <span className="text-[10px] text-emerald-400/80 uppercase tracking-wider block">PRIZE POOL</span>
+                  <span className="text-emerald-400 font-bold text-sm block mt-1">{currentCs.prizePool}</span>
+                </div>
+              </div>
+
+              {/* Dynamic Bracket Matchup Visual */}
               <div className="space-y-2.5 text-xs font-mono tracking-tight tabular-nums">
                 <div className="relative overflow-hidden p-3 rounded-control bg-emerald-500/[0.04] border border-emerald-500/20 flex justify-between items-center transition-colors duration-200 hover:border-emerald-500/[0.35]">
                   <span
@@ -375,38 +383,19 @@ export const TournamentModes = () => {
                     className="absolute inset-y-0 left-0 w-0.5 bg-emerald-400/70"
                   />
                   <div>
-                    <span className="text-text-1 font-bold block">Team Alpha (Squad A)</span>
-                    <span className="text-[10px] text-text-2 mt-0.5 flex items-center gap-1.5">
-                      <span>Seed #1</span>
-                      <span aria-hidden="true">•</span>
-                      <Badge tone="emerald" className="px-1.5 py-0 text-[9px]">
-                        Roster Verified
-                      </Badge>
-                    </span>
+                    <span className="text-text-1 font-bold block">{currentCs.team1.name}</span>
+                    <span className="text-[10px] text-text-2 mt-0.5 block">{currentCs.team1.seed}</span>
                   </div>
-                  <span className="text-emerald-400 font-bold">4 Wins</span>
+                  <span className="text-emerald-400 font-bold">{currentCs.team1.wins}</span>
                 </div>
 
                 <div className="p-3 rounded-control bg-bg-1/70 border border-white/[0.07] flex justify-between items-center transition-colors duration-200 hover:border-emerald-500/25">
                   <div>
-                    <span className="text-text-2 font-medium block">Team Omega (Squad B)</span>
-                    <span className="text-[10px] text-text-2 mt-0.5 flex items-center gap-1.5">
-                      <span>Seed #4</span>
-                      <span aria-hidden="true">•</span>
-                      <Badge tone="neutral" className="px-1.5 py-0 text-[9px]">
-                        Roster Verified
-                      </Badge>
-                    </span>
+                    <span className="text-text-2 font-medium block">{currentCs.team2.name}</span>
+                    <span className="text-[10px] text-text-2 mt-0.5 block">{currentCs.team2.seed}</span>
                   </div>
-                  <span className="text-text-2">2 Wins</span>
+                  <span className="text-text-2">{currentCs.team2.wins}</span>
                 </div>
-              </div>
-
-              <div className="p-3 rounded-control glass-panel text-xs font-mono text-text-2 flex items-center gap-2.5">
-                <span className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-lg border border-emerald-500/[0.15] bg-emerald-500/[0.06]">
-                  <ShieldAlert className="w-4 h-4 text-emerald-400" strokeWidth={1.5} />
-                </span>
-                <span>Single elimination with automated match progression.</span>
               </div>
             </div>
           </div>

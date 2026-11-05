@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { ChevronDown, Headset } from 'lucide-react';
-import { Pill } from './primitives/Pill';
 import { Button } from './primitives/Button';
 import { HudCorners } from './primitives/HudCorners';
 import { IconOrb } from './primitives/IconOrb';
@@ -77,8 +76,7 @@ export default function FAQ() {
         <div className="relative z-10 max-w-[1200px] mx-auto px-6">
           {/* Header */}
           <div className="mb-14 sm:mb-20 text-center max-w-3xl mx-auto">
-            <Pill dot={true} label="SUPPORT KNOWLEDGE BASE" />
-            <h1 className="text-4xl sm:text-6xl font-extrabold uppercase tracking-tight text-text-1 font-heading mt-4">
+            <h1 className="text-4xl sm:text-6xl font-extrabold uppercase tracking-tight text-text-1 font-heading">
               Frequently Asked <span className="text-accent text-glow-accent">Questions</span>
             </h1>
             <p className="text-base sm:text-lg text-text-2 mt-3 leading-relaxed">
@@ -108,7 +106,7 @@ export default function FAQ() {
                       className="pointer-events-none absolute inset-y-0 left-0 w-[2px] bg-gradient-to-b from-emerald-400/80 via-emerald-500/40 to-transparent"
                     />
                   )}
-                  {isOpen && <HudCorners tone="emerald" size="sm" inset />}
+                  {isOpen && <HudCorners tone="emerald" size="sm" />}
 
                   <button
                     onClick={() => setOpenIndex(isOpen ? null : index)}
@@ -155,7 +153,7 @@ export default function FAQ() {
 
           {/* Need Further Support Card */}
           <div className="hud-card relative mx-auto max-w-2xl space-y-4 overflow-hidden rounded-card p-8 text-center transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-lift">
-            <HudCorners tone="neutral" size="sm" inset />
+            <HudCorners tone="neutral" size="sm" />
             <div className="flex justify-center">
               <IconOrb icon={Headset} tone="emerald" size="md" />
             </div>

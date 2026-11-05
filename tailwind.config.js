@@ -17,9 +17,9 @@ export default {
           3: withAlpha('--bg-3', '27, 31, 34'),
         },
         line: {
-          DEFAULT: 'var(--line)',
-          strong: 'var(--line-strong)',
-          accent: 'var(--line-accent)',
+          DEFAULT: withAlpha('--line', '255, 255, 255'),
+          strong: withAlpha('--line-strong', '255, 255, 255'),
+          accent: withAlpha('--line-accent', '0, 200, 120'),
         },
         text: {
           1: 'var(--text-1)',

@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Facebook, Instagram, Youtube } from 'lucide-react';
-import { Badge, IconOrb } from './primitives';
+import { IconOrb } from './primitives';
 
 export const Footer = () => {
   return (
@@ -26,14 +26,6 @@ export const Footer = () => {
                 Arena<span className="text-accent">X</span>
               </span>
             </Link>
-
-            <p className="text-sm text-text-2 leading-relaxed">
-              Pakistan's premier mobile esports platform. Compete in daily Free Fire Bermuda and Clash Squad tournaments with automated AI scoreboard verification.
-            </p>
-
-            <Badge tone="emerald" dot pulse className="w-fit">
-              PLATFORM OPERATIONAL 24/7
-            </Badge>
           </div>
 
           {/* Group 1: Navigation */}
@@ -43,22 +35,22 @@ export const Footer = () => {
             </span>
             <ul className="space-y-2.5 text-sm">
               <li>
-                <Link to="/" className="link-underline text-text-2 hover:text-white transition-colors">
+                <Link to="/" className="link-underline inline-block py-3 -my-3 px-2 -mx-2 text-text-2 hover:text-white transition-colors">
                   Home
                 </Link>
               </li>
               <li>
-                <Link to="/about" className="link-underline text-text-2 hover:text-white transition-colors">
+                <Link to="/about" className="link-underline inline-block py-3 -my-3 px-2 -mx-2 text-text-2 hover:text-white transition-colors">
                   About Us
                 </Link>
               </li>
               <li>
-                <Link to="/faq" className="link-underline text-text-2 hover:text-white transition-colors">
+                <Link to="/faq" className="link-underline inline-block py-3 -my-3 px-2 -mx-2 text-text-2 hover:text-white transition-colors">
                   FAQs
                 </Link>
               </li>
               <li>
-                <Link to="/contact" className="link-underline text-text-2 hover:text-white transition-colors">
+                <Link to="/contact" className="link-underline inline-block py-3 -my-3 px-2 -mx-2 text-text-2 hover:text-white transition-colors">
                   Contact Support
                 </Link>
               </li>
@@ -72,22 +64,22 @@ export const Footer = () => {
             </span>
             <ul className="space-y-2.5 text-sm">
               <li>
-                <Link to="/terms" className="link-underline text-text-2 hover:text-white transition-colors">
+                <Link to="/terms" className="link-underline inline-block py-3 -my-3 px-2 -mx-2 text-text-2 hover:text-white transition-colors">
                   Terms of Service
                 </Link>
               </li>
               <li>
-                <Link to="/privacy" className="link-underline text-text-2 hover:text-white transition-colors">
+                <Link to="/privacy" className="link-underline inline-block py-3 -my-3 px-2 -mx-2 text-text-2 hover:text-white transition-colors">
                   Privacy Policy
                 </Link>
               </li>
               <li>
-                <Link to="/refund-policy" className="link-underline text-text-2 hover:text-white transition-colors">
-                  100% Refund Policy
+                <Link to="/refund-policy" className="link-underline inline-block py-3 -my-3 px-2 -mx-2 text-text-2 hover:text-white transition-colors">
+                  Refund Policy
                 </Link>
               </li>
               <li>
-                <Link to="/fair-play" className="link-underline text-text-2 hover:text-white transition-colors">
+                <Link to="/fair-play" className="link-underline inline-block py-3 -my-3 px-2 -mx-2 text-text-2 hover:text-white transition-colors">
                   Fair Play & Anti-Cheat
                 </Link>
               </li>
@@ -144,10 +136,9 @@ export const Footer = () => {
               </a>
             </div>
             <p className="text-xs text-text-3 font-mono">
-              Direct Helpline:{' '}
               <a
                 href="mailto:arenasupport@gmail.com"
-                className="link-underline text-text-2 hover:text-white transition-colors"
+                className="link-underline inline-block py-3 -my-3 px-2 -mx-2 text-text-2 hover:text-white transition-colors"
               >
                 arenasupport@gmail.com
               </a>
@@ -157,14 +148,7 @@ export const Footer = () => {
 
         {/* Bottom Disclaimer */}
         <div className="border-t border-white/[0.08] pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs font-mono text-text-3">
-          <p className="tabular-nums">© 2026 ArenaX. All rights reserved. Built for competitive esports in Pakistan.</p>
-          <div className="flex items-center gap-4">
-            <span>Free Fire Bermuda</span>
-            <span className="text-white/20">•</span>
-            <span>Clash Squad 4v4</span>
-            <span className="text-white/20">•</span>
-            <span className="text-accent">AI Vision Verified</span>
-          </div>
+          <p className="tabular-nums">© 2026 ArenaX. All rights reserved.</p>
         </div>
       </div>
     </footer>

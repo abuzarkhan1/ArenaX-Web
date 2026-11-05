@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { Menu, X, DownloadCloud } from 'lucide-react';
 import { Button } from './primitives/Button';
+import { trackDownload, trackButtonClick } from '../utils/analytics';
 
 export const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -17,7 +18,7 @@ export const Navbar = () => {
     const handleScroll = () => {
       const winScroll = document.documentElement.scrollTop;
       const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-      const scrolled = height > 0 ? (winScroll / height) * 100 : 0;
+      const scrolled = height > 0 ? Math.min(100, Math.max(0, (winScroll / height) * 100)) : 0;
       setScrollProgress(scrolled);
 
       // Simple active section detection on home page
@@ -44,6 +45,18 @@ export const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [isHomePage]);
 
+  // Synchronize document body overflow with mobile menu open state
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [mobileMenuOpen]);
+
   const navItems = [
     { id: 'tournaments', label: 'Tournaments', isSection: true },
     { id: 'ai-vision', label: 'Vision Engine', isSection: true },
@@ -56,7 +69,6 @@ export const Navbar = () => {
 
   const handleNavClick = (item: { id: string; label: string; isSection?: boolean; path?: string }) => {
     setMobileMenuOpen(false);
-    document.body.style.overflow = '';
 
     if (item.path) {
       navigate(item.path);
@@ -77,8 +89,9 @@ export const Navbar = () => {
   };
 
   const handleDownloadClick = () => {
+    trackButtonClick('download_app', 'navbar');
+    trackDownload('ArenaX.apk', 'Android', 'navbar');
     setMobileMenuOpen(false);
-    document.body.style.overflow = '';
     if (!isHomePage) {
       navigate('/');
       setTimeout(() => {
@@ -90,9 +103,7 @@ export const Navbar = () => {
   };
 
   const toggleMobileMenu = () => {
-    const next = !mobileMenuOpen;
-    setMobileMenuOpen(next);
-    document.body.style.overflow = next ? 'hidden' : '';
+    setMobileMenuOpen(!mobileMenuOpen);
   };
 
   return (
@@ -111,14 +122,9 @@ export const Navbar = () => {
             <div className="w-9 h-9 rounded-control overflow-hidden border border-line-accent bg-white/[0.02] flex items-center justify-center transition-[transform,border-color,box-shadow] duration-300 group-hover:scale-105 group-hover:border-emerald-500/50 shadow-[0_0_24px_-12px_rgba(0,200,120,0.6)]">
               <img src="/logo.webp" alt="ArenaX Logo" width={36} height={36} className="w-full h-full object-cover" />
             </div>
-            <div className="flex flex-col">
-              <span className="text-xl font-extrabold text-text-1 font-heading tracking-tight">
-                Arena<span className="text-accent">X</span>
-              </span>
-              <span className="text-[9px] font-mono uppercase tracking-[0.1em] text-text-3 -mt-0.5 hidden sm:block">
-                ESPORTS CLIENT
-              </span>
-            </div>
+            <span className="text-xl font-extrabold text-text-1 font-heading tracking-tight">
+              Arena<span className="text-accent">X</span>
+            </span>
           </Link>
 
           {/* Desktop Nav Links */}
@@ -134,9 +140,9 @@ export const Navbar = () => {
                   key={item.id}
                   onClick={() => handleNavClick(item)}
                   data-active={isActive}
-                  className={`link-underline px-3 py-1.5 text-xs font-mono uppercase tracking-wider rounded-control transition-colors cursor-pointer ${
+                  className={`link-underline px-3 py-1.5 text-sm font-medium tracking-normal rounded-control transition-colors cursor-pointer ${
                     isActive
-                      ? 'text-accent font-bold bg-accent-dim'
+                      ? 'text-accent font-semibold bg-accent-dim'
                       : 'text-text-2 hover:text-text-1 hover:bg-bg-2'
                   }`}
                 >
@@ -181,7 +187,7 @@ export const Navbar = () => {
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="lg:hidden bg-bg-0/95 backdrop-blur-2xl border-t border-white/[0.08] shadow-broadcast">
+        <div className="lg:hidden bg-bg-0/95 backdrop-blur-2xl border-t border-white/[0.08] shadow-broadcast max-h-[calc(100dvh-5.5rem)] overflow-y-auto overscroll-contain">
           <div className="px-6 py-6 space-y-2 max-w-md mx-auto">
             {navItems.map((item) => {
               const isActive =
@@ -193,9 +199,9 @@ export const Navbar = () => {
                 <button
                   key={item.id}
                   onClick={() => handleNavClick(item)}
-                  className={`block w-full min-h-[48px] text-left px-4 py-3 rounded-control text-sm font-mono uppercase tracking-wider transition-colors cursor-pointer border-l-2 ${
+                  className={`block w-full min-h-[48px] text-left px-4 py-3 rounded-control text-sm font-medium transition-colors cursor-pointer border-l-2 ${
                     isActive
-                      ? 'text-accent bg-accent-dim border-emerald-500/60'
+                      ? 'text-accent bg-accent-dim border-emerald-500/60 font-semibold'
                       : 'text-text-2 hover:text-accent hover:bg-bg-2 border-transparent'
                   }`}
                 >
@@ -208,21 +214,21 @@ export const Navbar = () => {
               <Link
                 to="/about"
                 onClick={() => setMobileMenuOpen(false)}
-                className="px-3.5 py-2 rounded-control bg-white/[0.03] border border-white/[0.08] text-xs font-mono text-text-2 hover:text-text-1 hover:border-emerald-500/40 transition-colors active:scale-[0.98]"
+                className="px-3.5 py-2 rounded-control bg-white/[0.03] border border-white/[0.08] text-xs font-medium text-text-2 hover:text-text-1 hover:border-emerald-500/40 transition-colors active:scale-[0.98]"
               >
                 About
               </Link>
               <Link
                 to="/contact"
                 onClick={() => setMobileMenuOpen(false)}
-                className="px-3.5 py-2 rounded-control bg-white/[0.03] border border-white/[0.08] text-xs font-mono text-text-2 hover:text-text-1 hover:border-emerald-500/40 transition-colors active:scale-[0.98]"
+                className="px-3.5 py-2 rounded-control bg-white/[0.03] border border-white/[0.08] text-xs font-medium text-text-2 hover:text-text-1 hover:border-emerald-500/40 transition-colors active:scale-[0.98]"
               >
                 Contact
               </Link>
               <Link
                 to="/terms"
                 onClick={() => setMobileMenuOpen(false)}
-                className="px-3.5 py-2 rounded-control bg-white/[0.03] border border-white/[0.08] text-xs font-mono text-text-2 hover:text-text-1 hover:border-emerald-500/40 transition-colors active:scale-[0.98]"
+                className="px-3.5 py-2 rounded-control bg-white/[0.03] border border-white/[0.08] text-xs font-medium text-text-2 hover:text-text-1 hover:border-emerald-500/40 transition-colors active:scale-[0.98]"
               >
                 Terms
               </Link>
@@ -235,7 +241,7 @@ export const Navbar = () => {
                 onClick={handleDownloadClick}
                 icon={<DownloadCloud className="w-4 h-4" strokeWidth={1.5} />}
               >
-                Download APK (v2.6)
+                Download App
               </Button>
             </div>
           </div>

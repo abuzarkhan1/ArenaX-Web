@@ -1,46 +1,45 @@
-# BRIEFING — 2026-11-05T13:42:00Z
+# BRIEFING — 2026-11-07T06:35:00Z
 
 ## Mission
-Investigate navigation, chrome & primitives (Navbar, Footer, WhatsAppButton, SEO) to identify redundant copy/badges and propose Linear/Apple Notes polish while preserving all interactive behaviors.
+Investigate and formulate a concrete, precise implementation blueprint for Milestone 1: Design System Tokens & CSS Architecture (green accent, carbon surfaces, hairline borders, typography, backward compatibility).
 
 ## 🔒 My Identity
 - Archetype: explorer
-- Roles: read-only investigation, code & UI analysis, synthesis
-- Working directory: c:\Users\Muhammad Minhas\ArenaX-Web\.agents\teamwork\explorer_m1_1
-- Original parent: 946cbb3b-435a-471b-a15d-9c388cab6b10
-- Milestone: Milestone 1: Navigation, Chrome & Primitives Polish
+- Roles: investigator, synthesizer
+- Working directory: c:\Users\Muhammad Minhas\ArenaX-Web\.agents\teamwork\explorer_m1_1\
+- Original parent: 8b88bbad-6052-4d75-b548-47b7f26819bc
+- Milestone: Milestone 1 (Design System Tokens & CSS Architecture)
 
 ## 🔒 Key Constraints
-- Read-only investigation — do NOT implement / modify source code directly
-- Scope restricted to Navbar.tsx, Footer.tsx, WhatsAppButton.tsx, SEO.tsx (and their direct dependencies/tokens)
-- Strictly preserve navigation links, active section spy, mobile drawer toggle, and APK download click handlers
-- Handoff via 5-component handoff report (handoff.md) and notify parent via send_message
+- Read-only investigation — do NOT implement or modify project code files
+- The reference file `Supabase _ The Postgres Development Platform.html` and folder `Supabase _ The Postgres Development Platform_files` MUST remain STRICTLY unaltered
+- Write only to `.agents/teamwork/explorer_m1_1/`
 
 ## Current Parent
-- Conversation ID: 946cbb3b-435a-471b-a15d-9c388cab6b10
-- Updated: not yet
+- Conversation ID: 8b88bbad-6052-4d75-b548-47b7f26819bc
+- Updated: 2026-11-07T06:35:00Z
 
 ## Investigation State
 - **Explored paths**:
-  - `src/components/Navbar.tsx`
-  - `src/components/Footer.tsx`
-  - `src/components/WhatsAppButton.tsx`
-  - `src/components/SEO.tsx`
-  - `src/components/primitives/*` (`Stat.tsx`, `Button.tsx`, `Badge.tsx`, `Card.tsx`, `Pill.tsx`, `HudCorners.tsx`, `IconOrb.tsx`, `Container.tsx`, `Section.tsx`)
-  - `ORIGINAL_REQUEST.md`, `PROJECT.md`, `package.json`, `tailwind.config.js`, `src/index.css`
+  - `ORIGINAL_REQUEST.md`, `PROJECT.md`, `spec_miner_survey_1/supabase_tokens.md`
+  - `tailwind.config.js`, `src/index.css`, `index.html`
+  - `tests/challenger-m1-adversarial.test.ts`, `tests/layout-copy-verification.test.ts`, `tests/tier1-feature-coverage.test.ts`
+  - Codebase token usage across 520+ instances in `src/**/*.tsx`
 - **Key findings**:
-  - In `Navbar.tsx`: Logo subtitle `ESPORTS CLIENT` is redundant helper text; mobile drawer CTA says `Download APK (v2.6)` with version helper text while desktop CTA says `Download App`; nav links use uppercase monospace that can be elevated to clean medium sans.
-  - In `Footer.tsx`: Conversational brand paragraph, `PLATFORM OPERATIONAL 24/7` badge, `100% Refund Policy` prefix, `Direct Helpline:` label, tagline chips (`Free Fire Bermuda • Clash Squad 4v4 • AI Vision Verified`), and copyright tagline `Built for competitive esports in Pakistan.` can all be eliminated.
-  - In `WhatsAppButton.tsx`: Hover tooltip `Chat on WhatsApp` and its `isHovered` state are redundant; FAB affordance is self-evident.
-  - In `Stat.tsx`: Deprecate and remove `subtext` prop to eliminate helper text slot.
-  - In `SEO.tsx`: Headless utility component verified clean and non-visual.
-- **Unexplored areas**: None within Milestone 1 scope.
+  - Exact token definitions verified: `#3ECF8E`, `#171717`, `#121212`, `#1E201F`, `#161616`, `#0B0E0D`.
+  - Normalization of `--bg-2` from `#171817` to `#171717` requires synchronizing `withAlpha` tuple from `'23, 24, 23'` to `'23, 23, 23'`.
+  - Normalization of `--bg-3` from `#202220` to `#1E201F` requires synchronizing `withAlpha` tuple from `'32, 34, 32'` to `'30, 32, 31'`.
+  - Preserved full backward compatibility for all existing `bg-bg-*`, `text-text-*`, `border-line*`, `bg-accent*` classes while introducing forward Supabase tokens (`surface`, `foreground`, `border`, `brand`).
+  - Calibrated normal weight `450` mapped to `body` and Google Fonts variable axis `Inter:wght@100..900`.
+- **Unexplored areas**: None for M1 token architecture.
 
 ## Key Decisions Made
-- Detailed 5-component handoff report generated with exact before/after code blocks and verification instructions.
+- Produced concrete, line-by-line blueprint in `token_architecture_plan.md`.
+- Formulated 5-component handoff report in `handoff.md`.
+- Ready to message orchestrator.
 
 ## Artifact Index
-- DISPATCH.md — record of incoming tasks
-- BRIEFING.md — persistent state and identity
-- progress.md — liveness heartbeat
-- handoff.md — final 5-component handoff report
+- `.agents/teamwork/explorer_m1_1/DISPATCH.md` — Incoming dispatch log
+- `.agents/teamwork/explorer_m1_1/progress.md` — Heartbeat and task progress log
+- `.agents/teamwork/explorer_m1_1/token_architecture_plan.md` — Complete token architecture blueprint
+- `.agents/teamwork/explorer_m1_1/handoff.md` — Final 5-component handoff report

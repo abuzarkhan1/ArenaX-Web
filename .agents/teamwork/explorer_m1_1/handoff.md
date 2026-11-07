@@ -1,217 +1,153 @@
-# Milestone 1 Exploration Report: Navigation, Chrome & Primitives Polish
+# Milestone 1 Handoff Report: Design System Tokens & CSS Architecture
+
+**Author:** Teamwork Explorer (`explorer_m1_1`)  
+**Date:** 2026-11-07T06:35:00Z  
+**Recipient:** Project Orchestrator (`8b88bbad-6052-4d75-b548-47b7f26819bc`)  
+**Artifact Referenced:** `c:\Users\Muhammad Minhas\ArenaX-Web\.agents\teamwork\explorer_m1_1\token_architecture_plan.md`  
+
+---
 
 ## 1. Observation
 
-Direct code analysis of `src/components/Navbar.tsx`, `src/components/Footer.tsx`, `src/components/WhatsAppButton.tsx`, `src/components/SEO.tsx`, and `src/components/primitives/*` revealed the following specific findings:
+Direct observations made through read-only inspection of the codebase and authoritative reference documents:
 
-### 1.1 Navbar (`src/components/Navbar.tsx`)
-- **Extraneous Subtitle under Logo**:
-  - **Location**: `src/components/Navbar.tsx:118-120`
-  - **Code**:
-    ```tsx
-    <span className="text-[9px] font-mono uppercase tracking-[0.1em] text-text-3 -mt-0.5 hidden sm:block">
-      ESPORTS CLIENT
-    </span>
-    ```
-  - **Observation**: An explicit secondary label `ESPORTS CLIENT` sits underneath `ArenaX`, adding visual noise and detracting from brand clarity.
-- **Button Copy Discrepancy & Helper Version Text**:
-  - **Desktop CTA** (`Navbar.tsx:158`): `<Button ...>Download App</Button>`
-  - **Mobile Drawer CTA** (`Navbar.tsx:238`): `<Button ...>Download APK (v2.6)</Button>`
-  - **Observation**: Desktop and mobile drawer display inconsistent button copy. The mobile drawer embeds version helper text `(v2.6)` and uses "APK" rather than the clean, confident "Download App".
-- **Navigation Typography**:
-  - **Location**: `Navbar.tsx:137`
-  - **Code**: `className="... text-xs font-mono uppercase tracking-wider ..."`
-  - **Observation**: Monospace uppercase text creates a harsh, arcade-style aesthetic rather than the refined, executive typography characteristic of Linear or Apple Notes.
-- **Interactive State Contracts**:
-  - Preserved intact: `activeSection` detection using viewport scroll tracking (`Navbar.tsx:23-40`), smooth scroll progress bar (`Navbar.tsx:174-180`), section jump and route navigation (`handleNavClick`, lines 57-77), APK section jump (`handleDownloadClick`, lines 79-90), and mobile drawer toggle with body overflow control (`toggleMobileMenu`, lines 92-96).
+1. **Reference Tokens Specification (`spec_miner_survey_1/supabase_tokens.md`)**:
+   - Signature Brand Green: `#3ECF8E` (`hsl(153.1deg, 60.2%, 52.7%)`), hover `#34B27B`, gradient `#249361` ➔ `#3ECF8E` (Lines 25, 29, 40).
+   - Dark Carbon Surfaces: Canvas `#121212` (`--background`), Card `#171717` (`--card` / `dark:bg-[#171717]`), Elevated `#1E201F` (`--secondary`), Footer `#161616` (`--background-alternative-default`), Header Translucent Backdrop `#0B0E0D` (`rgba(11, 14, 13, 0.85)` / `oklab(15.99% -0.005 0.0006 / 0.85)`) (Lines 47-54).
+   - Hairline Borders: 1px subtle `rgba(255, 255, 255, 0.08)` (`--border`), control border `rgba(255, 255, 255, 0.14)` (`--border-strong` / `--border-control`), brand border `rgba(62, 207, 142, 0.35)` (`--border-brand-default`) (Lines 76-81).
+   - Typography: Manrope (Headings), Inter (Body UI with calibrated normal weight `450`), Source Code Pro / JetBrains Mono (Code/Mono) (Lines 99-109).
 
-### 1.2 Footer (`src/components/Footer.tsx`)
-- **Conversational Brand Paragraph**:
-  - **Location**: `src/components/Footer.tsx:30-32`
-  - **Code**:
-    ```tsx
-    <p className="text-sm text-text-2 leading-relaxed">
-      Pakistan's premier mobile esports platform. Compete in daily Free Fire Bermuda and Clash Squad tournaments with automated AI scoreboard verification.
-    </p>
-    ```
-  - **Observation**: Conversational marketing copy repeating product positioning inside the footer directory.
-- **Marketing Status Badge**:
-  - **Location**: `src/components/Footer.tsx:34-36`
-  - **Code**:
-    ```tsx
-    <Badge tone="emerald" dot pulse className="w-fit">
-      PLATFORM OPERATIONAL 24/7
-    </Badge>
-    ```
-  - **Observation**: Arbitrary promotional badge simulating system status inside the footer column.
-- **Marketing Badge in Legal Links**:
-  - **Location**: `src/components/Footer.tsx:85-87`
-  - **Code**:
-    ```tsx
-    <Link to="/refund-policy" className="...">
-      100% Refund Policy
-    </Link>
-    ```
-  - **Observation**: The prefix `100%` is an infomercial marketing modifier attached to a legal page link.
-- **Secondary Prefix on Support Helpline**:
-  - **Location**: `src/components/Footer.tsx:146-154`
-  - **Code**: `Direct Helpline: <a href="mailto:arenasupport@gmail.com">arenasupport@gmail.com</a>`
-  - **Observation**: `Direct Helpline:` is an unnecessary explanatory label before a standard email link.
-- **Redundant Tagline Ribbon in Copyright Row**:
-  - **Location**: `src/components/Footer.tsx:161-167`
-  - **Code**:
-    ```tsx
-    <div className="flex flex-wrap justify-center md:justify-start items-center text-center gap-x-4 gap-y-1.5">
-      <span>Free Fire Bermuda</span>
-      <span className="text-white/20">•</span>
-      <span>Clash Squad 4v4</span>
-      <span className="text-white/20">•</span>
-      <span className="text-accent">AI Vision Verified</span>
-    </div>
-    ```
-  - **Observation**: Clustered tagline chips repeating game modes and OCR claims in the bottom bar.
-- **Conversational Slogan in Copyright String**:
-  - **Location**: `src/components/Footer.tsx:160`
-  - **Code**: `© 2026 ArenaX. All rights reserved. Built for competitive esports in Pakistan.`
-  - **Observation**: `Built for competitive esports in Pakistan.` is an appended tagline to the standard legal copyright notice.
+2. **Current `tailwind.config.js` (`tailwind.config.js:12-49`)**:
+   ```javascript
+   colors: {
+     bg: {
+       0: withAlpha('--bg-0', '14, 15, 14'),
+       1: withAlpha('--bg-1', '18, 18, 18'),
+       2: withAlpha('--bg-2', '23, 24, 23'),
+       3: withAlpha('--bg-3', '32, 34, 32'),
+     },
+     line: {
+       DEFAULT: withAlpha('--line', '255, 255, 255'),
+       strong: withAlpha('--line-strong', '255, 255, 255'),
+       accent: withAlpha('--line-accent', '62, 207, 142'),
+     },
+     text: {
+       1: 'var(--text-1)',
+       2: 'var(--text-2)',
+       3: 'var(--text-3)',
+     },
+     accent: {
+       DEFAULT: withAlpha('--accent', '62, 207, 142'),
+       hover: withAlpha('--accent-hover', '52, 178, 123'),
+       dim: 'var(--accent-dim)',
+     },
+   ```
 
-### 1.3 Floating Action Button (`src/components/WhatsAppButton.tsx`)
-- **Hover Tooltip**:
-  - **Location**: `src/components/WhatsAppButton.tsx:5`, `16-17`, `31-37`
-  - **Code**:
-    ```tsx
-    {isHovered && (
-      <div className="hidden md:block absolute right-full mr-3 top-1/2 -translate-y-1/2 whitespace-nowrap pointer-events-none">
-        <div className="p-2.5 rounded-control bg-bg-2/80 backdrop-blur-xl border border-white/[0.08] text-text-1 text-xs font-mono font-bold shadow-lift">
-          Chat on WhatsApp
-        </div>
-      </div>
-    )}
-    ```
-  - **Observation**: Redundant explanatory tooltip requiring `isHovered` state management and mouse enter/leave listeners.
-- **Button Affordance Evaluation**:
-  - The WhatsApp FAB has self-evident affordance:
-    - Fixed bottom-right corner position with viewport safe-area insets (`sm:bottom-6 sm:right-6`).
-    - Standard WhatsApp brand green (`bg-whatsapp`), layered elevation shadow, and smooth hover/active scaling.
-    - Centered `MessageCircle` icon within a tactile frosted ring.
-    - Accessible `aria-label="Chat with ArenaX Support on WhatsApp"` for screen readers.
-    - Test identifier `data-testid="whatsapp-button"`.
-  - The visual affordance does not require the tooltip to communicate purpose or action.
+3. **Current `src/index.css` (`src/index.css:5-41`)**:
+   ```css
+   :root {
+     --bg-0: #0E0F0E;
+     --bg-1: #121212;
+     --bg-2: #171817;   /* Needs normalization to #171717 */
+     --bg-3: #202220;   /* Needs normalization to #1E201F */
+     --line:        rgba(255, 255, 255, 0.08);
+     --line-strong: rgba(255, 255, 255, 0.14);
+     --line-accent: rgba(62, 207, 142, 0.35);
+     --text-1: #EDEDED;
+     --text-2: #A0A0A0;
+     --text-3: #707070;
+     --accent:      #3ECF8E;
+     --accent-hover:#34B27B;
+     --accent-dim:  rgba(62, 207, 142, 0.12);
+   ```
 
-### 1.4 Primitives (`src/components/primitives/Stat.tsx`)
-- **Deprecated Helper Prop in Stat Primitive**:
-  - **Location**: `src/components/primitives/Stat.tsx:6, 13, 30`
-  - **Code**: `subtext?: string;` and `{subtext && <span ...>{subtext}</span>}`
-  - **Observation**: `subtext` prop explicitly provides a slot for secondary explanatory helper text. Grep search confirmed zero callers currently pass `subtext`.
+4. **Codebase Token Usage Analysis**:
+   - `Select-String` scan across `src/**/*.tsx` revealed 522 active token occurrences:
+     - Backgrounds: `bg-bg-1`, `bg-bg-2`, `bg-bg-3`, `bg-bg-0` (and opacity variants like `bg-bg-2/80`, `bg-bg-1/70`).
+     - Text colors: 280 occurrences of `text-text-1`, `text-text-2`, `text-text-3`.
+     - Lines: `border-line`, `border-line-strong`, `border-line-accent`.
+     - Accent: `bg-accent`, `hover:bg-accent-hover`, `text-accent`, `ring-[#3ECF8E]/30`.
+   - In `tests/challenger-m1-adversarial.test.ts:212-213`, assertions explicitly require the existence of `'hud-card'` and `'hud-card-highlight'`.
+   - In `index.html:15`, Google Fonts currently imports `Inter:wght@400;500;600;700`.
 
-### 1.5 Headless SEO Component (`src/components/SEO.tsx`)
-- **Observation**: `SEO.tsx` is a headless component updating document head metadata and schema. It renders `null` and introduces zero UI chrome, taglines, or helper text. Its cleanup and dynamic metadata injection operate without issues.
+5. **Baseline Test & Build Verification**:
+   - `npm run typecheck`: Passed with 0 errors (20.60s).
+   - `npm run lint`: Passed with 0 errors (26.61s).
+   - `npm run build`: Passed with 0 errors (10.23s).
+   - `npm test`: All 4 validation tiers + challenger suites passed with 100% success rate (3.42s).
 
 ---
 
 ## 2. Logic Chain
 
-1. **R1 Mandate Application**:
-   - R1 explicitly requires removing taglines, helper text, and secondary labels across all pages, screens, and components, ensuring that navigation and controls are intuitive and self-evident without explanatory copy.
-   - `ESPORTS CLIENT` in `Navbar.tsx` is a secondary label directly violating R1. Removing it streamlines the brand header to pure emblem + wordmark (`ArenaX`).
-   - `Download APK (v2.6)` in `Navbar.tsx` mobile menu violates R1 by including version helper text `(v2.6)` and creates inconsistency with desktop's `Download App`. Unifying to `Download App` establishes consistency.
-   - In `Footer.tsx`, the conversational paragraph, `PLATFORM OPERATIONAL 24/7` badge, `100% Refund Policy` badge prefix, `Direct Helpline:` label, and bottom tagline ribbon (`Free Fire Bermuda • Clash Squad 4v4 • AI Vision Verified`) are all redundant marketing slogans. Removing them converts the footer into a clean, utilitarian directory.
-   - In `WhatsAppButton.tsx`, the `Chat on WhatsApp` hover tooltip is secondary helper copy. The button's canonical placement, distinctive color, chat icon, tactile elevation, and accessibility label make its function self-evident without the tooltip.
-   - In `Stat.tsx`, removing `subtext` from `StatProps` prevents reintroducing secondary helper text at the primitive contract level.
+1. **RGB Tuple Synchronization**:
+   - From Observation 2, `withAlpha('--bg-2', '23, 24, 23')` and `withAlpha('--bg-3', '32, 34, 32')` in `tailwind.config.js` derive alpha utility classes (`bg-bg-2/80`) using RGB strings.
+   - When `--bg-2` is normalized to `#171717` (0x17 = 23, 0x17 = 23, 0x17 = 23), the RGB tuple must become `'23, 23, 23'`.
+   - When `--bg-3` is normalized to `#1E201F` (0x1E = 30, 0x20 = 32, 0x1F = 31), the RGB tuple must become `'30, 32, 31'`.
+   - Therefore, updating both `src/index.css` and `tailwind.config.js` in lockstep is required to prevent color mismatches when alpha modifiers are applied.
 
-2. **Linear / Apple Notes Design Synthesis**:
-   - Linear and Apple interfaces achieve clarity by eliminating conversational filler, badges, and decorative taglines.
-   - Navigational links are presented with balanced typography (`text-sm font-medium tracking-normal`) and subtle active indicators, avoiding aggressive monospace shouting.
-   - Action buttons are crisp, confident verbs (`Download App`).
-   - Footers are quiet, functional site maps with pristine legal attribution (`© 2026 ArenaX. All rights reserved.`).
+2. **100% Backward Compatibility Strategy**:
+   - From Observation 4, over 520 existing class instances use `bg-bg-1`, `bg-bg-2`, `text-text-1`, `border-line`, etc.
+   - Renaming or removing these keys would cause widespread visual breakage and fail automated invariant tests.
+   - By preserving `bg: { ... }`, `text: { ... }`, `line: { ... }`, `accent: { ... }` in `tailwind.config.js` AND aliasing them with forward Supabase names (`surface: { ... }`, `foreground: { ... }`, `border: { ... }`, `brand: { ... }`), existing code remains 100% functional while new code can use standard Supabase vocabulary.
+   - In addition, providing `.bg-1`, `.bg-2`, `.text-1`, etc., utility classes directly in `src/index.css` guarantees that any shorthand syntax used by developers also resolves correctly.
 
-3. **Behavioral Invariance (R3)**:
-   - All navigation handlers (`handleNavClick`, `handleDownloadClick`, `toggleMobileMenu`) remain completely intact.
-   - Active section detection on the home page (`activeSection`) remains functional.
-   - Scroll progress indicator width binding remains intact.
-   - All route links (`/about`, `/faq`, `/contact`, `/terms`, `/privacy`, `/refund-policy`, `/fair-play`) remain functional with verified routes.
+3. **Typography & Calibrated Weight 450**:
+   - From Observation 1, Supabase specifies body text weight `450` for OLED dark theme contrast clarity.
+   - From Observation 4, `index.html` loads static weights `400;500;600;700`.
+   - Updating `index.html` to variable font axis `Inter:wght@100..900` provides true variable font support so that `font-weight: 450` in `@layer base` of `src/index.css` and `fontWeight: { normal: '450', 450: '450' }` in `tailwind.config.js` render with mathematical vector precision.
+
+4. **Component Invariant Safety**:
+   - From Observation 4, test suites specifically assert that `Card.tsx` contains `hud-card` and `hud-card-highlight`.
+   - Therefore, `hud-card` and `hud-card-highlight` must remain present in `src/index.css`, with their base background color updated to canonical `#171717` (`rgba(23, 23, 23, 0.90)`).
 
 ---
 
 ## 3. Caveats
 
-- **Scope Boundary**: As `explorer_m1_1`, this investigation is strictly read-only. Source files must be modified by the implementer agent (`implementer_m1_1`).
-- **Page Titles vs Nav Anchors**: `RefundPolicy.tsx` currently has internal page title `100% Refund Policy - ArenaX Esports Platform` which is owned by Milestone 4 (`M4`). In Milestone 1, updating the link in `Footer.tsx` to `Refund Policy` ensures the chrome is clean; M4 will update the document title and content.
-- **Analytics Tracking Contract**: `PROJECT.md` notes that `Navbar.tsx` should preserve the download click handler. The current handler smoothly scrolls to the `#download` section. If direct telemetry tracking is desired, `trackButtonClick('navbar_download', 'navbar')` from `src/utils/analytics.ts` can be called within `handleDownloadClick`.
+- **Network-dependent Webfonts**: If Google Fonts CDN is unreachable offline, the system falls back to locally installed `@fontsource/inter` (already present in `package.json:17`). The variable font link is recommended for optimal production rendering.
+- **Scope Restriction**: In accordance with the Explorer role and strict read-only constraints, no project source code files were altered. The recommendations in `token_architecture_plan.md` are ready for immediate execution by the implementer agent.
 
 ---
 
-## 4. Conclusion & Proposed Action Plan
+## 4. Conclusion
 
-The following concrete modifications are recommended for implementation by `implementer_m1_1`:
+A complete, line-by-line implementation blueprint for Milestone 1 styling tokens has been synthesized and written to:
+`c:\Users\Muhammad Minhas\ArenaX-Web\.agents\teamwork\explorer_m1_1\token_architecture_plan.md`
 
-### 4.1 Changes to `src/components/Navbar.tsx`
-1. **Remove Logo Subtitle**:
-   - Remove `<span className="text-[9px] ...">ESPORTS CLIENT</span>`.
-   - Simplify logo container to:
-     ```tsx
-     <span className="text-xl font-extrabold text-text-1 font-heading tracking-tight">
-       Arena<span className="text-accent">X</span>
-     </span>
-     ```
-2. **Unify CTA Button**:
-   - Change mobile drawer button text from `Download APK (v2.6)` to `Download App`.
-3. **Refine Navigation Link Typography**:
-   - Update desktop nav button classes from `text-xs font-mono uppercase tracking-wider` to `text-sm font-medium tracking-normal` for Linear-grade polish.
-
-### 4.2 Changes to `src/components/Footer.tsx`
-1. **Remove Conversational Paragraph & Status Badge**:
-   - Remove `<p className="text-sm text-text-2 leading-relaxed">Pakistan's premier...</p>`.
-   - Remove `<Badge tone="emerald" dot pulse>PLATFORM OPERATIONAL 24/7</Badge>`.
-   - Remove unused `Badge` import from `./primitives`.
-2. **Clean Legal Link**:
-   - Change `100% Refund Policy` to `Refund Policy`.
-3. **Clean Helpline Link**:
-   - Remove `Direct Helpline:` label, leaving the email link `arenasupport@gmail.com`.
-4. **Remove Tagline Ribbon & Clean Copyright**:
-   - Remove the tagline chip cluster `Free Fire Bermuda • Clash Squad 4v4 • AI Vision Verified`.
-   - Clean the copyright string to: `© 2026 ArenaX. All rights reserved.`
-
-### 4.3 Changes to `src/components/WhatsAppButton.tsx`
-1. **Remove Hover Tooltip & State**:
-   - Remove `isHovered` state and `useState` import.
-   - Remove `onMouseEnter` and `onMouseLeave` handlers.
-   - Remove the `{isHovered && <div ...>Chat on WhatsApp</div>}` tooltip block.
-   - Preserve `data-testid="whatsapp-button"`, `aria-label`, tactile ring, and `handleClick`.
-
-### 4.4 Changes to `src/components/primitives/Stat.tsx`
-1. **Remove Subtext**:
-   - Remove `subtext?: string;` from `StatProps`.
-   - Remove `{subtext && <span className="mt-1 font-mono text-xs leading-normal text-text-2 tabular-nums">{subtext}</span>}` from component JSX.
+All four core token pillars have been formulated with exact mathematical values:
+1. Brand Green Accent: `#3ECF8E` (`hsl(153.1deg, 60.2%, 52.7%)`), hover `#34B27B`, gradients `#249361` ➔ `#3ECF8E`.
+2. Dark Carbon Surfaces: Canvas `#121212`, Card `#171717`, Elevated `#1E201F`, Footer `#161616`, Header `#0B0E0D`.
+3. Hairline Borders: 1px subtle `rgba(255, 255, 255, 0.08)`, control `rgba(255, 255, 255, 0.14)`, brand `rgba(62, 207, 142, 0.35)`.
+4. Typography: Inter body weight `450`, Manrope headings, Source Code Pro / JetBrains Mono code.
+5. Backward Compatibility: 100% preservation of all 520+ existing class occurrences via dual-mapping architecture.
 
 ---
 
 ## 5. Verification Method
 
-To verify these changes independently:
+To verify the implementation once applied:
 
-1. **Type Integrity Check**:
-   ```powershell
+1. **Static Analysis & Typecheck**:
+   ```bash
    npm run typecheck
-   ```
-   *Expected result*: Exits with code 0 and zero TypeScript errors.
-
-2. **Lint Suite Check**:
-   ```powershell
    npm run lint
    ```
-   *Expected result*: Exits with code 0 and zero ESLint warnings/errors.
+   *Expected Result*: Exit code 0, 0 errors.
 
-3. **Production Build**:
-   ```powershell
+2. **Production Build**:
+   ```bash
    npm run build
    ```
-   *Expected result*: Vite builds the production client bundle successfully with code 0.
+   *Expected Result*: Exit code 0, cleanly bundled distribution in `dist/`.
 
-4. **DOM & Copy Invariant Check**:
-   - Confirm string `ESPORTS CLIENT` is absent from `Navbar.tsx`.
-   - Confirm string `Download APK (v2.6)` is absent from `Navbar.tsx`.
-   - Confirm strings `PLATFORM OPERATIONAL 24/7`, `100% Refund Policy`, `Direct Helpline:`, and `AI Vision Verified` are absent from `Footer.tsx`.
-   - Confirm string `Chat on WhatsApp` is absent from `WhatsAppButton.tsx` DOM (while `aria-label` remains present for accessibility).
-   - Confirm `subtext` is absent from `StatProps`.
-   - Confirm all navigation links (`tournaments`, `ai-vision`, `wallet`, `ranks`, `organizers`, `how-it-works`, `faq`), route changes, mobile drawer toggle, and download click handlers function correctly.
+3. **Unified Verification Suite**:
+   ```bash
+   npm test
+   ```
+   *Expected Result*: 100% passing test runs across all tiers and challenger suites.
+
+4. **Token Value Invalidation Checks**:
+   - Inspect `tailwind.config.js` to confirm `bg[2]` RGB is `'23, 23, 23'` and `bg[3]` RGB is `'30, 32, 31'`.
+   - Inspect `src/index.css` to confirm `--bg-2: #171717;` and `--bg-3: #1E201F;`.
+   - Inspect `index.html` to confirm Inter loads `wght@100..900`.

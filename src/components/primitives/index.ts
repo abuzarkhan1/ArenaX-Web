@@ -10,6 +10,9 @@ export type { PillProps } from './Pill';
 export { Badge } from './Badge';
 export type { BadgeProps, BadgeTone } from './Badge';
 
+export { Input } from './Input';
+export type { InputProps } from './Input';
+
 export { HudCorners } from './HudCorners';
 export type { HudCornersProps } from './HudCorners';
 
@@ -24,4 +27,3 @@ export type { ContainerProps } from './Container';
 
 export { Section } from './Section';
 export type { SectionProps } from './Section';
-

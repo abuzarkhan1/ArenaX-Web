@@ -27,7 +27,7 @@ export const Navbar = () => {
           setActiveSection('home');
           return;
         }
-        const sections = ['home', 'tournaments', 'ai-vision', 'wallet', 'ranks', 'organizers', 'how-it-works'];
+        const sections = ['tournaments', 'ai-vision', 'wallet', 'ranks', 'organizers', 'how-it-works'];
         for (const sec of sections) {
           const el = document.getElementById(sec);
           if (el) {
@@ -69,6 +69,7 @@ export const Navbar = () => {
 
   const handleNavClick = (item: { id: string; label: string; isSection?: boolean; path?: string }) => {
     setMobileMenuOpen(false);
+    document.body.style.overflow = '';
 
     if (item.path) {
       navigate(item.path);
@@ -92,6 +93,7 @@ export const Navbar = () => {
     trackButtonClick('download_app', 'navbar');
     trackDownload('ArenaX.apk', 'Android', 'navbar');
     setMobileMenuOpen(false);
+    document.body.style.overflow = '';
     if (!isHomePage) {
       navigate('/');
       setTimeout(() => {
@@ -107,9 +109,9 @@ export const Navbar = () => {
   };
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-bg-0/70 backdrop-blur-xl border-b border-white/[0.08] transition-colors duration-300">
-      <div className="max-w-[1200px] mx-auto px-6">
-        <div className="flex items-center justify-between h-20">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-[#0B0E0D]/85 backdrop-blur-md border-b border-white/[0.08] transition-all duration-300">
+      <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
+        <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link
             to="/"
@@ -117,13 +119,13 @@ export const Navbar = () => {
               window.scrollTo({ top: 0, behavior: 'smooth' });
               setActiveSection('home');
             }}
-            className="flex items-center gap-3 group cursor-pointer"
+            className="flex items-center gap-2.5 sm:gap-3 group cursor-pointer"
           >
-            <div className="w-9 h-9 rounded-control overflow-hidden border border-line-accent bg-white/[0.02] flex items-center justify-center transition-[transform,border-color,box-shadow] duration-300 group-hover:scale-105 group-hover:border-emerald-500/50 shadow-[0_0_24px_-12px_rgba(0,200,120,0.6)]">
-              <img src="/logo.webp" alt="ArenaX Logo" width={36} height={36} className="w-full h-full object-cover" />
+            <div className="w-8 h-8 rounded-md overflow-hidden border border-white/[0.08] bg-[#171717] flex items-center justify-center transition-all duration-300 group-hover:scale-105 group-hover:border-[#3ECF8E]/40 group-hover:bg-[#1E201F] shadow-[0_0_16px_-6px_rgba(62,207,142,0.4)]">
+              <img src="/logo.webp" alt="ArenaX Logo" width={32} height={32} className="w-full h-full object-cover" />
             </div>
-            <span className="text-xl font-extrabold text-text-1 font-heading tracking-tight">
-              Arena<span className="text-accent">X</span>
+            <span className="text-lg sm:text-xl font-semibold text-[#EDEDED] font-heading tracking-tight group-hover:text-white transition-colors">
+              Arena<span className="text-[#3ECF8E]">X</span>
             </span>
           </Link>
 
@@ -140,10 +142,10 @@ export const Navbar = () => {
                   key={item.id}
                   onClick={() => handleNavClick(item)}
                   data-active={isActive}
-                  className={`link-underline px-3 py-1.5 text-sm font-medium tracking-normal rounded-control transition-colors cursor-pointer ${
+                  className={`px-3 py-1.5 text-sm font-medium tracking-normal rounded-md transition-all duration-150 cursor-pointer ${
                     isActive
-                      ? 'text-accent font-semibold bg-accent-dim'
-                      : 'text-text-2 hover:text-text-1 hover:bg-bg-2'
+                      ? 'text-[#3ECF8E] font-medium bg-[#3ECF8E]/10 border border-[#3ECF8E]/20 shadow-[0_0_12px_-4px_rgba(62,207,142,0.3)]'
+                      : 'text-[#A0A0A0] hover:text-[#EDEDED] hover:bg-white/[0.04] border border-transparent'
                   }`}
                 >
                   {item.label}
@@ -152,8 +154,8 @@ export const Navbar = () => {
             })}
           </div>
 
-          {/* Right Action: Download APK Button */}
-          <div className="flex items-center gap-3">
+          {/* Right Action: Download App Button */}
+          <div className="flex items-center gap-2.5 sm:gap-3">
             <Button
               variant="primary"
               size="sm"
@@ -167,28 +169,28 @@ export const Navbar = () => {
             {/* Mobile Menu Hamburger */}
             <button
               onClick={toggleMobileMenu}
-              className="lg:hidden w-11 h-11 flex items-center justify-center bg-white/[0.03] hover:bg-white/[0.06] rounded-control border border-white/[0.08] hover:border-emerald-500/40 text-text-1 cursor-pointer transition-[background-color,border-color,transform] duration-200 active:scale-[0.98]"
+              className="lg:hidden w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center bg-[#171717] hover:bg-[#1E201F] rounded-md border border-white/[0.08] hover:border-[#3ECF8E]/40 text-[#EDEDED] cursor-pointer transition-[background-color,border-color,transform] duration-200 active:scale-[0.97]"
               aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
               aria-expanded={mobileMenuOpen}
             >
-              {mobileMenuOpen ? <X size={20} strokeWidth={1.5} /> : <Menu size={20} strokeWidth={1.5} />}
+              {mobileMenuOpen ? <X size={18} strokeWidth={1.75} /> : <Menu size={18} strokeWidth={1.75} />}
             </button>
           </div>
         </div>
       </div>
 
-      {/* Emerald Scroll Progress Line */}
-      <div className="w-full bg-white/[0.06] h-[2px]">
+      {/* Supabase Brand Green Scroll Progress Line */}
+      <div className="w-full bg-white/[0.04] h-[2px]">
         <div
-          className="bg-gradient-to-r from-emerald-500 via-emerald-400 to-emerald-300 h-[2px] shadow-[0_0_10px_rgba(16,185,129,0.6)] transition-all duration-150 ease-out"
+          className="bg-gradient-to-r from-[#249361] to-[#3ECF8E] h-[2px] shadow-[0_0_8px_rgba(62,207,142,0.45)] transition-all duration-150 ease-out"
           style={{ width: `${scrollProgress}%` }}
         />
       </div>
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="lg:hidden bg-bg-0/95 backdrop-blur-2xl border-t border-white/[0.08] shadow-broadcast max-h-[calc(100dvh-5.5rem)] overflow-y-auto overscroll-contain">
-          <div className="px-6 py-6 space-y-2 max-w-md mx-auto">
+        <div className="lg:hidden bg-[#171717]/98 backdrop-blur-2xl border-t border-white/[0.08] shadow-[0_20px_40px_rgba(0,0,0,0.8)] max-h-[calc(100dvh-4.5rem)] overflow-y-auto overscroll-contain">
+          <div className="px-5 py-5 space-y-2 max-w-md mx-auto">
             {navItems.map((item) => {
               const isActive =
                 item.path && location.pathname === item.path
@@ -199,10 +201,10 @@ export const Navbar = () => {
                 <button
                   key={item.id}
                   onClick={() => handleNavClick(item)}
-                  className={`block w-full min-h-[48px] text-left px-4 py-3 rounded-control text-sm font-medium transition-colors cursor-pointer border-l-2 ${
+                  className={`block w-full min-h-[44px] text-left px-4 py-2.5 rounded-md text-sm font-medium transition-all cursor-pointer border-l-2 ${
                     isActive
-                      ? 'text-accent bg-accent-dim border-emerald-500/60 font-semibold'
-                      : 'text-text-2 hover:text-accent hover:bg-bg-2 border-transparent'
+                      ? 'text-[#3ECF8E] bg-[#3ECF8E]/10 border-[#3ECF8E] font-medium'
+                      : 'text-[#A0A0A0] hover:text-[#EDEDED] hover:bg-[#1E201F] border-transparent'
                   }`}
                 >
                   {item.label}
@@ -214,21 +216,21 @@ export const Navbar = () => {
               <Link
                 to="/about"
                 onClick={() => setMobileMenuOpen(false)}
-                className="px-3.5 py-2 rounded-control bg-white/[0.03] border border-white/[0.08] text-xs font-medium text-text-2 hover:text-text-1 hover:border-emerald-500/40 transition-colors active:scale-[0.98]"
+                className="px-3 py-1.5 rounded-md bg-[#121212] border border-white/[0.08] text-xs font-medium text-[#A0A0A0] hover:text-[#EDEDED] hover:border-[#3ECF8E]/40 transition-colors active:scale-[0.97]"
               >
                 About
               </Link>
               <Link
                 to="/contact"
                 onClick={() => setMobileMenuOpen(false)}
-                className="px-3.5 py-2 rounded-control bg-white/[0.03] border border-white/[0.08] text-xs font-medium text-text-2 hover:text-text-1 hover:border-emerald-500/40 transition-colors active:scale-[0.98]"
+                className="px-3 py-1.5 rounded-md bg-[#121212] border border-white/[0.08] text-xs font-medium text-[#A0A0A0] hover:text-[#EDEDED] hover:border-[#3ECF8E]/40 transition-colors active:scale-[0.97]"
               >
                 Contact
               </Link>
               <Link
                 to="/terms"
                 onClick={() => setMobileMenuOpen(false)}
-                className="px-3.5 py-2 rounded-control bg-white/[0.03] border border-white/[0.08] text-xs font-medium text-text-2 hover:text-text-1 hover:border-emerald-500/40 transition-colors active:scale-[0.98]"
+                className="px-3 py-1.5 rounded-md bg-[#121212] border border-white/[0.08] text-xs font-medium text-[#A0A0A0] hover:text-[#EDEDED] hover:border-[#3ECF8E]/40 transition-colors active:scale-[0.97]"
               >
                 Terms
               </Link>
@@ -238,6 +240,7 @@ export const Navbar = () => {
               <Button
                 variant="primary"
                 fullWidth
+                size="md"
                 onClick={handleDownloadClick}
                 icon={<DownloadCloud className="w-4 h-4" strokeWidth={1.5} />}
               >

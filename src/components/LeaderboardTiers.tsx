@@ -1,7 +1,6 @@
 import { useState, useRef, useLayoutEffect } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { HudCorners } from './primitives/HudCorners';
 import { IconOrb } from './primitives/IconOrb';
 import { ChevronLeft, ChevronRight, Target, Trophy } from 'lucide-react';
 
@@ -37,8 +36,8 @@ export const LeaderboardTiers = () => {
   const selectedTier = RANK_TIERS.find((t) => t.name === targetTier) || RANK_TIERS[5];
   const ptsNeeded = Math.max(0, selectedTier.targetMin - currentPts);
   const booyahsNeeded = Math.ceil(ptsNeeded / 20); // 20 PTS per Booyah
-  const progressPercent = selectedTier.targetMin === 0 
-    ? 100 
+  const progressPercent = selectedTier.targetMin === 0
+    ? 100
     : Math.min(100, Math.round((currentPts / selectedTier.targetMin) * 100));
 
   const scrollTrack = (direction: 'left' | 'right') => {
@@ -50,7 +49,7 @@ export const LeaderboardTiers = () => {
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
-      // Subtle section entry reveal
+      // Section entry reveal
       gsap.fromTo(
         '.tier-reveal',
         { y: 30, opacity: 0 },
@@ -75,27 +74,27 @@ export const LeaderboardTiers = () => {
     <section
       ref={sectionRef}
       id="ranks"
-      className="py-[clamp(80px,10vw,140px)] bg-bg-1 border-b border-line relative overflow-hidden"
+      className="py-[clamp(80px,10vw,140px)] bg-[#121212] border-b border-white/[0.08] relative overflow-hidden"
       aria-label="Season Tiers & Ranks"
     >
       <div className="max-w-[1200px] mx-auto px-6 relative z-10">
         {/* Header & Carousel Navigation */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 sm:mb-14 gap-6">
           <div className="tier-reveal">
-            <h2 className="text-3xl sm:text-5xl md:text-6xl font-extrabold uppercase tracking-tight text-text-1 font-heading">
-              Competitive <span className="text-accent">Tiers</span>
+            <h2 className="text-3xl sm:text-5xl md:text-6xl font-extrabold uppercase tracking-tight text-[#EDEDED] font-heading">
+              Competitive <span className="text-[#3ECF8E]">Tiers</span>
             </h2>
-            <p className="text-sm sm:text-base text-text-2 max-w-2xl mt-2">
+            <p className="text-sm sm:text-base text-[#A0A0A0] max-w-2xl mt-2 font-sans">
               Eight competitive divisions with direct cash milestone rewards.
             </p>
           </div>
 
-          {/* Carousel Navigation */}
-          <div className="tier-reveal flex items-center gap-2 self-start md:self-end">
+          {/* Carousel Navigation Buttons (Mobile Viewport Only) */}
+          <div className="tier-reveal flex md:hidden items-center gap-2 self-start">
             <button
               type="button"
               onClick={() => scrollTrack('left')}
-              className="w-10 h-10 rounded-control border border-line bg-bg-2 hover:bg-bg-3 hover:border-line-strong text-text-2 hover:text-text-1 transition-all duration-200 flex items-center justify-center cursor-pointer active:scale-[0.98]"
+              className="w-10 h-10 rounded-control border border-white/[0.08] bg-[#171717] hover:bg-[#1E201F] hover:border-white/20 text-[#A0A0A0] hover:text-[#EDEDED] transition-all duration-200 flex items-center justify-center cursor-pointer active:scale-[0.97]"
               aria-label="Scroll ranks left"
             >
               <ChevronLeft className="w-5 h-5" strokeWidth={1.5} />
@@ -103,7 +102,7 @@ export const LeaderboardTiers = () => {
             <button
               type="button"
               onClick={() => scrollTrack('right')}
-              className="w-10 h-10 rounded-control border border-line bg-bg-2 hover:bg-bg-3 hover:border-line-strong text-text-2 hover:text-text-1 transition-all duration-200 flex items-center justify-center cursor-pointer active:scale-[0.98]"
+              className="w-10 h-10 rounded-control border border-white/[0.08] bg-[#171717] hover:bg-[#1E201F] hover:border-white/20 text-[#A0A0A0] hover:text-[#EDEDED] transition-all duration-200 flex items-center justify-center cursor-pointer active:scale-[0.97]"
               aria-label="Scroll ranks right"
             >
               <ChevronRight className="w-5 h-5" strokeWidth={1.5} />
@@ -112,13 +111,13 @@ export const LeaderboardTiers = () => {
         </div>
 
         {/* ======================================================== */}
-        {/* ESPORTS TIER CAROUSEL / TRACK                            */}
+        {/* COMPLETE 4x2 DIVISION MATRIX & SCROLL TRACK              */}
         {/* ======================================================== */}
         <div
           ref={scrollContainerRef}
-          className="mb-14 overflow-x-auto no-scrollbar scroll-smooth pb-4 -mx-6 px-6"
+          className="mb-14 overflow-x-auto md:overflow-visible no-scrollbar scroll-smooth pb-4 md:pb-0 -mx-6 px-6 md:mx-0 md:px-0"
         >
-          <div className="flex gap-4 min-w-max pb-2">
+          <div className="flex md:grid md:grid-cols-4 gap-3.5 sm:gap-4 min-w-max md:min-w-0 pb-2 md:pb-0">
             {RANK_TIERS.map((tier, idx) => {
               const isGrandmaster = tier.isTop;
               const isSelected = targetTier === tier.name;
@@ -136,29 +135,26 @@ export const LeaderboardTiers = () => {
                   tabIndex={0}
                   role="button"
                   aria-pressed={isSelected}
-                  className={`w-[200px] sm:w-[220px] p-5 rounded-card transition-all duration-200 ease-out border flex flex-col justify-between cursor-pointer relative group text-left select-none outline-none focus-visible:ring-2 focus-visible:ring-accent bg-bg-2 bg-gradient-to-b from-white/[0.03] via-transparent to-transparent backdrop-blur-sm ${
-                    isSelected
-                      ? 'border-accent shadow-lift -translate-y-1.5'
+                  className={`w-[190px] sm:w-[210px] md:w-full p-4 sm:p-5 md:p-3.5 lg:p-5 rounded-card transition-all duration-200 ease-out border flex flex-col justify-between cursor-pointer relative group text-left select-none outline-none focus-visible:ring-2 focus-visible:ring-[#3ECF8E] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] ${isSelected
+                      ? 'bg-[#181a19] border-[#3ECF8E] shadow-[0_0_24px_-8px_rgba(62,207,142,0.30),inset_0_1px_0_rgba(255,255,255,0.08)] -translate-y-1.5'
                       : isGrandmaster
-                      ? 'border-line-accent hover:border-accent hover:-translate-y-1 hover:shadow-lift'
-                      : 'border-line hover:border-line-strong hover:-translate-y-1 hover:shadow-lift'
-                  }`}
+                        ? 'bg-[#171717] border-[#3ECF8E]/40 hover:border-[#3ECF8E] hover:-translate-y-1 hover:shadow-lift'
+                        : 'bg-[#171717] border-white/[0.08] hover:border-white/20 hover:-translate-y-1 hover:shadow-lift'
+                    }`}
                 >
-                  {(isSelected || isGrandmaster) && <HudCorners tone="emerald" size="sm" />}
-
-                  {/* Subtle apex ambient light for Grandmaster */}
+                  {/* Grandmaster Apex Top Sheen */}
                   {isGrandmaster && (
-                    <div className="absolute inset-0 rounded-card bg-[radial-gradient(ellipse_at_top,rgba(0,200,120,0.10),transparent_70%)] pointer-events-none" />
+                    <div className="absolute inset-0 rounded-card bg-[radial-gradient(ellipse_at_top,rgba(62,207,142,0.08),transparent_70%)] pointer-events-none" />
                   )}
 
                   {/* Card Header: Monospace Counter & Tag */}
                   <div>
                     <div className="flex justify-between items-center mb-1">
-                      <span className="text-[11px] font-mono text-text-3 font-semibold tracking-tight tabular-nums">
+                      <span className="text-[11px] font-mono text-[#707070] font-semibold tracking-tight tabular-nums">
                         {String(idx + 1).padStart(2, '0')} / 08
                       </span>
                       {isGrandmaster && (
-                        <span className="px-1.5 py-0.5 rounded text-[10px] font-mono font-bold bg-accent/15 text-accent border border-accent/40 tracking-wider">
+                        <span className="px-1.5 py-0.5 rounded text-[10px] font-mono font-bold bg-[#041B10] text-[#3ECF8E] border border-[#3ECF8E]/40 tracking-wider">
                           APEX
                         </span>
                       )}
@@ -168,13 +164,12 @@ export const LeaderboardTiers = () => {
                     <div className="h-28 sm:h-32 flex flex-col items-center justify-center relative my-2">
                       {/* Ambient Halo */}
                       <div
-                        className={`absolute w-20 h-20 rounded-full blur-xl transition-all duration-300 pointer-events-none ${
-                          isSelected
-                            ? 'bg-accent/20'
+                        className={`absolute w-20 h-20 rounded-full blur-xl transition-all duration-300 pointer-events-none ${isSelected
+                            ? 'bg-[#3ECF8E]/20'
                             : isGrandmaster
-                            ? 'bg-accent/15'
-                            : 'bg-white/[0.03] group-hover:bg-accent/10'
-                        }`}
+                              ? 'bg-[#3ECF8E]/15'
+                              : 'bg-white/[0.02] group-hover:bg-[#3ECF8E]/10'
+                          }`}
                       />
 
                       {/* Rank Emblem */}
@@ -182,7 +177,7 @@ export const LeaderboardTiers = () => {
                         src={tier.badge}
                         alt={`${tier.name} Rank Badge`}
                         loading="lazy"
-                        className="h-20 sm:h-24 w-auto max-w-[96px] object-contain drop-shadow-[0_12px_20px_rgba(0,0,0,0.85)] group-hover:scale-110 transition-transform duration-300 relative z-10"
+                        className="h-20 sm:h-24 w-auto max-w-[96px] object-contain drop-shadow-[0_12px_20px_rgba(0,0,0,0.85)] group-hover:scale-105 transition-transform duration-300 relative z-10"
                       />
 
                       {/* Pedestal Ground Shadow */}
@@ -190,25 +185,24 @@ export const LeaderboardTiers = () => {
                     </div>
 
                     {/* Tier Name & Sub-range */}
-                    <h4 className="text-lg sm:text-xl font-extrabold font-heading text-text-1 group-hover:text-accent transition-colors">
+                    <h4 className="text-lg sm:text-xl font-extrabold font-heading text-[#EDEDED] group-hover:text-[#3ECF8E] transition-colors">
                       {tier.name}
                     </h4>
-                    <span className="text-xs font-mono text-text-3 block mt-0.5 tracking-tight tabular-nums">
+                    <span className="text-xs font-mono text-[#707070] block mt-0.5 tracking-tight tabular-nums">
                       {tier.range}
                     </span>
 
                     {/* Requirement tag */}
-                    <div className="mt-2.5 inline-block px-2 py-0.5 rounded bg-bg-1 border border-line text-[11px] font-mono font-bold text-text-2 tracking-tight tabular-nums">
+                    <div className="mt-2.5 inline-block px-2 py-0.5 rounded bg-[#121212] border border-white/[0.08] text-[11px] font-mono font-bold text-[#A0A0A0] tracking-tight tabular-nums">
                       {tier.pts}
                     </div>
                   </div>
 
                   {/* Card Footer: Bonus Reward */}
-                  <div className="mt-4 pt-3 border-t border-line/60">
+                  <div className="mt-4 pt-3 border-t border-white/[0.08]">
                     <span
-                      className={`text-xs sm:text-sm font-mono font-bold block tracking-tight tabular-nums ${
-                        isGrandmaster || isSelected ? 'text-accent' : 'text-text-1'
-                      }`}
+                      className={`text-xs sm:text-sm font-mono font-bold block tracking-tight tabular-nums ${isGrandmaster || isSelected ? 'text-[#3ECF8E]' : 'text-[#EDEDED]'
+                        }`}
                     >
                       {tier.reward}
                     </span>
@@ -220,178 +214,173 @@ export const LeaderboardTiers = () => {
         </div>
 
         {/* ======================================================== */}
-        {/* RANK-GAP TACTICAL SIMULATOR (Cardless HUD Layout)       */}
+        {/* RANK-GAP TACTICAL SIMULATOR                              */}
         {/* ======================================================== */}
         <div className="relative">
-          <div
-            aria-hidden="true"
-            className="ambient-glow left-1/2 top-1/2 h-[420px] w-[680px] max-w-[90vw] -translate-x-1/2 -translate-y-1/2"
-          />
-          <div className="relative z-10 border border-line rounded-card bg-bg-2/60 backdrop-blur-sm p-6 sm:p-8 max-w-4xl mx-auto">
-          {/* Header Bar */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-5 border-b border-line gap-3 mb-8">
-            <div className="flex items-center gap-3">
-              <IconOrb icon={Target} tone="emerald" size="sm" />
-              <h3 className="text-xl sm:text-2xl font-bold font-heading text-text-1">
-                Promotion Gap Simulator
-              </h3>
-            </div>
-            <div className="flex items-center gap-2 px-3 py-1.5 rounded-control bg-bg-1 border border-line self-start sm:self-auto">
-              <Trophy className="w-3.5 h-3.5 text-accent" strokeWidth={1.5} />
-              <span className="text-xs font-mono text-accent font-bold tracking-tight tabular-nums">+20 PTS / Booyah</span>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            {/* Left Column: Interactive Controls */}
-            <div className="lg:col-span-7 space-y-6">
-              {/* Slider Section */}
-              <div>
-                <div className="flex justify-between items-baseline text-xs font-mono mb-2.5">
-                  <span className="text-text-3 uppercase font-semibold">Current Rating</span>
-                  <div className="flex items-center gap-2">
-                    <span className="text-base font-bold font-mono text-accent tracking-tight tabular-nums">
-                      {currentPts.toLocaleString()}
-                    </span>
-                    <span className="text-text-3">PTS</span>
-                  </div>
-                </div>
-
-                <input
-                  type="range"
-                  min="0"
-                  max="10000"
-                  step="50"
-                  value={currentPts}
-                  onChange={(e) => setCurrentPts(parseInt(e.target.value, 10))}
-                  aria-label="Current Points Rating"
-                  className="w-full h-2.5 bg-bg-1 rounded-control appearance-none cursor-pointer accent-accent transition-shadow hover:accent-emerald-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/60 focus-visible:ring-offset-2 focus-visible:ring-offset-bg-1"
-                />
-
-                {/* Quick Presets */}
-                <div className="flex justify-between items-center text-[11px] font-mono text-text-3 mt-2 px-1 tracking-tight tabular-nums">
-                  <span>0 PTS</span>
-                  <button
-                    type="button"
-                    onClick={() => setCurrentPts(2500)}
-                    aria-label="Set rating to 2,500 points"
-                    className="hover:text-accent inline-block py-2.5 -my-2.5 transition-all duration-100 cursor-pointer tabular-nums active:scale-[0.98]"
-                  >
-                    2.5K
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setCurrentPts(5000)}
-                    aria-label="Set rating to 5,000 points"
-                    className="hover:text-accent inline-block py-2.5 -my-2.5 transition-all duration-100 cursor-pointer tabular-nums active:scale-[0.98]"
-                  >
-                    5.0K
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setCurrentPts(7500)}
-                    aria-label="Set rating to 7,500 points"
-                    className="hover:text-accent inline-block py-2.5 -my-2.5 transition-all duration-100 cursor-pointer tabular-nums active:scale-[0.98]"
-                  >
-                    7.5K
-                  </button>
-                  <span>10K+ PTS</span>
-                </div>
+          <div className="relative z-10 border border-white/[0.08] rounded-card bg-[#171717] shadow-[inset_0_1px_0_rgba(255,255,255,0.05),0_20px_48px_-20px_rgba(0,0,0,0.7)] p-6 sm:p-8 max-w-4xl mx-auto">
+            {/* Header Bar */}
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-5 border-b border-white/[0.08] gap-3 mb-8">
+              <div className="flex items-center gap-3">
+                <IconOrb icon={Target} tone="emerald" size="sm" />
+                <h3 className="text-xl sm:text-2xl font-bold font-heading text-[#EDEDED]">
+                  Promotion Gap Simulator
+                </h3>
               </div>
-
-              {/* Target Tier Quick Milestone Selector */}
-              <div>
-                <span className="text-xs font-mono text-text-3 uppercase font-semibold block mb-2.5">
-                  Target Tier
-                </span>
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                  {RANK_TIERS.map((t) => {
-                    const isCurrent = targetTier === t.name;
-                    return (
-                      <button
-                        key={t.name}
-                        type="button"
-                        onClick={() => setTargetTier(t.name)}
-                        className={`py-2 px-2 rounded-control text-[10px] font-mono font-bold uppercase leading-tight transition-all duration-100 cursor-pointer flex flex-col items-center gap-1.5 active:scale-[0.98] tabular-nums ${
-                          isCurrent
-                            ? 'bg-accent text-bg-1 shadow-sm'
-                            : 'bg-bg-1 text-text-3 border border-line hover:text-text-1 hover:border-line-strong'
-                        }`}
-                      >
-                        <img
-                          src={t.badge}
-                          alt=""
-                          className="w-5 h-5 sm:w-6 sm:h-6 object-contain drop-shadow pointer-events-none"
-                        />
-                        <span className="truncate max-w-full">{t.name}</span>
-                      </button>
-                    );
-                  })}
-                </div>
+              <div className="flex items-center gap-2 px-3 py-1.5 rounded-control bg-[#121212] border border-white/[0.08] self-start sm:self-auto">
+                <Trophy className="w-3.5 h-3.5 text-[#3ECF8E]" strokeWidth={1.5} />
+                <span className="text-xs font-mono text-[#3ECF8E] font-bold tracking-tight tabular-nums">+20 PTS / Booyah</span>
               </div>
             </div>
 
-            {/* Right Column: Tactical Promotion Dossier */}
-            <div className="lg:col-span-5 border-t lg:border-t-0 lg:border-l border-line pt-6 lg:pt-0 lg:pl-8 space-y-4">
-              {/* Badge Preview & Title */}
-              <div className="flex items-center gap-4">
-                <div className="relative w-16 h-16 sm:w-20 sm:h-20 shrink-0 flex items-center justify-center">
-                  <div className="absolute inset-0 rounded-full bg-accent/15 blur-lg" />
-                  <img
-                    src={selectedTier.badge}
-                    alt={`${selectedTier.name} badge`}
-                    className="w-14 h-14 sm:w-16 sm:h-16 object-contain drop-shadow-[0_8px_16px_rgba(0,0,0,0.8)] relative z-10"
-                  />
-                </div>
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+              {/* Left Column: Interactive Controls */}
+              <div className="lg:col-span-7 space-y-6">
+                {/* Slider Section */}
                 <div>
-                  <div className="text-xl sm:text-2xl font-extrabold font-heading text-text-1">
-                    {selectedTier.name}
+                  <div className="flex justify-between items-baseline text-xs font-mono mb-2.5">
+                    <span className="text-[#707070] uppercase font-semibold">Current Rating</span>
+                    <div className="flex items-center gap-2">
+                      <span className="text-base font-bold font-mono text-[#3ECF8E] tracking-tight tabular-nums">
+                        {currentPts.toLocaleString()}
+                      </span>
+                      <span className="text-[#707070]">PTS</span>
+                    </div>
                   </div>
-                  <span className="text-xs font-mono text-accent tracking-tight tabular-nums">
-                    {selectedTier.targetMin.toLocaleString()} PTS REQUIRED
-                  </span>
-                </div>
-              </div>
 
-              {/* Telemetry Metrics */}
-              <div className="space-y-2.5 pt-2 border-t border-line font-mono text-xs tracking-tight">
-                <div className="flex justify-between items-center py-1">
-                  <span className="text-text-3 uppercase">Points Required:</span>
-                  <span className="text-sm font-bold text-accent tabular-nums">
-                    {ptsNeeded > 0 ? `${ptsNeeded.toLocaleString()} PTS` : 'QUALIFIED'}
-                  </span>
-                </div>
-
-                <div className="flex justify-between items-center py-1">
-                  <span className="text-text-3 uppercase">Booyahs Required:</span>
-                  <span className="text-sm font-bold text-text-1 tabular-nums">
-                    {ptsNeeded > 0 ? `~${booyahsNeeded} Matches` : 'Promotion Ready'}
-                  </span>
-                </div>
-
-                <div className="flex justify-between items-center py-1">
-                  <span className="text-text-3 uppercase">Milestone Bonus:</span>
-                  <span className="text-sm font-bold text-accent tabular-nums">
-                    {selectedTier.reward}
-                  </span>
-                </div>
-              </div>
-
-              {/* Progress to Target Bar */}
-              <div className="pt-2">
-                <div className="flex justify-between text-[11px] font-mono text-text-3 mb-1.5 tracking-tight tabular-nums">
-                  <span>Progress to {selectedTier.name}</span>
-                  <span className="text-text-1 font-bold">{progressPercent}%</span>
-                </div>
-                <div className="h-2 w-full bg-bg-1 rounded-full overflow-hidden border border-line">
-                  <div
-                    className="h-full bg-accent transition-all duration-300 rounded-full shadow-[0_0_12px_rgba(0,200,120,0.45)]"
-                    style={{ width: `${progressPercent}%` }}
+                  <input
+                    type="range"
+                    min="0"
+                    max="10000"
+                    step="50"
+                    value={currentPts}
+                    onChange={(e) => setCurrentPts(parseInt(e.target.value, 10))}
+                    aria-label="Current Points Rating"
+                    className="w-full h-2.5 bg-[#121212] rounded-control appearance-none cursor-pointer accent-[#3ECF8E] hover:accent-[#34B27B] border border-white/[0.08] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3ECF8E]/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[#121212]"
                   />
+
+                  {/* Quick Presets */}
+                  <div className="flex justify-between items-center text-[11px] font-mono text-[#707070] mt-2 px-1 tracking-tight tabular-nums">
+                    <span>0 PTS</span>
+                    <button
+                      type="button"
+                      onClick={() => setCurrentPts(2500)}
+                      aria-label="Set rating to 2,500 points"
+                      className="hover:text-[#3ECF8E] inline-block py-2.5 -my-2.5 transition-colors cursor-pointer tabular-nums active:scale-[0.98]"
+                    >
+                      2.5K
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setCurrentPts(5000)}
+                      aria-label="Set rating to 5,000 points"
+                      className="hover:text-[#3ECF8E] inline-block py-2.5 -my-2.5 transition-colors cursor-pointer tabular-nums active:scale-[0.98]"
+                    >
+                      5.0K
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setCurrentPts(7500)}
+                      aria-label="Set rating to 7,500 points"
+                      className="hover:text-[#3ECF8E] inline-block py-2.5 -my-2.5 transition-colors cursor-pointer tabular-nums active:scale-[0.98]"
+                    >
+                      7.5K
+                    </button>
+                    <span>10K+ PTS</span>
+                  </div>
+                </div>
+
+                {/* Target Tier Quick Milestone Selector */}
+                <div>
+                  <span className="text-xs font-mono text-[#707070] uppercase font-semibold block mb-2.5">
+                    Target Tier
+                  </span>
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                    {RANK_TIERS.map((t) => {
+                      const isCurrent = targetTier === t.name;
+                      return (
+                        <button
+                          key={t.name}
+                          type="button"
+                          onClick={() => setTargetTier(t.name)}
+                          className={`py-2 px-2 rounded-control text-[10px] font-mono font-bold uppercase leading-tight transition-all duration-100 cursor-pointer flex flex-col items-center gap-1.5 active:scale-[0.98] tabular-nums ${isCurrent
+                              ? 'bg-[#3ECF8E] text-[#041B10] shadow-sm'
+                              : 'bg-[#121212] text-[#707070] border border-white/[0.08] hover:text-[#EDEDED] hover:border-white/20'
+                            }`}
+                        >
+                          <img
+                            src={t.badge}
+                            alt=""
+                            className="w-5 h-5 sm:w-6 sm:h-6 object-contain drop-shadow pointer-events-none"
+                          />
+                          <span className="truncate max-w-full">{t.name}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+
+              {/* Right Column: Tactical Promotion Dossier */}
+              <div className="lg:col-span-5 border-t lg:border-t-0 lg:border-l border-white/[0.08] pt-6 lg:pt-0 lg:pl-8 space-y-4">
+                {/* Badge Preview & Title */}
+                <div className="flex items-center gap-4">
+                  <div className="relative w-16 h-16 sm:w-20 sm:h-20 shrink-0 flex items-center justify-center">
+                    <div className="absolute inset-0 rounded-full bg-[#3ECF8E]/15 blur-lg" />
+                    <img
+                      src={selectedTier.badge}
+                      alt={`${selectedTier.name} badge`}
+                      className="w-14 h-14 sm:w-16 sm:h-16 object-contain drop-shadow-[0_8px_16px_rgba(0,0,0,0.8)] relative z-10"
+                    />
+                  </div>
+                  <div>
+                    <div className="text-xl sm:text-2xl font-extrabold font-heading text-[#EDEDED]">
+                      {selectedTier.name}
+                    </div>
+                    <span className="text-xs font-mono text-[#3ECF8E] tracking-tight tabular-nums">
+                      {selectedTier.targetMin.toLocaleString()} PTS REQUIRED
+                    </span>
+                  </div>
+                </div>
+
+                {/* Telemetry Metrics */}
+                <div className="space-y-2.5 pt-2 border-t border-white/[0.08] font-mono text-xs tracking-tight">
+                  <div className="flex justify-between items-center py-1">
+                    <span className="text-[#707070] uppercase">Points Required:</span>
+                    <span className="text-sm font-bold text-[#3ECF8E] tabular-nums">
+                      {ptsNeeded > 0 ? `${ptsNeeded.toLocaleString()} PTS` : 'QUALIFIED'}
+                    </span>
+                  </div>
+
+                  <div className="flex justify-between items-center py-1">
+                    <span className="text-[#707070] uppercase">Booyahs Required:</span>
+                    <span className="text-sm font-bold text-[#EDEDED] tabular-nums">
+                      {ptsNeeded > 0 ? `~${booyahsNeeded} Matches` : 'Promotion Ready'}
+                    </span>
+                  </div>
+
+                  <div className="flex justify-between items-center py-1">
+                    <span className="text-[#707070] uppercase">Milestone Bonus:</span>
+                    <span className="text-sm font-bold text-[#3ECF8E] tabular-nums">
+                      {selectedTier.reward}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Progress to Target Bar */}
+                <div className="pt-2">
+                  <div className="flex justify-between text-[11px] font-mono text-[#707070] mb-1.5 tracking-tight tabular-nums">
+                    <span>Progress to {selectedTier.name}</span>
+                    <span className="text-[#EDEDED] font-bold">{progressPercent}%</span>
+                  </div>
+                  <div className="h-2 w-full bg-[#121212] rounded-full overflow-hidden border border-white/[0.08]">
+                    <div
+                      className="h-full bg-[#3ECF8E] transition-all duration-300 rounded-full shadow-[0_0_8px_rgba(62,207,142,0.4)]"
+                      style={{ width: `${progressPercent}%` }}
+                    />
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
           </div>
         </div>
       </div>

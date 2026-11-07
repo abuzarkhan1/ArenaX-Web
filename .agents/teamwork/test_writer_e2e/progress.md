@@ -1,19 +1,17 @@
-# Progress — test_writer_e2e
+# Progress
 
-Last visited: 2026-11-05T13:54:00Z
+Last visited: 2026-11-07T06:41:30Z
+Status: Completed - Test architecture implemented and 100% verified
 
-## Status
-- [x] Initialized workspace and recorded dispatch
-- [x] Read ORIGINAL_REQUEST.md and PROJECT.md
-- [x] Inspect existing project code, package.json, scripts, and test framework
-- [x] Design and implement automated verification suite:
-  - [x] TypeScript type checks (`npm run typecheck`) and ESLint (`npm run lint`)
-  - [x] Production build integrity (`npm run build`)
-  - [x] Automated layout & copy verification (R1 scan: taglines, helper text, subtitles, explanatory paragraphs, Pill eyebrows)
-  - [x] Functional invariants & calculations (R3: routes, combat points formula, tier mapping, rank gap math, organizer revenue math, contact form behavior)
-  - [x] 4-tier test case methodology (Tier 1: Feature Coverage, Tier 2: Boundary & Corner Cases, Tier 3: Cross-Feature Interactions, Tier 4: Real-World Scenarios)
-- [x] Create TEST_INFRA.md at project root
-- [x] Add test runner command (`npm test`, `npm run test:verify`, `npm run test:unit`) to package.json
-- [x] Execute test runner and verify 100% pass (exit code 0)
+## Steps
+- [x] Received dispatch instructions and initialized BRIEFING.md
+- [x] Read ORIGINAL_REQUEST.md, PROJECT.md, supabase_tokens.md, views_catalog.md
+- [x] Examine existing test configuration and tests directory
+- [x] Formulate 4-tier test architecture and plan
+- [x] Draft and write TEST_INFRA.md at project root
+- [x] Implement `tests/supabase-tokens-and-invariants.test.ts` (Reference immutability, Supabase tokens #3ECF8E/#171717/#121212/hairlines, verbatim copy preservation, build configs)
+- [x] Expand Tier 1, Tier 2, Tier 3, and Tier 4 test suites with required scope
+- [x] Update `scripts/run-all-tests.ts` and `package.json`
+- [x] Run `npm test` and build checks (278/278 tests passing, 0 failures)
 - [x] Publish TEST_READY.md at project root
-- [x] Document handoff.md and send_message to orchestrator
+- [x] Author handoff.md and report to orchestrator

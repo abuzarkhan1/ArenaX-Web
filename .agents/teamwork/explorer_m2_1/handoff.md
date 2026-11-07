@@ -1,396 +1,119 @@
-# Milestone 2 Exploration Report: Hero & Editorial Statements Redesign
+# Handoff Report: Milestone 2 Navbar & Global Chrome Redesign Blueprint
 
-**Target Components**: `src/components/Hero.tsx` & `src/components/Statement.tsx`  
-**Author**: `explorer_m2_1`  
-**Working Directory**: `c:\Users\Muhammad Minhas\ArenaX-Web\.agents\teamwork\explorer_m2_1\`  
-**Project Root**: `c:\Users\Muhammad Minhas\ArenaX-Web`  
+**Agent**: teamwork_explorer (`explorer_m2_1`)  
+**Parent / Recipient**: `8b88bbad-6052-4d75-b548-47b7f26819bc` (Project Orchestrator)  
+**Deliverable File**: `c:\Users\Muhammad Minhas\ArenaX-Web\.agents\teamwork\explorer_m2_1\navbar_plan.md`  
+**Handoff Type**: Hard (Task Complete)  
 
 ---
 
 ## 1. Observation
 
-Direct inspection of `src/components/Hero.tsx`, `src/components/Statement.tsx`, `src/components/primitives/Stat.tsx`, and the automated test suite (`tests/tier1-feature-coverage.test.ts`, `tests/tier3-cross-feature.test.ts`, `tests/layout-copy-verification.test.ts`) revealed the following concrete observations:
-
-### 1.1 Hero Component (`src/components/Hero.tsx`)
-
-1. **Status Badge Version Suffix**:
-   - **Location**: `src/components/Hero.tsx:116-124`
-   - **Current Code**:
+1. **Current Header Implementation (`src/components/Navbar.tsx`)**:
+   - Lines 110-112:
      ```tsx
-     <Badge
-       tone="emerald"
-       dot
-       pulse
-       className="px-3.5 py-1.5 text-[11px] tracking-[0.08em] shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]"
-     >
-       OFFICIAL CLIENT <span className="ml-0.5 text-emerald-300/90">• v2.6.0</span>
-     </Badge>
+     <nav className="fixed top-0 left-0 right-0 z-50 bg-bg-0/70 backdrop-blur-xl border-b border-white/[0.08] transition-colors duration-300">
+       <div className="max-w-[1200px] mx-auto px-6">
+         <div className="flex items-center justify-between h-20">
      ```
-   - **Finding**: Appending `• v2.6.0` to a live status badge mixes release versioning with system availability indicators. In Linear's design system, status badges communicate operational state (`OFFICIAL CLIENT`), not changelog release tags.
-
-2. **Promo Pill `25 AX Free Welcome Bonus For Referred Accounts`**:
-   - **Finding**: Audited entire file. Verified that no promotional welcome bonus pill exists in current `Hero.tsx`. (Marketing copy mentioning 25 AX bonus was isolated to `ScoutRewards.tsx` and `Download.tsx`). It must remain strictly excluded from `Hero.tsx` under R1.
-
-3. **Secondary Corner Badges (`2026` & `SEASON 4`)**:
-   - **Location**: `src/components/Hero.tsx:187-199`
-   - **Current Code**:
+   - Lines 125-127:
      ```tsx
-     {/* Corner Year Badge */}
-     <div className="absolute right-2 sm:right-6 top-1/2 -translate-y-1/2 hidden sm:flex flex-col items-end animate-cine-badge-right">
-       <Badge tone="emerald" className="px-2.5 py-1 tracking-[0.1em]">
-         2026
-       </Badge>
-     </div>
-
-     {/* Left Season Badge */}
-     <div className="absolute left-2 sm:left-6 top-1/2 -translate-y-1/2 hidden sm:flex flex-col items-start animate-cine-badge-left">
-       <Badge tone="neutral" className="px-2.5 py-1 tracking-[0.1em]">
-         SEASON 4
-       </Badge>
+     <span className="text-xl font-extrabold text-text-1 font-heading tracking-tight">
+       Arena<span className="text-accent">X</span>
+     </span>
+     ```
+   - Lines 143-148:
+     ```tsx
+     className={`link-underline px-3 py-1.5 text-sm font-medium tracking-normal rounded-control transition-colors cursor-pointer ${
+       isActive
+         ? 'text-accent font-semibold bg-accent-dim'
+         : 'text-text-2 hover:text-text-1 hover:bg-bg-2'
+     }`}
+     ```
+   - Lines 181-186:
+     ```tsx
+     <div className="w-full bg-white/[0.06] h-[2px]">
+       <div
+         className="bg-gradient-to-r from-[#249361] via-[#3ECF8E] to-[#4CD99B] h-[2px] shadow-[0_0_10px_rgba(62,207,142,0.6)] transition-all duration-150 ease-out"
+         style={{ width: `${scrollProgress}%` }}
+       />
      </div>
      ```
-   - **Finding**: Floating badges pinned at `top-1/2 -translate-y-1/2` visually clutter the parallax headline and overlap the 3D character cutout. Grep search confirms zero tests assert the presence of these badges in `Hero.tsx`. Eliminating them allows the condensed `ARENAX` typography and character cutout to command full depth.
-
-4. **Explanatory Subhead Paragraph**:
-   - **Location**: `src/components/Hero.tsx:245-247`
-   - **Current Code**:
+   - Lines 189-191:
      ```tsx
-     <p className="text-base sm:text-lg text-text-2 max-w-2xl mx-auto leading-relaxed mb-8 px-2">
-       Daily Bermuda BR and 4v4 Clash Squad scrims. AI vision verification and 24-hour JazzCash and EasyPaisa withdrawals.
-     </p>
+     {mobileMenuOpen && (
+       <div className="lg:hidden bg-bg-0/95 backdrop-blur-2xl border-t border-white/[0.08] shadow-broadcast max-h-[calc(100dvh-5.5rem)] overflow-y-auto overscroll-contain">
+         <div className="px-6 py-6 space-y-2 max-w-md mx-auto">
      ```
-   - **Finding**: This conversational prose paragraph summarizes features that are already self-evident from the top navigation chips (`Bermuda BR`, `Clash Squad 4v4`, `AI Vision OCR`, `Two-Wallet Escrow`), the headline (`Pakistan's Premier Free Fire Platform`), and the telemetry ribbon. It violates R1 requirement to remove explanatory copy where layout and controls are self-evident.
 
-5. **Version Tag in CTA Button**:
-   - **Location**: `src/components/Hero.tsx:258`
-   - **Current Code**:
-     ```tsx
-     <Button
-       variant="primary"
-       size="lg"
-       onClick={handleDownload}
-       icon={<DownloadCloud className="w-4 h-4" strokeWidth={1.5} />}
-       className="w-full sm:w-auto shadow-[0_12px_28px_rgba(0,200,120,0.22)]"
-     >
-       Download Direct APK (v2.6)
-     </Button>
+2. **Design System Tokens (`spec_miner_survey_1/supabase_tokens.md`, `src/index.css`, `tailwind.config.js`)**:
+   - `spec_miner_survey_1/supabase_tokens.md:49`: `dark:bg-[#0b0e0d]` / `oklab(15.99% -0.005 0.0006 / 0.85)` (`#0B0E0D`) — sticky header translucent surface.
+   - `src/index.css:12`: `--bg-header: #0B0E0D; /* sticky header translucent backdrop */`.
+   - `tailwind.config.js:20`: `header: withAlpha('--bg-header', '11, 14, 13')`.
+   - `spec_miner_survey_1/supabase_tokens.md:40`: Brand Gradient `linear-gradient(#249361, #3ECF8E)`.
+   - `spec_miner_survey_1/supabase_tokens.md:125`: Navigation links `text-sm` (14px), font-weight Medium (500), font-family `Inter`.
+   - `spec_miner_survey_1/supabase_tokens.md:195`: Canonical Supabase navbar height `h-16` (64px).
+
+3. **Current Test Baseline Execution (`scripts/run-all-tests.ts`)**:
+   - Tool command `npm test` executed via background task `task-40`. Result:
      ```
-   - **Finding**: Embeds version helper text `(v2.6)` and redundant modifier `Direct APK`. In Milestone 1, the mobile navbar button was streamlined to `Download App`. Primary action buttons in Linear / Apple design use clean action verbs without embedded version numbers.
-
-6. **Subtext Under Telemetry Metrics**:
-   - **Location**: `src/components/Hero.tsx:273-309`
-   - **Current Code**:
-     ```tsx
-     <div className="pt-6 sm:pt-8 border-t border-white/[0.08] grid grid-cols-1 sm:grid-cols-3 gap-5 sm:gap-0 sm:divide-x sm:divide-line text-left">
-       <div className="flex items-start gap-3 sm:pr-6">
-         <IconOrb icon={Zap} tone="emerald" size="sm" className="mt-0.5" />
-         <div>
-           <span className="text-[11px] text-text-3 font-mono uppercase font-bold tracking-wider block mb-0.5">
-             AI Vision Engine
-           </span>
-           <span className="text-sm font-bold text-text-1 block tracking-tight">
-             Scoreboards verified in seconds
-           </span>
-         </div>
-       </div>
-       {/* Two-Wallet Security & Solvency Guarantee blocks with sentences */}
-     </div>
+     1. TypeScript Typecheck                      [PASS] (6.99s)
+     2. ESLint Code Analysis                      [PASS] (6.70s)
+     3. Vite Production Build                     [PASS] (6.04s)
+     4. Automated Test Suites (Tiers 1–5 & R1/R3)  [PASS] (2.65s)
+     OVERALL STATUS: ALL CHECKS PASSED (Total: 22.38s)
      ```
-   - **Finding**: Currently, `Hero.tsx` does NOT use the official `<Stat />` primitive component (`src/components/primitives/Stat.tsx`). Instead, it uses custom text blocks with explanatory sentence claims (`Scoreboards verified in seconds`, `1 AX = 1 PKR cash parity`, `100% automated refund`). Furthermore, `tests/tier1-feature-coverage.test.ts:123` specifically checks:
-     `assert.ok(src.includes('Stat') || src.includes('stat'), 'Hero must feature telemetry metrics');`
-     Replacing these prose blurbs with `<Stat value="..." label="..." />` aligns with design system primitives and Linear telemetry standards.
 
-7. **Character Switcher & Parallax Invariants**:
-   - **Location**: `src/components/Hero.tsx:6-29, 32-37, 147-165, 206-234`
-   - **Finding**: The character switcher (`CHARACTERS` object containing `Red Criminal` and `Streetwear Rebel`, `activeCharacter` state, `selectedChar.halo` aura with `#EF4444` red and `#00C878` emerald) and multi-plane scroll parallax with mouse tilt are fully intact and functional. These must remain strictly preserved.
-
----
-
-### 1.2 Statement Component (`src/components/Statement.tsx`)
-
-1. **Platform Protocol Eyebrow**:
-   - **Location**: `src/components/Statement.tsx:85-87`
-   - **Finding**: Previously contained `<Pill dot={true} label="PLATFORM PROTOCOL" />` in initial commit `4253628`. Verified that it has already been removed from current HEAD. `tests/layout-copy-verification.test.ts:20` scans for `<Pill\b[^>]*\/>` and flags them under strict R1. The eyebrow must remain omitted.
-
-2. **4 Long Detail Explanation Paragraphs**:
-   - **Location**: `src/components/Statement.tsx:7-28, 118-121`
-   - **Current Code**:
-     ```tsx
-     const STATEMENTS = [
-       {
-         num: '01',
-         line: 'Scoreboards verified in seconds.',
-         detail: 'AI vision scans end-match victory screenshots automatically. Zero host bias, zero dispute delays.',
-       },
-       {
-         num: '02',
-         line: 'Cash out in 24 hours.',
-         detail: 'Direct transfers to JazzCash, EasyPaisa, and Pakistani bank accounts with 1 AX = 1 PKR cash parity.',
-       },
-       {
-         num: '03',
-         line: 'Money kept in two separate wallets.',
-         detail: 'Deposits and tournament prize money remain completely segregated. 100% automated match refund guarantee.',
-       },
-       {
-         num: '04',
-         line: 'Cheaters banned for life.',
-         detail: 'Strict in-game UID roster validation before credentials unlock. Zero tolerance for emulators or hacks.',
-       },
-     ];
-     ```
-     And in JSX:
-     ```tsx
-     <p className="statement-detail text-sm sm:text-base text-text-2 max-w-sm md:text-right leading-relaxed font-normal flex-shrink-0 pl-8 md:pl-0">
-       {item.detail}
-     </p>
-     ```
-   - **Finding**: `PROJECT.md:17` defines Feature 6: *"Platform Protocol Statements | 4 high-contrast statements with GSAP scrubbed word-by-word reveal; elimination of verbose detail paragraphs | M2"*. The 4 paragraphs dilute the high-impact editorial typography.
-   - **CRITICAL Cross-Feature Test Finding**:
-     `tests/tier3-cross-feature.test.ts:154-160` asserts:
-     ```ts
-     it('cross-references AI vision screenshot verification between AIVisionShowcase and Statement', () => {
-       const visionSrc = readSrcFile('components/AIVisionShowcase.tsx');
-       const stmtSrc = readSrcFile('components/Statement.tsx');
-
-       assert.ok(visionSrc.includes('AI') || visionSrc.includes('Scoreboard'));
-       assert.ok(stmtSrc.includes('AI') || stmtSrc.includes('Vision'));
-     });
-     ```
-     Currently, the strings `'AI'` and `'Vision'` exist **only** inside `STATEMENTS[0].detail`! If `detail` is deleted without revising `STATEMENTS[0].line`, `tier3-cross-feature.test.ts` will immediately fail!
-     Updating `STATEMENTS[0].line` to `"AI vision verifies scoreboards in seconds."` guarantees that `stmtSrc.includes('AI') || stmtSrc.includes('Vision')` passes with 100% stability.
-
-3. **GSAP ScrollTrigger scrub timeline**:
-   - **Location**: `src/components/Statement.tsx:33-76`
-   - **Finding**: Animates `.statement-word` elements with scrubbed opacity reveal. Removing `.statement-detail` allows simplifying the GSAP context to solely animate `.statement-word`, while preserving responsive `matchMedia` and clean `ctx.revert()`.
+4. **Rigid Test Invariants on `Navbar.tsx`**:
+   - `tests/challenger-m1-adversarial.test.ts:75-81`: `document.getElementById(item.id)?.scrollIntoView` and `document.getElementById('download')?.scrollIntoView`.
+   - `tests/challenger-m1-adversarial.test.ts:89-93`: `const el = document.getElementById(sec);` and `if (el) {`.
+   - `tests/challenger-m1-adversarial.test.ts:103-114`: `handleNavClick =` and `handleDownloadClick =` must both contain `document.body.style.overflow = '';`.
+   - `tests/challenger-m1-adversarial.test.ts:120-122`: Secondary drawer links `to="/about"`, `to="/contact"`, `to="/terms"` with `onClick`.
+   - `tests/challenger-m1-adversarial.test.ts:135` & `tests/mobile-drawer-overflow-bug.test.ts:12-16`: Dedicated `useEffect(() => { if (mobileMenuOpen) document.body.style.overflow = 'hidden' ... document.body.style.overflow = ''` effect.
+   - `tests/challenger-m1-adversarial.test.ts:151-154`: Free of `ESPORTS CLIENT`, `v2.6`, `Download APK (v2.6)`, and must include `Download App`.
+   - `tests/challenger-m1-adversarial.test.ts:258-260`: Must trigger `trackButtonClick('download_app', 'navbar')` and `trackDownload('ArenaX.apk', 'Android', 'navbar')`.
+   - `tests/tier3-cross-feature.test.ts:54-57`: Exact array `const sections = ['tournaments', 'ai-vision', 'wallet', 'ranks', 'organizers', 'how-it-works'];`.
+   - `tests/supabase-tokens-and-invariants.test.ts:158-169`: Verbatim labels `Arena`, `X`, `Tournaments`, `Vision Engine`, `Wallet`, `Ranks`, `Organizers`, `How It Works`, `FAQs`, `Download App`.
 
 ---
 
 ## 2. Logic Chain
 
-1. **R1 Compliance & Elimination of Verbal Crutches**:
-   - R1 explicitly requires eliminating taglines, secondary labels, and helper copy across all screens.
-   - In `Hero.tsx`:
-     - Version suffix `• v2.6.0` on the status badge is extraneous telemetry noise.
-     - Corner badges `2026` and `SEASON 4` are decorative visual clutter.
-     - Subhead paragraph `Daily Bermuda BR and 4v4 Clash Squad scrims...` is redundant narrative padding.
-     - CTA button copy `Download Direct APK (v2.6)` has extraneous helper modifiers.
-     - Telemetry claims `Scoreboards verified in seconds`, `1 AX = 1 PKR cash parity`, `100% automated refund` are sentence fragments rather than high-contrast data.
-   - In `Statement.tsx`:
-     - The 4 `detail` paragraphs are explanatory footnotes.
-     - Eliminating them transforms the section into pure, monumental typography matching Linear's design system.
-
-2. **Linear & Apple Notes Polish Synthesis**:
-   - **Linear**: High-contrast, cardless telemetry ribbons built with quantitative figures (`< 15s`, `1:1`, `100%`) and concise mono uppercase labels (`AI OCR VERIFICATION`, `CASH PARITY (PKR)`, `AUTOMATED REFUND`).
-   - **Apple Notes / Editorial**: Confident editorial declarations where typography alone communicates value. Removing side-column paragraphs lets the scrubbed statements expand to `text-3xl sm:text-5xl md:text-6xl font-extrabold`.
-
-3. **Behavioral & Contract Invariance (R3)**:
-   - Preserves character switcher state: `activeCharacter` (`'tactical' | 'rebel'`), `CHARACTERS` object with `'Red Criminal'` and `'Streetwear Rebel'`, and respective red/emerald backlight halos.
-   - Preserves title parallax: `scrollY * 0.16` Z-space translation, mouse offset tracking.
-   - Preserves conversion triggers: `handleDownload` calling `trackDownload("ArenaX.apk", "Android", "2.6.0")` and `scrollToSection('tournaments')`.
-   - Preserves GSAP timeline: `gsap.context`, `ScrollTrigger.create`, `stagger: 0.08`, `scrub: 0.6`, `.statement-word` opacity interpolation.
-   - Preserves test contracts: `Stat` primitive in `Hero.tsx`, and `AI vision` in `Statement.tsx:STATEMENTS[0].line`.
+1. From Observation 1, `Navbar.tsx` currently applies a dark green canvas tint `bg-bg-0/70` (`#0E0F0E`) with `backdrop-blur-xl` and an oversized `h-20` (80px) height.
+2. From Observation 2, Supabase's canonical header surface specification dictates `#0B0E0D` / `rgba(11, 14, 13, 0.85)` with `backdrop-blur-md` and `h-16` (64px) height. Changing the classes to `bg-[#0B0E0D]/85 backdrop-blur-md` and `h-16` directly satisfies Requirement R2 without affecting layout clearance (Hero padding is `pt-24 sm:pt-28`, comfortably clearing 64px).
+3. From Observation 1, the scroll progress fill currently uses a 3-stop gradient (`#249361` via `#3ECF8E` to `#4CD99B`). Observation 2 indicates the official Supabase brand linear gradient is `#249361` ➔ `#3ECF8E`. Updating the class to `bg-gradient-to-r from-[#249361] to-[#3ECF8E]` brings the scroll indicator into strict token compliance.
+4. From Observation 1 & 4, the mobile menu overlay currently uses `bg-bg-0/95`. Updating it to dark carbon `#171717` (`bg-[#171717]/98 backdrop-blur-2xl`) aligns with canonical Supabase surface-100.
+5. From Observation 4, any modifications to `Navbar.tsx` must preserve 10 explicit test assertions across 5 test suites (optional chaining on element lookups, dual-layer overflow reset, analytics tracking, exact section lists, and verbatim text labels).
+6. Therefore, the blueprint in `navbar_plan.md` synthesizes all design improvements while preserving 100% of the state contracts and code invariants.
 
 ---
 
 ## 3. Caveats
 
-1. **Read-Only Investigation Boundary**: This report is produced by `explorer_m2_1` in read-only mode. No production source files have been altered. All proposed modifications must be executed by the Milestone 2 implementer agent (`implementer_m2_1`).
-2. **Milestone 2 Peer Scopes**:
-   - `AppExperienceShowcase.tsx` and `TournamentModes.tsx` belong to Milestone 2 but are assigned to peer explorers/implementers (`explorer_m2_2` and `explorer_m2_3`).
-3. **Cross-Feature String Invariant**:
-   - Implementer must ensure `STATEMENTS[0].line` in `Statement.tsx` explicitly includes `"AI vision"` (e.g., `"AI vision verifies scoreboards in seconds."`) to prevent breaking `tests/tier3-cross-feature.test.ts`.
+- **No Caveats**: All 14 test suites and all relevant components (`Navbar.tsx`, `Button.tsx`, `Hero.tsx`, `App.tsx`, `index.css`, `tailwind.config.js`) were inspected directly. No changes were made to the source files, maintaining strict read-only explorer compliance.
 
 ---
 
-## 4. Conclusion & Concrete Action Plan
+## 4. Conclusion
 
-### 4.1 Exact Specifications for `src/components/Hero.tsx`
-
-#### A. Top Meta Bar
-- Remove `• v2.6.0` from status badge.
-- Resulting badge:
-  ```tsx
-  <Badge
-    tone="emerald"
-    dot
-    pulse
-    className="px-3.5 py-1.5 text-[11px] tracking-[0.08em] shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]"
-  >
-    OFFICIAL CLIENT
-  </Badge>
-  ```
-- Retain `HudCorners`, fluid anchor pills (`Bermuda BR`, `Clash Squad 4v4`, `AI Vision OCR`, `Two-Wallet Escrow`), and the character switcher (`Criminal` vs `Rebel`).
-
-#### B. Parallax Title Region
-- Remove the two floating corner badges (`2026` and `SEASON 4`) from lines 187-199.
-- Retain the condensed `ARENAX` background heading, parallax tracking styles, and character cutout with active aura glow.
-
-#### C. Hero Headline & CTAs
-- Retain headline:
-  ```tsx
-  <h2 className="text-3xl sm:text-5xl md:text-6xl font-extrabold text-text-1 font-heading tracking-tight mb-8 text-balance">
-    Pakistan's Premier <span className="text-accent">Free Fire</span> Platform
-  </h2>
-  ```
-- Delete the explanatory paragraph (`<p className="text-base sm:text-lg text-text-2...">Daily Bermuda BR...</p>`).
-- Update primary CTA button from `Download Direct APK (v2.6)` to `Download App` (or `Download Android APK`), retaining `handleDownload` and `DownloadCloud` icon.
-- Update secondary CTA button from `Explore Tournament Modes` to `Explore Tournaments`, retaining `scrollToSection('tournaments')`.
-
-#### D. Telemetry Ribbon Redesign with `<Stat />` Primitive
-- Import `Stat` from `./primitives`.
-- Replace the custom unquantified `IconOrb` / text blocks with:
-  ```tsx
-  {/* Open HUD Telemetry Ribbon (High-Contrast Quantitative Data) */}
-  <div className="pt-8 sm:pt-10 border-t border-white/[0.08] grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-0 sm:divide-x sm:divide-line text-left">
-    <div className="sm:pr-8">
-      <Stat value="< 15s" label="AI OCR Verification" accent />
-    </div>
-    <div className="sm:px-8">
-      <Stat value="1:1" label="Cash Parity (PKR)" />
-    </div>
-    <div className="sm:pl-8">
-      <Stat value="100%" label="Automated Refund" />
-    </div>
-  </div>
-  ```
-
----
-
-### 4.2 Exact Specifications for `src/components/Statement.tsx`
-
-#### A. Data Model Cleanup
-- Update `STATEMENTS` data structure to eliminate verbose `detail` strings while embedding `"AI vision"` into statement 01:
-  ```tsx
-  const STATEMENTS = [
-    {
-      num: '01',
-      line: 'AI vision verifies scoreboards in seconds.',
-    },
-    {
-      num: '02',
-      line: 'Cash out in 24 hours.',
-    },
-    {
-      num: '03',
-      line: 'Money kept in two separate wallets.',
-    },
-    {
-      num: '04',
-      line: 'Cheaters banned for life.',
-    },
-  ];
-  ```
-
-#### B. GSAP Animation Streamlining
-- Streamline `useLayoutEffect` to scrub words without needing `detail` query or tween:
-  ```tsx
-  useLayoutEffect(() => {
-    const ctx = gsap.context(() => {
-      const mm = gsap.matchMedia();
-      mm.add('(prefers-reduced-motion: no-preference)', () => {
-        const rows = statementRef.current?.querySelectorAll('[data-statement-row]');
-        rows?.forEach((row) => {
-          const words = row.querySelectorAll('.statement-word');
-
-          gsap.to(words, {
-            opacity: 1,
-            stagger: 0.08,
-            ease: 'power3.out',
-            scrollTrigger: {
-              trigger: row,
-              start: 'top 85%',
-              end: 'top 45%',
-              scrub: 0.6,
-            },
-          });
-        });
-      });
-    }, statementRef);
-
-    return () => ctx.revert();
-  }, []);
-  ```
-
-#### C. JSX Layout Redesign
-- Remove `<p className="statement-detail">` completely.
-- Make the statement typography full-width, monumental, and impactful:
-  ```tsx
-  <div className="space-y-0 divide-y divide-line">
-    {STATEMENTS.map((item, index) => (
-      <div
-        key={item.num}
-        data-statement-row={index}
-        className="group relative py-10 sm:py-16 transition-colors duration-300 hover:bg-emerald-500/[0.025] flex items-baseline gap-6 sm:gap-10"
-      >
-        {/* Emerald hairline accent on hover */}
-        <span
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-emerald-500/50 via-emerald-500/10 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-        />
-
-        {/* Mono Index Number */}
-        <span className="font-mono text-base sm:text-xl font-bold text-accent tracking-[0.1em] tabular-nums flex-shrink-0 transition-colors duration-300 group-hover:text-emerald-300">
-          /{item.num}
-        </span>
-
-        {/* High-Contrast Scrubbed Statement Words */}
-        <h2 className="text-3xl sm:text-5xl md:text-6xl font-extrabold text-text-1 font-heading tracking-tight leading-[1.08] max-w-5xl">
-          {item.line.split(' ').map((word, wIdx) => (
-            <span
-              key={wIdx}
-              className="statement-word inline-block mr-2.5 sm:mr-3.5 opacity-25 transition-opacity"
-            >
-              {word}
-            </span>
-          ))}
-        </h2>
-      </div>
-    ))}
-  </div>
-  ```
+The blueprint in `navbar_plan.md` provides a complete, drop-in specification for redesigning `src/components/Navbar.tsx` with Supabase design tokens:
+1. **Surface**: Obsidian translucent header `bg-[#0B0E0D]/85 backdrop-blur-md` with 1px hairline border `border-b border-white/[0.08]`.
+2. **Dimensions**: Precision `h-16` (64px) developer-tool chrome height.
+3. **Scroll Indicator**: Clean Supabase brand gradient `from-[#249361] to-[#3ECF8E]`.
+4. **Brand Wordmark**: Manrope `Arena` with emerald accent `text-[#3ECF8E]` on `X` and `#171717` hairline badge.
+5. **Navigation Links**: Medium-weight (500) Inter typography with `#A0A0A0` muted text, hover brightening, and active emerald pill indicator (`text-[#3ECF8E] bg-[#3ECF8E]/10 border border-[#3ECF8E]/20`).
+6. **Primary CTA**: `<Button variant="primary" size="sm">` with `Download App` label.
+7. **Mobile Drawer**: Canonical dark carbon `#171717` surface, hairline dividers, hairline secondary route chips, and full-width CTA.
+8. **Contract Integrity**: 100% preservation of all 7 navigation items, anchor IDs, scroll spy sections, analytics telemetry, and body overflow lifecycle effects.
 
 ---
 
 ## 5. Verification Method
 
-To verify these redesigns independently once implemented:
-
-### 5.1 Automated Command Verification
-1. **Full Test Suite**:
-   ```powershell
-   npm test
-   ```
-   *Expected*: Zero errors across all test suites, including TypeScript check, ESLint check, Vite build, and automated test tiers.
-2. **Typecheck Only**:
-   ```powershell
-   npm run typecheck
-   ```
-   *Expected*: Zero TypeScript diagnostic errors.
-3. **Lint Suite**:
-   ```powershell
-   npm run lint
-   ```
-   *Expected*: Zero ESLint warnings or errors.
-4. **Vite Production Build**:
-   ```powershell
-   npm run build
-   ```
-   *Expected*: Production bundle emits successfully with code 0.
-
-### 5.2 Specific Invariant & Regression Checks
-- **Hero Invariants**:
-  - `Hero.tsx` must contain `Red Criminal`, `Streetwear Rebel`, `activeCharacter`.
-  - `Hero.tsx` must contain `handleDownload` and `tournaments`.
-  - `Hero.tsx` must contain `Stat` (satisfies `tests/tier1-feature-coverage.test.ts:123`).
-  - `Hero.tsx` must NOT contain `v2.6.0`, `(v2.6)`, or the subhead sentence `Daily Bermuda BR...`.
-  - `Hero.tsx` must NOT contain floating corner badges `2026` or `SEASON 4`.
-- **Statement Invariants**:
-  - `Statement.tsx` must contain `STATEMENTS`, `gsap` (or `ScrollTrigger`), `'01'`, `'02'`, `'03'`, `'04'`.
-  - `Statement.tsx` must contain `'AI'` or `'Vision'` (satisfies `tests/tier3-cross-feature.test.ts:159`).
-  - `Statement.tsx` must NOT contain `<Pill` or `<p className="statement-detail">` paragraphs.
-- **Strict R1 Audit**:
-  ```powershell
-  $env:STRICT_R1="true"; npm test
-  ```
-  *Expected*: Passes without violations for `Hero.tsx` and `Statement.tsx`.
+To independently verify the implementation against this blueprint:
+1. Review the proposed implementation in `navbar_plan.md` Section 5.
+2. After the implementer applies the changes to `src/components/Navbar.tsx`:
+   - Run typecheck: `npm run typecheck` (must pass 0 errors)
+   - Run linter: `npx eslint src/components/Navbar.tsx` (must pass 0 errors)
+   - Run test suite: `npm test` (all 14 test suites must pass 100%)
+   - Invalidation condition: Any failure in `tests/challenger-m1-adversarial.test.ts`, `tests/mobile-drawer-overflow-bug.test.ts`, `tests/supabase-tokens-and-invariants.test.ts`, `tests/tier1-feature-coverage.test.ts`, or `tests/tier3-cross-feature.test.ts` indicates an invariant regression.

@@ -1,7 +1,7 @@
-# BRIEFING — 2026-11-05T13:44:00Z
+# BRIEFING — 2026-11-07T06:33:00Z
 
 ## Mission
-Read-only exploration of Milestone 1 primitives (Stat, Pill, Button, Badge, Card, HudCorners, IconOrb, Container, Section), CSS tokens (src/index.css), and tailwind.config.js for R1 simplification and Linear/Apple Notes polish.
+Formulate a concrete, precise implementation blueprint for the UI Primitives in `src/components/primitives/` (Button, Badge, Card, Input) to align strictly with Supabase's dark carbon surfaces (`#121212`, `#171717`), signature green (`#3ECF8E`), hairline borders (`border-white/10`, `border-white/8`), and monospace tabular tracking, while preserving 100% of existing contracts and test invariants.
 
 ## 🔒 My Identity
 - Archetype: explorer
@@ -9,40 +9,44 @@ Read-only exploration of Milestone 1 primitives (Stat, Pill, Button, Badge, Card
 - Working directory: c:\Users\Muhammad Minhas\ArenaX-Web\.agents\teamwork\explorer_m1_2\
 - Original parent: 946cbb3b-435a-471b-a15d-9c388cab6b10
 - Milestone: Milestone 1: Navigation, Chrome & Primitives Polish
+- Parent (2026-11-07): 8b88bbad-6052-4d75-b548-47b7f26819bc
+- Assignment: Milestone 1: UI Primitives Redesign (Supabase Design Tokens)
 
 ## 🔒 Key Constraints
 - Read-only investigation — do NOT implement or modify source code in src/
 - Only write metadata, reports, and analysis in .agents/teamwork/explorer_m1_2/
 - Follow R1 (zero taglines/secondary labels/helper text), R2 (DX/UX simplification), R3 (preservation of functionality), R4 (verification integrity)
 - Produce 5-Component Handoff Report in handoff.md and send message to parent upon completion
+- Reference files `Supabase _ The Postgres Development Platform.html` and `Supabase _ The Postgres Development Platform_files` MUST remain STRICTLY unaltered.
+- Retain all existing component props, variants, and test invariants (`forwardRef`, `displayName`, `hud-card`, `hud-card-highlight`, tones).
 
 ## Current Parent
-- Conversation ID: 946cbb3b-435a-471b-a15d-9c388cab6b10
-- Updated: 2026-11-05T13:44:00Z
+- Conversation ID: 8b88bbad-6052-4d75-b548-47b7f26819bc
+- Updated: 2026-11-07T06:33:00Z
 
 ## Investigation State
 - **Explored paths**:
-  - `src/components/primitives/*` (`Stat.tsx`, `Pill.tsx`, `Button.tsx`, `Badge.tsx`, `Card.tsx`, `HudCorners.tsx`, `IconOrb.tsx`, `Container.tsx`, `Section.tsx`, `index.ts`)
-  - `src/index.css`
-  - `tailwind.config.js`
-  - Entire `src/` consumer imports for primitives
+  - `src/components/primitives/*` (`Button.tsx`, `Badge.tsx`, `Card.tsx`, `Pill.tsx`, `Stat.tsx`, `HudCorners.tsx`, `IconOrb.tsx`, `Container.tsx`, `Section.tsx`, `index.ts`)
+  - `src/index.css` & `tailwind.config.js`
+  - Form input usages: `Contact.tsx`, `AIVisionShowcase.tsx`, `LeaderboardTiers.tsx`, `OrganizerProgram.tsx`
+  - Automated test suites: `tests/challenger-m1-adversarial.test.ts`, `tests/tier1-feature-coverage.test.ts`, `scripts/run-all-tests.ts`
+  - Authoritative reference spec: `.agents/teamwork/spec_miner_survey_1/supabase_tokens.md`
 - **Key findings**:
-  1. `Stat.tsx`: `subtext` prop has 0 consumers across the codebase; safely removable to strictly enforce R1.
-  2. `Pill.tsx`: Used in 17 sections as category eyebrow tags. Must NOT be deleted; simplify and align with `Badge` (alias `pulse` with `dotPulse`, add `forwardRef`).
-  3. `Card.tsx`: Divergence identified — 0 components import `Card.tsx`, instead using raw `.hud-card` classes. `Card.tsx` should be polished to match `.hud-card` visual language.
-  4. `Button.tsx`: Fix secondary double-border ring artifact; resize `sm` to 36px for sleek navigation fit; refine specular highlight.
-  5. `tailwind.config.js`: Critical bug on `--line` opacity modifiers (`border-line/60` and `border-line/80` produce invalid CSS). Fix with `withAlpha`.
-  6. `IconOrb.tsx`: Fix neutral tone halo bug where `tone="neutral"` leaked an emerald glow.
-  7. `src/index.css`: Clean up dead `.tactical-pill` class.
-- **Unexplored areas**: None within scope. All 4 target areas thoroughly investigated and verified.
+  1. `Button.tsx`: Currently uses `--accent` with heavy box shadows; blueprint aligns Primary to solid `#3ECF8E` (`hover:bg-[#34B27B]`, `active:scale-[0.98]`, inset top highlight), Secondary to dark carbon `#171717` with `border-white/10` and `hover:bg-[#202220]`, Ghost to `text-[#A0A0A0]` and `hover:text-[#EDEDED]`. Sizing calibrated to `sm: 36px`, `md: 44px`, `lg: 50px`.
+  2. `Badge.tsx`: Aligned to Supabase status pill architecture with `bg-[#041B10]` (emerald) / `bg-[#171717]` (neutral) / `bg-[#1F0A0A]` (danger), hairline borders (`border-[#3ECF8E]/30` / `border-white/10`), monospace tabular figures (`tabular-nums tracking-[0.08em]`), and pulsing LED dot.
+  3. `Card.tsx`: Aligned to dark carbon `#171717` surface with 1px subtle hairline border `border-white/8`, top highlight, and hover lift. Crucially retains `hud-card` and `hud-card-highlight` classes and `base`/`highlighted` variants to satisfy adversarial tests.
+  4. `Input.tsx`: Formulated new standalone input primitive with `#121212` carbon background, hairline border (`border-white/10 hover:border-white/20`), and brand green `#3ECF8E` focus ring. Provided global field styling recommendation for `Contact.tsx` and interactive range sliders.
+  5. Test baseline: Executed full test suite (`npm test`) — 100% passed (51.48s) with 0 errors.
+- **Unexplored areas**: None. All Milestone 1 primitives, form controls, and test invariants are thoroughly mapped.
 
 ## Key Decisions Made
-- Confirmed removal of `subtext` from `Stat.tsx` is completely non-breaking.
-- Recommended retaining and simplifying `Pill.tsx` rather than breaking 17 consumer files.
-- Provided concrete actionable changes and verification methods in `handoff.md`.
+- Fully documented complete replacement code for `Button.tsx`, `Badge.tsx`, `Card.tsx`, and new `Input.tsx`.
+- Guaranteed zero breaking changes for existing consumers across 17+ components.
+- Preserved all adversarial test contracts (`forwardRef`, `displayName`, `asAnchor`, `hud-card`, etc.).
 
 ## Artifact Index
-- DISPATCH.md — Dispatch log
-- BRIEFING.md — Situational awareness
+- DISPATCH.md — Task assignment log
+- BRIEFING.md — Situational awareness & memory
 - progress.md — Liveness heartbeat
-- handoff.md — Final 5-component handoff report (complete)
+- primitives_plan.md — Concrete implementation blueprint for UI Primitives
+- handoff.md — 5-Component Handoff Report

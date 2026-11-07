@@ -31,9 +31,9 @@ export const Pill = forwardRef<HTMLDivElement, PillProps>(
         {dot && (
           <span className="relative flex h-1.5 w-1.5 flex-shrink-0" aria-hidden="true">
             {isPulsing && (
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-60" />
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#3ECF8E] opacity-60" />
             )}
-            <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400 shadow-[0_0_6px_rgba(52,211,153,0.9)]" />
+            <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-[#3ECF8E] shadow-[0_0_6px_rgba(62,207,142,0.9)]" />
           </span>
         )}
         <span>{label || children}</span>

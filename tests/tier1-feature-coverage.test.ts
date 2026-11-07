@@ -281,4 +281,36 @@ describe('Tier 1: Comprehensive Feature Coverage (Features 1–20)', () => {
       assert.ok(fairPlay.includes('Fair Play') || fairPlay.includes('Anti-Cheat'));
     });
   });
+
+  // Supabase Design Tokens & Theme Architecture
+  describe('Supabase Design Tokens & Theme Architecture', () => {
+    it('declares signature green accent #3ECF8E, dark canvas #121212, and hairline borders in index.css', () => {
+      const cssPath = path.resolve(process.cwd(), 'src/index.css');
+      assert.ok(fs.existsSync(cssPath), 'src/index.css must exist');
+      const css = fs.readFileSync(cssPath, 'utf8');
+      assert.ok(css.includes('#3ECF8E'), 'Must declare #3ECF8E green');
+      assert.ok(css.includes('#121212'), 'Must declare #121212 canvas');
+      assert.ok(css.includes('rgba(255, 255, 255, 0.08)'), 'Must declare 0.08 hairline border');
+      assert.ok(css.includes('color-scheme: dark'), 'Must declare color-scheme: dark');
+    });
+
+    it('configures Supabase tokens in tailwind.config.js', () => {
+      const twPath = path.resolve(process.cwd(), 'tailwind.config.js');
+      assert.ok(fs.existsSync(twPath), 'tailwind.config.js must exist');
+      const tw = fs.readFileSync(twPath, 'utf8');
+      assert.ok(tw.includes('#3ECF8E'), 'Must include #3ECF8E');
+      assert.ok(tw.includes('62, 207, 142'), 'Must include rgb(62, 207, 142)');
+      assert.ok(tw.includes('18, 18, 18'), 'Must include rgb(18, 18, 18)');
+    });
+
+    it('verifies all 8 registered public routes in App.tsx', () => {
+      const appPath = path.resolve(process.cwd(), 'src/App.tsx');
+      assert.ok(fs.existsSync(appPath), 'src/App.tsx must exist');
+      const app = fs.readFileSync(appPath, 'utf8');
+      const routes = ['/', '/about', '/faq', '/contact', '/terms', '/privacy', '/refund-policy', '/fair-play'];
+      for (const r of routes) {
+        assert.ok(app.includes(`path="${r}"`), `Route ${r} must be registered in App.tsx`);
+      }
+    });
+  });
 });

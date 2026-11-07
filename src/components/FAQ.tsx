@@ -1,65 +1,86 @@
 import { useState } from 'react';
 import { ChevronDown, Headset } from 'lucide-react';
 import { Button } from './primitives/Button';
-import { HudCorners } from './primitives/HudCorners';
-import { IconOrb } from './primitives/IconOrb';
 import { SEO } from './SEO';
 
 export default function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
+  const [activeCategory, setActiveCategory] = useState<string>('all');
+
+  const categories = [
+    { id: 'all', label: 'All Questions' },
+    { id: 'tournaments', label: 'Tournaments' },
+    { id: 'wallet', label: 'Wallet & Cashout' },
+    { id: 'engine', label: 'Vision Engine & Rules' },
+    { id: 'organizer', label: 'Organizer & Legal' },
+  ];
 
   const faqs = [
     {
+      category: 'tournaments',
       question: 'What is ArenaX?',
       answer:
         'ArenaX is Pakistan\'s premier mobile esports platform. We host daily competitive Free Fire scrims across Bermuda Battle Royale (48 players) and Clash Squad 4v4 brackets. Equipped with automated AI scoreboard verification and a strict Two-Wallet isolation model, ArenaX guarantees fair competition and 24-hour cashouts.',
     },
     {
+      category: 'tournaments',
       question: 'How do I participate in tournaments?',
       answer:
         'Download the official ArenaX APK, register your account, and link your Free Fire in-game UID. Browse active tournaments in the app, review the entry fee and prize pool, and register. Custom room credentials (Room ID and Password) unlock automatically 10–15 minutes before match countdown.',
     },
     {
+      category: 'wallet',
       question: 'What is the difference between Play Wallet and Winning Wallet?',
       answer:
         'ArenaX maintains a strict two-vault architecture: 1) Play Wallet holds deposits and welcome bonuses used strictly to pay tournament entry fees (non-withdrawable). 2) Winning Wallet holds tournament prize money, Scout royalties, and milestone bonuses. 1 AX Coin = 1 PKR Cash, and funds in the Winning Wallet are 100% withdrawable to JazzCash, EasyPaisa, or Pakistani Bank Accounts within 24 hours.',
     },
     {
+      category: 'wallet',
       question: 'How do I add money to my wallet?',
       answer:
         'You can top up your Play Wallet using JazzCash, EasyPaisa, or direct Bank Transfer. Navigate to the Wallet section, enter the deposit amount (minimum PKR 50), and follow the transfer instructions. Upload your payment slip in-app; our team processes and credits your Play Wallet promptly.',
     },
     {
+      category: 'wallet',
       question: 'How long does it take to withdraw cash winnings?',
       answer:
         'Withdrawal requests from your Winning Wallet are processed within 24 hours. You can cash out directly to JazzCash, EasyPaisa, or any Pakistani commercial bank account. The minimum withdrawal threshold is 100 AX Coins (PKR 100). For security, all withdrawals require your secondary 6-digit Fund Security Password.',
     },
     {
+      category: 'engine',
       question: 'How does the ArenaX Vision Engine verify match scoreboards?',
       answer:
         'After completing your match, submit a screenshot of your end-game victory summary. The ArenaX Vision Engine scans the image using optical character recognition (OCR) to detect in-game names, UIDs, kill counts, damage, and Booyah placements. Winnings are distributed to verified winners automatically within seconds.',
     },
     {
+      category: 'tournaments',
       question: 'What happens if a tournament is cancelled or fails to start?',
       answer:
         'ArenaX enforces a 100% Automated Cancellation Refund Policy. If a tournament fails to fill the minimum slot threshold or is cancelled by the organizer, 100% of your paid entry fee is credited back to your Play Wallet immediately.',
     },
     {
+      category: 'organizer',
       question: 'How can I become an Organizer and host my own tournaments?',
       answer:
         'Any verified user can apply to become an organizer directly inside the app. Once approved, you gain access to the Organizer Wizard where you can configure match rules, schedules, entry fees, and custom slot caps (10 to 48 players). Organizers earn a configurable 0%–20% commission on tournament revenue, credited directly to an isolated Organizer Wallet.',
     },
     {
+      category: 'organizer',
       question: 'Is ArenaX legal and compliant in Pakistan?',
       answer:
         'Yes. ArenaX operates strictly as a skill-based esports platform where match outcomes depend entirely on players\' tactical decision-making, aim accuracy, and team coordination. We comply with all applicable electronic and digital laws in Pakistan.',
     },
     {
+      category: 'engine',
       question: 'How are combat points calculated for Bermuda tournaments?',
       answer:
         'Scoring is strictly rulebook-governed: 1 Booyah (#1 finish) awards 20 Points, and each confirmed frag kill awards 5 Points. Scores are calculated deterministically across all participants.',
     },
   ];
+
+  const filteredFaqs = activeCategory === 'all'
+    ? faqs
+    : faqs.filter((faq) => faq.category === activeCategory);
 
   return (
     <>
@@ -69,62 +90,87 @@ export default function FAQ() {
         canonical="https://marenax.site/faq"
       />
 
-      <div className="relative isolate min-h-screen overflow-hidden bg-bg-1 pt-28 pb-20 sm:pt-36">
-        <div aria-hidden="true" className="hud-grid pointer-events-none absolute inset-x-0 top-0 h-[420px] opacity-40" />
-        <div aria-hidden="true" className="ambient-glow left-1/2 top-16 h-64 w-[36rem] max-w-[90vw] -translate-x-1/2" />
+      <div className="relative isolate min-h-screen overflow-hidden bg-[#121212] pt-28 pb-20 sm:pt-36">
+        {/* Supabase ambient atmosphere */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute left-1/2 top-16 h-72 w-[40rem] max-w-[90vw] -translate-x-1/2 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(62,207,142,0.06)_0%,transparent_70%)] blur-2xl"
+        />
 
         <div className="relative z-10 max-w-[1200px] mx-auto px-6">
           {/* Header */}
-          <div className="mb-14 sm:mb-20 text-center max-w-3xl mx-auto">
-            <h1 className="text-4xl sm:text-6xl font-extrabold uppercase tracking-tight text-text-1 font-heading">
-              Frequently Asked <span className="text-accent text-glow-accent">Questions</span>
+          <div className="mb-10 sm:mb-14 text-center max-w-3xl mx-auto">
+            <h1 className="text-4xl sm:text-6xl font-extrabold uppercase tracking-tight text-[#EDEDED] font-heading">
+              Frequently Asked <span className="text-[#3ECF8E]">Questions</span>
             </h1>
-            <p className="text-base sm:text-lg text-text-2 mt-3 leading-relaxed">
+            <p className="text-base sm:text-lg text-[#A0A0A0] mt-3 leading-relaxed">
               Find transparent answers regarding tournaments, payouts, rules, and account security.
             </p>
           </div>
 
-          {/* FAQ Accordion List: 15-16px text */}
-          <div className="max-w-3xl mx-auto space-y-3.5 mb-16">
-            {faqs.map((faq, index) => {
-              const isOpen = openIndex === index;
+          {/* Supabase Segmented Filter Pills */}
+          <div className="flex flex-wrap items-center justify-center gap-2 mb-10">
+            {categories.map((cat) => {
+              const isActive = activeCategory === cat.id;
+              return (
+                <button
+                  key={cat.id}
+                  onClick={() => {
+                    setActiveCategory(cat.id);
+                    setOpenIndex(null);
+                  }}
+                  className={`px-4 py-1.5 rounded-full text-xs font-mono font-medium transition-all duration-150 cursor-pointer ${
+                    isActive
+                      ? 'bg-[#041B10] text-[#3ECF8E] border border-[#3ECF8E]/40 shadow-[0_0_12px_rgba(62,207,142,0.2)]'
+                      : 'bg-[#171717] text-[#A0A0A0] border border-white/[0.08] hover:border-white/20 hover:text-[#EDEDED]'
+                  }`}
+                >
+                  {cat.label}
+                </button>
+              );
+            })}
+          </div>
+
+          {/* FAQ Accordion List (Supabase Precision Accordion) */}
+          <div className="max-w-3xl mx-auto space-y-3 mb-16">
+            {filteredFaqs.map((faq) => {
+              // Find index in main faqs array to maintain single-open state
+              const realIndex = faqs.findIndex((f) => f.question === faq.question);
+              const isOpen = openIndex === realIndex;
 
               return (
                 <div
-                  key={index}
-                  className="group hud-card relative overflow-hidden rounded-card transition-all duration-300 ease-out hover:-translate-y-0.5"
+                  key={realIndex}
+                  className={`group relative overflow-hidden rounded-xl transition-all duration-200 ${
+                    isOpen
+                      ? 'bg-[#171717] border border-[#3ECF8E]/35 shadow-[inset_0_1px_0_rgba(62,207,142,0.12),0_12px_24px_-10px_rgba(0,0,0,0.6)]'
+                      : 'bg-[#171717] border border-white/[0.08] hover:border-white/20 hover:bg-[#181a19]'
+                  }`}
                 >
                   {isOpen && (
                     <span
                       aria-hidden="true"
-                      className="pointer-events-none absolute inset-0 z-10 rounded-card border border-emerald-500/30 bg-emerald-500/[0.02] shadow-[0_12px_24px_-10px_rgba(0,255,163,0.15)]"
+                      className="pointer-events-none absolute inset-y-0 left-0 w-[2px] bg-[#3ECF8E]"
                     />
                   )}
-                  {isOpen && (
-                    <span
-                      aria-hidden="true"
-                      className="pointer-events-none absolute inset-y-0 left-0 w-[2px] bg-gradient-to-b from-emerald-400/80 via-emerald-500/40 to-transparent"
-                    />
-                  )}
-                  {isOpen && <HudCorners tone="emerald" size="sm" />}
 
                   <button
-                    onClick={() => setOpenIndex(isOpen ? null : index)}
-                    className="w-full min-h-[56px] p-5 sm:p-6 text-left flex justify-between items-center gap-4 cursor-pointer"
+                    onClick={() => setOpenIndex(isOpen ? null : realIndex)}
+                    className="w-full min-h-[58px] p-5 sm:p-6 text-left flex justify-between items-center gap-4 cursor-pointer"
                     aria-expanded={isOpen}
                   >
-                    <span className="text-base sm:text-lg font-bold font-heading text-text-1">
+                    <span className="text-base sm:text-lg font-semibold font-heading text-[#EDEDED] group-hover:text-white">
                       {faq.question}
                     </span>
                     <span
-                      className={`flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full border transition-colors duration-200 ease-out ${
+                      className={`flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full border transition-all duration-200 ${
                         isOpen
-                          ? 'border-emerald-500/40 bg-emerald-500/10 text-emerald-400'
-                          : 'border-white/[0.08] bg-white/[0.03] text-text-2 group-hover:border-emerald-500/40 group-hover:text-emerald-400'
+                          ? 'border-[#3ECF8E]/40 bg-[#041B10] text-[#3ECF8E]'
+                          : 'border-white/10 bg-white/[0.02] text-[#A0A0A0] group-hover:border-[#3ECF8E]/30 group-hover:text-[#3ECF8E]'
                       }`}
                     >
                       <ChevronDown
-                        className={`h-4 w-4 transition-transform duration-300 ease-out ${
+                        className={`h-4 w-4 transition-transform duration-200 ease-out ${
                           isOpen ? 'rotate-180' : ''
                         }`}
                         strokeWidth={1.5}
@@ -139,8 +185,8 @@ export default function FAQ() {
                     aria-hidden={!isOpen}
                   >
                     <div className="overflow-hidden">
-                      <div className="border-t border-line px-5 sm:px-6 pb-6 pt-5">
-                        <p className="text-[15px] sm:text-base text-text-2 leading-relaxed">
+                      <div className="border-t border-white/[0.08] px-5 sm:px-6 pb-6 pt-4">
+                        <p className="text-[15px] sm:text-base text-[#A0A0A0] leading-relaxed">
                           {faq.answer}
                         </p>
                       </div>
@@ -151,15 +197,16 @@ export default function FAQ() {
             })}
           </div>
 
-          {/* Need Further Support Card */}
-          <div className="hud-card relative mx-auto max-w-2xl space-y-4 overflow-hidden rounded-card p-8 text-center transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-lift">
-            <HudCorners tone="neutral" size="sm" />
+          {/* Need Further Support Card (Supabase Elevated Surface) */}
+          <div className="relative mx-auto max-w-2xl space-y-4 overflow-hidden rounded-2xl bg-[#171717] border border-white/[0.08] p-8 sm:p-10 text-center shadow-[inset_0_1px_0_rgba(255,255,255,0.05),0_20px_48px_-20px_rgba(0,0,0,0.7)] transition-all duration-200 ease-out hover:-translate-y-0.5">
             <div className="flex justify-center">
-              <IconOrb icon={Headset} tone="emerald" size="md" />
+              <div className="w-12 h-12 rounded-xl bg-[#041B10] border border-[#3ECF8E]/30 flex items-center justify-center text-[#3ECF8E] shadow-[0_0_15px_rgba(62,207,142,0.15)]">
+                <Headset className="w-6 h-6" strokeWidth={1.5} />
+              </div>
             </div>
-            <h3 className="text-xl font-bold font-heading text-text-1">Still Have Questions?</h3>
-            <p className="text-sm text-text-2 leading-relaxed">
-              Our <span className="font-mono tracking-tight tabular-nums text-white/80">24/7</span> Pakistani customer support team is available via email and WhatsApp.
+            <h3 className="text-xl sm:text-2xl font-bold font-heading text-[#EDEDED]">Still Have Questions?</h3>
+            <p className="text-sm text-[#A0A0A0] leading-relaxed max-w-md mx-auto">
+              Our <span className="font-mono tracking-tight tabular-nums text-[#EDEDED]">24/7</span> Pakistani customer support team is available via email and WhatsApp.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
               <Button

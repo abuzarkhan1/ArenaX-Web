@@ -1,59 +1,70 @@
-# BRIEFING — 2026-11-05T15:26:00Z
+# BRIEFING — 2026-11-07T07:51:00Z
 
 ## Mission
-Implement Milestone 3: Esports Engine & Financial Architecture refactoring and tightening across AIVisionShowcase, WalletSection, LeaderboardTiers, and OrganizerProgram.
+Redesign the 10 Milestone 3 interactive product showcase & technical feature components to strictly adhere to the Supabase design system tokens, typography, hairline borders, and surfaces while preserving 100% copy and interactive logic.
 
 ## 🔒 My Identity
-- Archetype: implementer
+- Archetype: teamwork_worker
 - Roles: implementer, qa, specialist
-- Working directory: c:\Users\Muhammad Minhas\ArenaX-Web\.agents\teamwork\worker_m3\
-- Original parent: 946cbb3b-435a-471b-a15d-9c388cab6b10
-- Milestone: Milestone 3: Esports Engine & Financial Architecture
+- Working directory: c:\Users\Muhammad Minhas\ArenaX-Web\.agents\teamwork\worker_m3
+- Original parent: 8b88bbad-6052-4d75-b548-47b7f26819bc
+- Milestone: Milestone 3 (Interactive Product Showcases & Technical Features)
 
 ## 🔒 Key Constraints
-- Exclusive file ownership: ONLY modify `src/components/AIVisionShowcase.tsx`, `src/components/WalletSection.tsx`, `src/components/LeaderboardTiers.tsx`, `src/components/OrganizerProgram.tsx`.
-- DO NOT modify any other files.
-- Preserve DOM ids: id="ranks" in LeaderboardTiers, id="organizers" in OrganizerProgram.
-- Preserve exact string 'Bermuda or Clash Squad' in Pillar 01 of OrganizerProgram.
-- Preserve all calculations: points formula `(isBooyah ? 20 : 0) + kills * 5` in AIVisionShowcase, gap math in LeaderboardTiers, economics math in OrganizerProgram.
-- Verification required: `npm run typecheck`, `npm run lint`, `npm run build`, `npm test` all passing with exit code 0.
+- READ-ONLY: `Supabase _ The Postgres Development Platform.html` and `Supabase _ The Postgres Development Platform_files` must remain strictly untouched.
+- EXCLUSIVE SCOPE: Only edit the 10 designated components:
+  1. `src/components/AppExperienceShowcase.tsx`
+  2. `src/components/TournamentModes.tsx`
+  3. `src/components/AIVisionShowcase.tsx`
+  4. `src/components/WalletSection.tsx`
+  5. `src/components/LeaderboardTiers.tsx`
+  6. `src/components/OrganizerProgram.tsx`
+  7. `src/components/ScoutRewards.tsx`
+  8. `src/components/HowItWorks.tsx`
+  9. `src/components/PlatformComparison.tsx`
+  10. `src/components/Download.tsx`
+- 100% copy, formulas, interactive logic, section IDs, sliders, buttons preserved verbatim.
+- De-HUDification: strip all gaming HUD glows (`text-glow-accent`, `.ambient-glow`, etc.), remove `<HudCorners />`, zero `<Pill />` eyebrows, clean Supabase styling with hairline borders (`border-white/[0.08]` or `border-border-muted`).
 
 ## Current Parent
-- Conversation ID: 946cbb3b-435a-471b-a15d-9c388cab6b10
-- Updated: 2026-11-05T15:26:00Z
+- Conversation ID: 8b88bbad-6052-4d75-b548-47b7f26819bc
+- Updated: not yet
 
 ## Task Summary
-- **What to build**: Production tightening & HUD alignment of M3 components: remove conversational marketing fluff, redundant tags, subtexts, and essays; align with cyber/esports HUD aesthetic while preserving core interactive simulation engines and invariants.
-- **Success criteria**: 4 components cleaned and updated per explorer specs, 100% typecheck, lint, build, and tests passing.
-- **Interface contracts**: PROJECT.md, explorer handoffs.
-- **Code layout**: src/components/
-
-## Key Decisions Made
-- [Initial]: Read all handoffs, original request, and existing components before making changes.
-- [AIVisionShowcase]: Implemented proposed blueprint removing subtitle, simplifying OCR / bounding box labels, setting SHA-256 INTEGRITY, unified placement toggle, and streamlined Combat Score card. Preserved formula `isBooyah ? 20 : 0 + kills * 5` and `getTier` thresholds.
-- [WalletSection]: Implemented 5-step flow pipeline with top-[50%] animated connector, 2x2 structured spec grids for Play Wallet and Winning Wallet, 1 AX = 1 PKR cash parity valuation, and direct Deposit / Cashout CTA triggers.
-- [LeaderboardTiers]: Condensed header subtitle, removed redundant ACTIVE label on selected cards, streamlined simulator labels (`Current Rating`, `Target Tier`, `Points Required`, `Milestone Bonus`), removed footnote, preserved RANK_TIERS and `id="ranks"`.
-- [OrganizerProgram]: Condensed header subtitle, tightened 4 capability descriptions while strictly preserving `'Bermuda or Clash Squad'`, streamlined slider tick labels, removed net payout footnote, preserved revenue conservation math and `id="organizers"`.
-
-## Artifact Index
-- DISPATCH.md — Orchestrator instructions & safety checks
-- BRIEFING.md — Persistent context & status
-- progress.md — Liveness & step tracking
-- handoff.md — Final completion handoff report
+- **What to build**: Supabase design token conversion for 10 interactive showcase components.
+- **Success criteria**:
+  - `npm run typecheck` passes (0 errors)
+  - `npm run lint` passes (0 errors)
+  - `npm run build` passes (0 errors)
+  - `npm test` passes (100% tests passing, 297/297 tests across 99 suites)
+- **Interface contracts**: Blueprints explorer_m3_1, explorer_m3_2, explorer_m3_3 adhered to 100%.
 
 ## Change Tracker
 - **Files modified**:
-  - `src/components/AIVisionShowcase.tsx`: Cleaned OCR labels, formula subtext, segmented placement toggle, Combat Score card
-  - `src/components/WalletSection.tsx`: 5-step flow, 2x2 structured telemetry cards, 1 AX = 1 PKR parity, direct action triggers
-  - `src/components/LeaderboardTiers.tsx`: Condensed subtitle, removed redundant card tags and footnote, cleaned simulator labels
-  - `src/components/OrganizerProgram.tsx`: Condensed subtitle, cleaned capabilities (retaining 'Bermuda or Clash Squad'), cleaned slider ticks, removed footnote
-- **Build status**: PASS (typecheck: 0, lint: 0, build: 0, test: 0)
-- **Pending issues**: None
+  1. `src/components/AppExperienceShowcase.tsx` - Supabase carbon surfaces, removed HudCorners, preserved 3D transforms & ScrollTrigger
+  2. `src/components/TournamentModes.tsx` - Supabase cards, removed HudCorners, preserved 3D tilt math & 10% platform rake specs
+  3. `src/components/AIVisionShowcase.tsx` - Supabase terminal cards, removed HudCorners, preserved scoring formula `(isBooyah ? 20 : 0) + kills * 5` and tier thresholds
+  4. `src/components/WalletSection.tsx` - Supabase dual-depth panels, removed HudCorners, preserved `FLOW_NODES` and `1 AX = 1 PKR` parity
+  5. `src/components/LeaderboardTiers.tsx` - Supabase rank track cards, removed HudCorners, preserved 8 tiers and gap math
+  6. `src/components/OrganizerProgram.tsx` - Supabase highlighted simulator card, removed HudCorners, preserved 3 sliders and revenue conservation
+  7. `src/components/ScoutRewards.tsx` - Supabase dual card pair, removed `text-glow-accent` and HudCorners, preserved royalties and digital store
+  8. `src/components/HowItWorks.tsx` - Supabase timeline card styling, removed HudCorners, preserved all 6 steps verbatim
+  9. `src/components/PlatformComparison.tsx` - Supabase table and mobile cards, removed HudCorners, preserved 2 comparative columns across 6 dimensions
+  10. `src/components/Download.tsx` - Supabase highlighted APK card and secondary iOS card, removed HudCorners, preserved 4 install steps & QRCodeSVG
+- **Build status**: PASS (Vite build clean)
+- **Pending issues**: none
 
 ## Quality Status
-- **Build/test result**: All checks passed (typecheck, lint, build, test - 71/71 tests passing)
-- **Lint status**: 0 errors, 0 warnings
-- **Tests added/modified**: Verified against all 11 test suites including strict R1 layout audit
+- **Build/test result**: PASS (TypeScript, ESLint, Vite Build, 297 automated tests pass 100%)
+- **Lint status**: 0 errors
+- **Tests added/modified**: none (exclusively edited the 10 components)
 
-## Loaded Skills
-- None
+## Key Decisions Made
+- Fully adhered to the Supabase design tokens (`#121212` canvas, `#171717` card base, `#181A19` elevated cards, `#041B10` deep emerald surfaces, hairline borders `rgba(255, 255, 255, 0.08)`, `#3ECF8E` green accent).
+- Eliminated all legacy `<HudCorners />` and neon glow drops across all 10 components.
+- Maintained 100% copy preservation and mathematical invariants.
+
+## Artifact Index
+- `.agents/teamwork/worker_m3/DISPATCH.md`
+- `.agents/teamwork/worker_m3/progress.md`
+- `.agents/teamwork/worker_m3/handoff.md`

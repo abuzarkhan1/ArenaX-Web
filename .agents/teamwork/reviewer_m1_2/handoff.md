@@ -1,145 +1,131 @@
-# Milestone 1 Independent Review & Adversarial Audit Report
+# Milestone 1 Independent Review & Adversarial Evaluation Report
 
-**Agent**: reviewer_m1_2 (reviewer, critic)  
-**Date**: 2026-11-05T14:18:00Z  
-**Target Milestone**: Milestone 1 (Navigation, Chrome & Primitives Polish)  
-**Assigned Parent**: Orchestrator (Conversation ID: `946cbb3b-435a-471b-a15d-9c388cab6b10`)  
-**Working Directory**: `c:\Users\Muhammad Minhas\ArenaX-Web\.agents\teamwork\reviewer_m1_2\`  
-**Project Root**: `c:\Users\Muhammad Minhas\ArenaX-Web`  
-**Verdict**: **APPROVE**  
+**Reviewer:** `teamwork_reviewer` (Instance 2 of 2)  
+**Roles:** reviewer, critic  
+**Target Milestone:** Milestone 1 — Design System Tokens & UI Primitives  
+**Working Directory:** `c:\Users\Muhammad Minhas\ArenaX-Web\.agents\teamwork\reviewer_m1_2\`  
+**Date:** 2026-11-07  
+**Verdict:** **APPROVE**  
 
 ---
 
 ## 1. Observation
 
-Direct observations obtained through independent command execution, AST static inspection, code diff verification, and compiled artifact analysis:
+### 1.1 Reference Immutability Verification
+Directly verified via cryptographic hash and file system inspection:
+- Command: `Get-FileHash -Algorithm SHA256 'Supabase _ The Postgres Development Platform.html'`
+  - Result: SHA-256 `CFBAB0C0F7D9ACAA887ECF3699EBDE892647F81C1CD023E4F3C156F8B6707B50` (identical to original read-only snapshot).
+  - Exact file size: `1,396,412` bytes.
+- Command: `(Get-ChildItem -File -Recurse 'Supabase _ The Postgres Development Platform_files').Count`
+  - Result: Exactly `66` files.
+  - Sum of byte sizes: `3,376,281` bytes.
+- Command: `git status --porcelain`
+  - Result: Reference HTML and asset folder remain untracked / untouched without any modifications.
 
-### 1.1 Automated Gate Execution Results
-1. **TypeScript Compilation (`npm run typecheck`)**:
-   - Command: `tsc --noEmit -p tsconfig.app.json`
-   - Exit Code: `0`
-   - Result: Zero type errors across all 24 components, primitives, routes, and utilities.
+### 1.2 Verification Commands & Live Execution
+Independently executed the verification commands in the workspace:
+1. `npm run typecheck` (`tsc --noEmit -p tsconfig.app.json`):
+   - Exit code: `0`
+   - Output: 0 errors.
+2. `npm run lint` (`eslint .`):
+   - Exit code: `0`
+   - Output: 0 warnings, 0 errors.
+3. `npm run build` (`vite build`):
+   - Exit code: `0`
+   - Output: Built cleanly in `5.97s`. Production bundle generated in `dist/` (`dist/assets/index-C4QLaa08.css` 100.06 kB, `dist/assets/index-BJ-W4Krg.js` 536.50 kB).
+4. `npm test` (`node --experimental-strip-types scripts/run-all-tests.ts`):
+   - Exit code: `0`
+   - Stage 1: TypeScript Typecheck — `[PASS]` (11.88s)
+   - Stage 2: ESLint Code Analysis — `[PASS]` (8.78s)
+   - Stage 3: Vite Production Build — `[PASS]` (8.37s)
+   - Stage 4: Automated Test Suites (Tiers 1–5 & R1/R3) — `[PASS]` (3.43s)
+   - Total passing tests: 278 tests across 14 suites, 0 failures, 0 skipped, 0 cancelled.
+5. Single suite executions:
+   - `node --test tests/supabase-tokens-and-invariants.test.ts`: 27 passing tests (454ms).
+   - `node --test tests/tier1-feature-coverage.test.ts`: 29 passing tests (385ms).
+   - `node --test tests/challenger-m1-adversarial.test.ts`: 26 passing tests (998ms).
 
-2. **Lint Suite (`npm run lint`)**:
-   - Command: `eslint .`
-   - Exit Code: `0`
-   - Result: Zero warnings, zero errors. Fast refresh component export rules strictly respected.
+### 1.3 Exact Token Adherence Inspection
+- `tailwind.config.js`:
+  - Normalized dark carbon RGB tuples: `bg-2` at `23, 23, 23` (`#171717`), `bg-3` at `30, 32, 31` (`#1E201F`), `bg-alt` at `22, 22, 22` (`#161616`), `bg-header` at `11, 14, 13` (`#0B0E0D`).
+  - Brand green accent: `accent.DEFAULT` and `brand.DEFAULT` configured with `withAlpha` to RGB `62, 207, 142` (`#3ECF8E`), with hover stop RGB `52, 178, 123` (`#34B27B`).
+  - Emerald palette: `emerald.500: '#3ECF8E'`, `emerald.600: '#34B27B'`, `emerald.700: '#249361'`.
+  - Hairline borders: `line.DEFAULT` and `border.DEFAULT` set with `withAlpha('--line', '255, 255, 255')` (0.08), `border.strong` (0.14), `border.brand` (`62, 207, 142`).
+  - Typography: `fontFamily.sans: ['Inter', ...]`, `fontFamily.heading: ['Manrope', ...]`, `fontFamily.mono: ['"Source Code Pro"', ...]`, `fontWeight.normal: '450'`.
+- `src/index.css`:
+  - Lines 7–12: `--bg-0: #0E0F0E`, `--bg-1: #121212`, `--bg-2: #171717`, `--bg-3: #1E201F`, `--bg-alt: #161616`, `--bg-header: #0B0E0D`.
+  - Lines 15–25: Canonical aliases `--background: var(--bg-1)`, `--card: var(--bg-2)`, `--popover: #1B1D1C`, `--field: rgba(0, 0, 0, 0.24)`.
+  - Lines 27–38: Hairline borders `--line: rgba(255, 255, 255, 0.08)`, `--line-strong: rgba(255, 255, 255, 0.14)`, `--line-accent: rgba(62, 207, 142, 0.35)`.
+  - Lines 52–67: Canonical emerald brand `--accent: #3ECF8E`, `--accent-hover: #34B27B`, `--brand-gradient: linear-gradient(180deg, #249361 0%, #3ECF8E 100%)`.
+  - Lines 88–96: `@layer base { html, body { background-color: var(--bg-1); color: var(--text-1); color-scheme: dark; font-family: var(--font-inter); font-weight: 450; } }`.
+  - Lines 133–158: `.hud-card` background normalized to `linear-gradient(180deg, rgba(23, 23, 23, 0.90) 0%, rgba(16, 17, 16, 0.85) 100%)` with `border: 1px solid rgba(255, 255, 255, 0.08)`.
+  - Lines 274–276: `.focus-ring` utility with `focus-visible:ring-[#3ECF8E]/55 focus-visible:ring-offset-[#121212]`.
+- `index.html`:
+  - Line 2: `<html lang="en" class="dark" data-theme="dark" style="color-scheme: dark;">`.
+  - Line 10: `<meta name="color-scheme" content="dark" />`.
+  - Line 15: Google Fonts link includes `Inter:wght@100..900`, `Manrope:wght@400;500;600;700;800`, `Source+Code+Pro:wght@400;500;600;700`.
+  - Line 53: `<meta name="theme-color" content="#121212" />`.
 
-3. **Production Build (`npm run build`)**:
-   - Command: `vite build`
-   - Exit Code: `0` (built in 3.66s)
-   - Transformed Modules: 1,514 modules
-   - Output Artifacts:
-     - `dist/index.html` (5.55 kB)
-     - `dist/assets/index-BiQUyx8A.css` (96.74 kB)
-     - `dist/assets/index-CaVDAXcd.js` (521.09 kB)
+### 1.4 Component Interface & Integrity Inspection
+- `src/components/primitives/Button.tsx`:
+  - Integrates `cn(...)` from `src/lib/utils` for tailwind class merging.
+  - Implements solid Supabase brand green `#3ECF8E` (`bg-accent hover:bg-accent-hover text-[#121212] font-semibold`), tactile active press `motion-safe:active:scale-[0.97]`, secondary dark carbon `#171717` with hairline border `border-white/[0.08]`, and ghost variant.
+  - Preserves polymorphism (`asAnchor` with `href` renders `<a>`), ref forwarding (`forwardRef`), and `Button.displayName = 'Button'`.
+- `src/components/primitives/Card.tsx`:
+  - Integrates `cn(...)`.
+  - Preserves `base` and `highlighted` variants, `interactive` hover lift, polymorphic `as` prop (`as: Component = 'div'`), ref forwarding, and `Card.displayName = 'Card'`.
+- `src/components/primitives/Badge.tsx`:
+  - Integrates `cn(...)`.
+  - Implements 1px hairline border, dark emerald `#041B10` background with `border-[#3ECF8E]/30` for `emerald` tone, dark carbon `#171717` for `neutral` tone, and `#1F0A0A` for `danger` tone.
+  - Formats numbers with `tabular-nums font-mono text-[10px] md:text-[11px] font-semibold uppercase tracking-[0.08em]`.
+  - Supports optional status LED (`dot`) with optional pulse ping (`pulse`).
+  - Preserves ref forwarding and `Badge.displayName = 'Badge'`.
+- `src/components/primitives/Input.tsx`:
+  - Created new primitive with canonical field background `#121212`, hairline border `border-white/10 hover:border-white/20`, brand focus ring `focus-visible:ring-[#3ECF8E]/40 focus-visible:border-[#3ECF8E]/60`.
+  - Implements `icon`, `iconPosition`, `error` with `aria-invalid="true"`, `disabled`, `fullWidth`, ref forwarding, and `Input.displayName = 'Input'`.
+- `src/components/primitives/index.ts`:
+  - Clean exports for `Button`, `Card`, `Pill`, `Badge`, `Input`, `HudCorners`, `IconOrb`, `Stat`, `Container`, `Section`.
 
-4. **Automated Verification Suite (`npm test` / `npm run test:unit`)**:
-   - Runner: `node --experimental-strip-types scripts/run-all-tests.ts` & `node --test tests/*.test.ts`
-   - Exit Code: `0`
-   - Summary: **81 tests passing**, **41 test suites passing**, 0 failures, 0 skipped, duration 752ms.
-   - Specific Coverage:
-     - Functional Invariants (R3): 17/17 PASS
-     - Layout & Copy Verification (R1): 4/4 PASS
-     - Tier 1 Feature Coverage: 26/26 PASS
-     - Tier 2 Boundary & Corner Cases: 20/20 PASS
-     - Tier 3 Cross-Feature Interactions: 9/9 PASS
-     - Tier 4 Real-World Scenarios: 5/5 PASS
-
-### 1.2 Primitives Contract & Downstream Analysis
-1. **`Stat.tsx` (`src/components/primitives/Stat.tsx`)**:
-   - Observation: Lines 3–7 show `StatProps` defines `value: React.ReactNode`, `label: string`, and `accent?: boolean`. `subtext` has been completely removed from the interface and JSX template.
-   - ForwardRef: Wrapped in `forwardRef<HTMLDivElement, StatProps>` with `Stat.displayName = 'Stat'`.
-   - Downstream Consumers: Grep search across `src/` for `subtext` returned 0 occurrences. Zero components pass `subtext` to `<Stat />`. `tests/layout-copy-verification.test.ts:11-30` verifies that no component in the repository passes `subtext`.
-
-2. **`Button.tsx` (`src/components/primitives/Button.tsx`)**:
-   - ForwardRef & Polymorphism: Wrapped in `forwardRef<HTMLButtonElement, ButtonProps>`.
-   - Anchor Mode: Lines 70–82 explicitly handle `if (asAnchor && href)`. Ref is safely forwarded via `ref={ref as unknown as React.Ref<HTMLAnchorElement>}`, `href`, `target`, and automatic `rel={rel || (target === '_blank' ? 'noopener noreferrer' : undefined)}` are applied.
-   - Button Mode: When `asAnchor` is false or `href` is missing, renders `<button ref={ref} className={combinedClassName} {...props}>`.
-   - Styling & Ring Fix: Removed `ring-1` from `baseStyles` and `secondary`/`ghost` variants. Sizing `sm` is standardized to `h-9 px-3.5 py-2 text-xs` (36px). Double-border artifacts on Retina displays are completely eliminated.
-
-3. **`Badge.tsx` (`src/components/primitives/Badge.tsx`)**:
-   - ForwardRef: Wrapped in `forwardRef<HTMLSpanElement, BadgeProps>`.
-   - Polymorphic content: Line 57 renders `<span>{label || children}</span>`, cleanly accepting either `label="LIVE"` or nested `<Badge>LIVE</Badge>`.
-   - Tones: Narrowed to `Record<BadgeTone, string>` with `'emerald' | 'neutral' | 'danger'`, removing legacy unused `amber`.
-   - Status indicators: `dot` and `pulse` render pinging tactical radar indicators.
-
-4. **`Card.tsx` (`src/components/primitives/Card.tsx`)**:
-   - ForwardRef: Wrapped in `forwardRef<HTMLDivElement, CardProps>`.
-   - Polymorphic Root: Supports `as?: React.ElementType` (defaults to `'div'`).
-   - Token Unification: Replaces duplicate local CSS rules with `.hud-card` and `.hud-card-highlight` from `src/index.css`.
-   - Interactive Prop: `interactive = true` applies upward lift (`hover:-translate-y-1`).
-
-5. **`Pill.tsx` (`src/components/primitives/Pill.tsx`)**:
-   - ForwardRef: Wrapped in `forwardRef<HTMLDivElement, PillProps>`.
-   - Prop Flexibility: Line 23 defines `const isPulsing = pulse !== undefined ? pulse : dotPulse;`, providing seamless backwards compatibility whether callers specify `pulse` or `dotPulse`.
-   - Polymorphic content: Line 39 renders `<span>{label || children}</span>`.
-   - Downstream Consumers: Grep verified 18 screen components invoke `<Pill dot={true} label="..." />` with 100% compatibility.
-
-6. **`HudCorners.tsx` (`src/components/primitives/HudCorners.tsx`)**:
-   - ForwardRef: Wrapped in `forwardRef<HTMLSpanElement, HudCornersProps>`.
-   - Arc Radius Hugging: Lines 17–20 introduce arm sizing (`sm: 'h-5 w-5'`, `md: 'h-6 w-6'`) with `rounded-[inherit]` and corner-specific radii (`rounded-tl-[inherit]`, etc.). Brackets conform to host card radii rather than floating disconnected.
-   - Accessibility: `aria-hidden="true"` and `pointer-events-none` preserved.
-
-7. **`IconOrb.tsx` (`src/components/primitives/IconOrb.tsx`)**:
-   - ForwardRef: Wrapped in `forwardRef<HTMLDivElement, IconOrbProps>`.
-   - Backlight Leak Fix: Lines 34–36 define:
-     ```tsx
-     const glowClass = tone === 'danger' ? 'bg-red-500/20' : tone === 'emerald' ? 'bg-emerald-500/20' : 'bg-white/5';
-     ```
-     This eliminates the bug where `tone="neutral"` fell through to emitting `bg-emerald-500/20`. Verified in `Download.tsx:136` (iOS Card neutral orb) where glow is now crisp neutral white.
-
-8. **`tailwind.config.js` (`tailwind.config.js`) Line Opacity Fix**:
-   - In `tailwind.config.js:5-6`:
-     ```javascript
-     const withAlpha = (variable, rgb) => ({ opacityValue }) =>
-       opacityValue === undefined ? `var(${variable})` : `rgba(${rgb}, ${opacityValue})`;
-     ```
-   - In `src/index.css`: `--line: rgba(255, 255, 255, 0.08)`.
-   - Previously, utility classes like `border-line/60` and `border-line/80` evaluated to `rgb(var(--line) / 0.60)` -> `rgb(rgba(255, 255, 255, 0.08) / 0.60)`, which is invalid CSS syntax that modern browsers discard.
-   - Inspection of compiled `dist/assets/index-BiQUyx8A.css` confirms the fix generates valid CSS:
-     - `.border-line{--tw-border-opacity:1;border-color:rgba(255, 255, 255, var(--tw-border-opacity,1))}`
-     - `.border-line\/60{border-color:#fff9}` (valid 60% opacity)
-     - `.border-line\/80{border-color:#fffc}` (valid 80% opacity)
-
-### 1.3 Integrity Violation Check
-- Source code search for fake outputs, test facades, or hardcoded mocks: NONE.
-- Verification scripts execute genuine Node.js child processes and assertion suites.
-- No shortcuts, bypassed tasks, or self-certifying fabrications detected.
+### 1.5 Adversarial & Forensic Findings
+- **Integrity Audit**:
+  - No hardcoded test outputs or mock bypasses detected in source code.
+  - No facade implementations; all primitives are fully functional React components.
+  - No external service delegation; all verification is executed natively via TypeScript, Vite, and Node.js test runners.
+- **Finding 1 (Minor / Ergonomic)**: `src/components/primitives/Button.tsx:71-82`
+  - In the `asAnchor && href` branch, remaining attributes (`...props`) are not forwarded to `<a>`. Currently all consumer components only pass `href`, `target`, `className`, and `children`, so functionality is completely unaffected, but passing standard anchor attributes (`onClick`, `aria-label`, `data-*`) to `<a>` would improve component versatility for future milestones.
+- **Finding 2 (Minor / Cosmetic)**: `src/components/primitives/Card.tsx:29`
+  - The variant class string contains `border-white/8`. In Tailwind CSS v3, `8` is not a standard opacity scale stop (unlike `border-white/[0.08]` or `border-white/10`). However, `.hud-card` in `src/index.css` explicitly specifies `border: 1px solid rgba(255, 255, 255, 0.08);`, so the 1px hairline border renders properly regardless. Standardizing this string to `border-white/[0.08]` in future passes will ensure consistency.
 
 ---
 
 ## 2. Logic Chain
 
-1. **R1 Design & Layout Simplification**:
-   - Direct inspection of `Navbar.tsx` confirms complete removal of `ESPORTS CLIENT` tagline and simplification of mobile drawer CTA to `Download App` (removing version subtitle `(v2.6)`).
-   - Inspection of `Footer.tsx` confirms removal of conversational marketing paragraphs, the promotional badge `PLATFORM OPERATIONAL 24/7`, bottom chips, and copyright slogans, while upgrading link touch targets.
-   - Inspection of `WhatsAppButton.tsx` confirms removal of the hover tooltip `Chat on WhatsApp` in favor of a clean, self-evident FAB with safe-area insets.
-   - Complete removal of `subtext` from `Stat.tsx` structurally guarantees zero helper copy can be rendered through the metric primitive.
+1. **Reference Immutability Invariant**:
+   - Observation 1.1 confirms that `Supabase _ The Postgres Development Platform.html` has the exact SHA-256 hash `cfbab0c0f7d9acaa887ecf3699ebde892647f81c1cd023e4f3c156f8b6707b50` and length of `1,396,412` bytes, and the `_files` directory contains exactly 66 files totaling `3,376,281` bytes.
+   - Therefore, Requirement R1 is strictly satisfied and inviolate.
 
-2. **Downstream Compatibility & DX/AX Simplification (R2 & R3)**:
-   - Because 0 consumers in `src/` were relying on `subtext`, removing it from `Stat.tsx` and `StatProps` caused zero downstream regressions, verified by successful typecheck and test runs.
-   - Standardizing `forwardRef` across all 7 primitives (`Stat`, `Button`, `Badge`, `Card`, `Pill`, `HudCorners`, `IconOrb`) provides consistent DX and prevents ref forwarding warnings when animations or tooling attach refs.
-   - `Pill` handling both `pulse` and `dotPulse` ensures full backwards compatibility with all 18 existing caller sections.
-   - `Button` handling polymorphic `asAnchor` with proper ref typing and automatic `rel="noopener noreferrer"` ensures anchor links are safe and well-typed.
+2. **Supabase Design Token Fidelity**:
+   - Observation 1.3 confirms exact hex values `#3ECF8E`, `#34B27B`, `#249361`, `#121212`, `#171717`, `#0E0F0E`, `#1E201F`, `#161616`, and `#0B0E0D` are declared in both `src/index.css` and `tailwind.config.js`.
+   - The opacity helper `withAlpha` properly enables arbitrary opacity modifiers (e.g., `bg-accent/10`, `border-line/60`) without dropping the underlying CSS variable or RGB values.
+   - Typography specifications (Manrope for headings, Inter for body with calibrated weight 450, Source Code Pro for code) are configured across HTML font loading, Tailwind config, and CSS base layers.
+   - Therefore, Requirement R2 is satisfied with exact token fidelity.
 
-3. **Design System Visual Fidelity**:
-   - Fixing `IconOrb` neutral tone glow cures the emerald backlight leak.
-   - Unifying `Card.tsx` with `.hud-card` and `.hud-card-highlight` consolidates design tokens.
-   - Wrapping `line` in `withAlpha` in `tailwind.config.js` restores opacity utility classes across `LeaderboardTiers` (`border-line/60`) and `ScoutRewards` (`border-line/80`), producing verified valid CSS in `dist/assets/index-*.css`.
+3. **Interface Conformance & Architectural Robustness**:
+   - Observation 1.4 confirms that UI primitives (`Button`, `Card`, `Badge`, `Input`) fully satisfy their contracts: `forwardRef`, `displayName`, accessibility attributes (`aria-invalid`, `aria-hidden`, `aria-expanded`), and clean className merging via `cn(...)`.
+   - The addition of `Input.tsx` fulfills Feature 5 without breaking existing code.
+   - Backward-compatibility is preserved across 520+ existing token occurrences in the codebase while normalizing their colors to canonical Supabase values.
 
-4. **Automated Verification Proof**:
-   - Zero-defect run of `tsc`, `eslint`, `vite build`, and `node --test` proves build and runtime stability.
+4. **Independent Verification & Zero Regressions**:
+   - Observation 1.2 proves that `npm run typecheck`, `npm run lint`, `npm run build`, and `npm test` execute cleanly with exit code 0.
+   - All 278 automated test cases across 14 suites pass without errors or skipped tests.
+   - Observation 1.5 confirms no integrity violations, facades, or shortcuts exist.
 
 ---
 
 ## 3. Caveats
 
-1. **Milestone Exclusive Boundaries**:
-   - `RefundPolicy.tsx` (owned by Milestone 4) has an internal page title string `100% Refund Policy - ArenaX Esports Platform`. In Milestone 1, the footer navigation link was cleaned to `Refund Policy`; Milestone 4 is scheduled to polish the component's internal header.
-2. **Subtext Elimination**:
-   - If future milestones require displaying secondary metadata alongside a Stat, the architectural contract requires utilizing a separate typography element rather than resurrecting conversational subtext inside `Stat.tsx`.
-3. **No other caveats**: All assigned tasks are verified complete.
+- **Scope Boundary**: Milestone 1 strictly covers Design System Tokens & UI Primitives (`tailwind.config.js`, `src/index.css`, `index.html`, and `src/components/primitives/*`). Section layouts (`Hero.tsx`, `Navbar.tsx`, `Footer.tsx`, etc.) and standalone pages (`About.tsx`, `FAQ.tsx`, etc.) are scheduled for redesign in subsequent Milestones (M2, M3, M4).
+- **Minor Observations**: Finding 1 (prop forwarding on anchor buttons) and Finding 2 (`border-white/8` class syntax) do not impair runtime behavior or test passes, and can be addressed during Milestone 2 cleanup.
 
 ---
 
@@ -147,71 +133,55 @@ Direct observations obtained through independent command execution, AST static i
 
 **Verdict: APPROVE**
 
-Milestone 1 (Navigation, Chrome & Primitives Polish) achieves an exemplary standard of polish, design system coherence, and downstream compatibility:
-- Primitives (`Button`, `Badge`, `Card`, `Pill`, `HudCorners`, `IconOrb`, `Stat`) are robust, fully typed, forward-ref capable, and cleanly handle polymorphic props.
-- Subtext removal from `Stat.tsx` was executed cleanly without breaking any consumer components.
-- The `withAlpha` fix in `tailwind.config.js` resolves CSS line opacity issues and compiles to valid CSS.
-- Zero integrity violations were detected.
-- All verification commands (`typecheck`, `lint`, `build`, `test`) pass with exit code `0`.
+The Milestone 1 work product meets all specified criteria:
+1. Exact Supabase design token adherence (`#3ECF8E`, `#171717`, `#121212`, hairlines, and typography) is faithfully implemented and verified.
+2. UI primitives (`Button`, `Card`, `Badge`, `Input`) exhibit full interface conformance, proper ref forwarding, tactile response, and conflict-free class merging.
+3. Build, lint, typecheck, and all 278 automated test cases pass with zero errors.
+4. Reference file immutability is 100% preserved.
+5. Zero integrity violations detected.
+
+Milestone 1 is ready to be locked, and Milestone 2 (Global Chrome & Hero Showcase) may proceed.
 
 ---
 
 ## 5. Verification Method
 
-To independently reproduce and verify this review:
+To independently reproduce and verify this review verdict:
 
-1. **Run TypeScript Typecheck**:
+1. **Verify Reference File Integrity**:
+   ```powershell
+   Get-FileHash -Algorithm SHA256 "Supabase _ The Postgres Development Platform.html"
+   (Get-Item "Supabase _ The Postgres Development Platform.html").Length
+   (Get-ChildItem -File -Recurse "Supabase _ The Postgres Development Platform_files").Count
+   (Get-ChildItem -File -Recurse "Supabase _ The Postgres Development Platform_files" | Measure-Object -Property Length -Sum).Sum
+   ```
+   *Expected: Hash `cfbab0c0f7d9acaa887ecf3699ebde892647f81c1cd023e4f3c156f8b6707b50`, size 1,396,412 bytes, file count 66, total bytes 3,376,281.*
+
+2. **Verify Typecheck**:
    ```powershell
    npm run typecheck
    ```
-   *Expected output*: `tsc --noEmit -p tsconfig.app.json` exits with code `0`.
+   *Expected: Exit code 0, 0 errors.*
 
-2. **Run ESLint Analysis**:
+3. **Verify Linter**:
    ```powershell
    npm run lint
    ```
-   *Expected output*: `eslint .` exits with code `0`.
+   *Expected: Exit code 0, 0 errors/warnings.*
 
-3. **Run Production Build**:
+4. **Verify Production Build**:
    ```powershell
    npm run build
    ```
-   *Expected output*: `vite build` creates `dist/` with code `0`.
+   *Expected: Exit code 0, dist/ generated cleanly.*
 
-4. **Run Unified Verification Suite**:
+5. **Verify Unified Test Runner**:
    ```powershell
    npm test
    ```
-   *Expected output*: All 4 test tracks pass with code `0` (81 tests passed).
-
-5. **Inspect Compiled Line Opacity CSS**:
-   Search for `.border-line\/60` in `dist/assets/index-*.css` to verify valid `#fff9` / `rgba(255, 255, 255, 0.6)` syntax.
+   *Expected: Exit code 0, all 4 pipeline stages pass with 278 passing tests across 14 test suites.*
 
 6. **Invalidation Conditions**:
-   - If any command fails with non-zero exit code.
-   - If any component fails to compile when invoking `Button`, `Badge`, `Card`, `Pill`, `HudCorners`, `IconOrb`, or `Stat`.
-
----
-
-## 6. Quality & Adversarial Review Details
-
-### Quality Summary
-- **Verdict**: APPROVE
-- **Correctness**: 100% compliant with `PROJECT.md` and `ORIGINAL_REQUEST.md`.
-- **Quality**: Clean polymorphic APIs, proper displayName bindings, high visual fidelity.
-- **Risk Assessment**: Very low. Zero breaking changes introduced to downstream consumers.
-
-### Adversarial Challenges & Stress-Test Results
-- **Challenge 1: Stat Subtext Consumers**
-  - Scenario: Did any consumer pass `subtext` leading to runtime degradation or silent text drop?
-  - Test: Grep of all `.tsx` files in `src/` for `subtext`.
-  - Result: 0 consumers found. TypeScript static typing verifies no caller breaks. PASS.
-- **Challenge 2: Button Polymorphic Ref and Blank Target**
-  - Scenario: Using `Button` with `asAnchor`, `href`, `target="_blank"`, and ref.
-  - Test: Verified `Button.tsx:70-82` forwards ref to `<a>` and automatically attaches `rel="noopener noreferrer"`. PASS.
-- **Challenge 3: IconOrb Neutral Tone Bleed**
-  - Scenario: Does `tone="neutral"` still emit emerald glow?
-  - Test: Checked `IconOrb.tsx:34-36` glowClass condition; verified neutral emits `bg-white/5`. Inspected `Download.tsx:136`. PASS.
-- **Challenge 4: Tailwind CSS Opacity Generation**
-  - Scenario: Does `border-line/60` generate invalid `rgb(rgba(...) / 0.60)`?
-  - Test: Examined compiled `dist/assets/index-BiQUyx8A.css`. Verified it generates `.border-line\/60{border-color:#fff9}`. PASS.
+   - Any modification or byte drift in the reference HTML or `_files/` directory.
+   - Any divergence in canonical token hex codes (`#3ECF8E`, `#171717`, `#121212`).
+   - Any failure in `npm run typecheck`, `npm run lint`, `npm run build`, or `npm test`.

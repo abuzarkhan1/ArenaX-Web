@@ -1,5 +1,7 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import path from 'node:path';
 import {
   computeCombatPoints,
   getTierFromPoints,
@@ -212,6 +214,60 @@ describe('Tier 2: Boundary & Corner Cases Suite', () => {
 
       toggle(1); // clicked item 1 -> switches to 1, closes 4
       assert.equal(openIndex, 1);
+    });
+  });
+
+  describe('UI Primitives Missing Props & Default Fallbacks', () => {
+    it('verifies Button primitive handles missing optional props with safe defaults', () => {
+      const btnPath = path.resolve(process.cwd(), 'src/components/primitives/Button.tsx');
+      assert.ok(fs.existsSync(btnPath));
+      const src = fs.readFileSync(btnPath, 'utf8');
+
+      // Check default parameter assignments
+      assert.ok(src.includes("variant = 'primary'"), 'Button must default to primary variant');
+      assert.ok(src.includes("size = 'lg'") || src.includes("size = 'md'"), 'Button must have default size');
+      assert.ok(src.includes('fullWidth = false'), 'Button must default to fullWidth false');
+      assert.ok(src.includes('asAnchor = false'), 'Button must default to asAnchor false');
+    });
+
+    it('verifies Card primitive handles missing optional props with safe defaults', () => {
+      const cardPath = path.resolve(process.cwd(), 'src/components/primitives/Card.tsx');
+      assert.ok(fs.existsSync(cardPath));
+      const src = fs.readFileSync(cardPath, 'utf8');
+
+      assert.ok(src.includes("variant = 'base'"), 'Card must default to base variant');
+      assert.ok(src.includes('interactive = true'), 'Card must default to interactive true');
+      assert.ok(src.includes("as: Component = 'div'") || src.includes("as = 'div'"), 'Card must default to div element');
+    });
+
+    it('verifies Badge primitive handles missing optional props with safe defaults', () => {
+      const badgePath = path.resolve(process.cwd(), 'src/components/primitives/Badge.tsx');
+      assert.ok(fs.existsSync(badgePath));
+      const src = fs.readFileSync(badgePath, 'utf8');
+
+      assert.ok(src.includes("tone = 'emerald'"), 'Badge must default to emerald tone');
+      assert.ok(src.includes('dot = false'), 'Badge must default to dot false');
+      assert.ok(src.includes('pulse = false'), 'Badge must default to pulse false');
+    });
+  });
+
+  describe('Extreme Viewports & Responsive Layout Clamps', () => {
+    it('verifies root container enforces horizontal overflow protection for 320px mobile viewports', () => {
+      const cssPath = path.resolve(process.cwd(), 'src/index.css');
+      const css = fs.readFileSync(cssPath, 'utf8');
+
+      assert.ok(css.includes('overflow-x: hidden'), 'Root must clamp overflow-x to prevent horizontal jitter');
+      assert.ok(css.includes('max-width: 100%'), 'Body must enforce max-width 100%');
+    });
+
+    it('verifies fluid layout max-width constraints prevent 4K ultra-wide layout distortion', () => {
+      const heroPath = path.resolve(process.cwd(), 'src/components/Hero.tsx');
+      const hero = fs.readFileSync(heroPath, 'utf8');
+
+      assert.ok(
+        hero.includes('max-w-[1200px]') && hero.includes('mx-auto'),
+        'Hero must center within 1200px max-width boundary on 4K displays'
+      );
     });
   });
 });

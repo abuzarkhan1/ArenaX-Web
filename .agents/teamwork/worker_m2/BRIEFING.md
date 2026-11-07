@@ -1,60 +1,55 @@
-# BRIEFING — 2026-11-05T14:45:00Z
+# BRIEFING — 2026-11-07T07:16:00Z
 
 ## Mission
-Implement Milestone 2: Hero, Editorial & Interactive Showcases by modernizing Hero, Statement, AppExperienceShowcase, and TournamentModes components according to design directives and explorer specifications.
+Implement Milestone 2: Refactor Global Chrome, Navigation & Hero Showcase (`src/components/Navbar.tsx`, `src/components/Hero.tsx`, `src/components/Statement.tsx`) into authentic Supabase dark developer-first design system while preserving all functionality and passing all tests.
 
 ## 🔒 My Identity
-- Archetype: worker
+- Archetype: teamwork_worker
 - Roles: implementer, qa, specialist
 - Working directory: c:\Users\Muhammad Minhas\ArenaX-Web\.agents\teamwork\worker_m2\
-- Original parent: 946cbb3b-435a-471b-a15d-9c388cab6b10
-- Milestone: Milestone 2: Hero, Editorial & Interactive Showcases
+- Original parent: 8b88bbad-6052-4d75-b548-47b7f26819bc
+- Milestone: Milestone 2 (Global Chrome, Navigation & Hero Showcase)
 
 ## 🔒 Key Constraints
-- Sole ownership of:
-  - `src/components/Hero.tsx`
-  - `src/components/Statement.tsx`
-  - `src/components/AppExperienceShowcase.tsx`
-  - `src/components/TournamentModes.tsx`
-- DO NOT MODIFY ANY OTHER FILES!
-- All implementations must be genuine. Do not hardcode test results, expected outputs, or dummy facades.
-- Verification must pass: `npm run typecheck`, `npm run lint`, `npm run build`, `npm test`.
+- STRICTLY DO NOT modify reference file `c:\Users\Muhammad Minhas\ArenaX-Web\Supabase _ The Postgres Development Platform.html` or folder `c:\Users\Muhammad Minhas\ArenaX-Web\Supabase _ The Postgres Development Platform_files`.
+- File Write Boundaries: ONLY modify `src/components/Navbar.tsx`, `src/components/Hero.tsx`, `src/components/Statement.tsx`.
+- DO NOT touch other component files or tests in `tests/*`.
+- DO NOT cheat, fake test results, create dummy/facade implementations.
+- All 278 automated tests must pass.
+- Preserve all existing links, anchors, handlers, text copy, telemetry numbers, and 4 protocol statements verbatim.
 
 ## Current Parent
-- Conversation ID: 946cbb3b-435a-471b-a15d-9c388cab6b10
-- Updated: 2026-11-05T14:43:58Z
+- Conversation ID: 8b88bbad-6052-4d75-b548-47b7f26819bc
+- Updated: not yet
 
 ## Task Summary
-- **What to build**: Modernize Hero, Statement, AppExperienceShowcase, and TournamentModes components. Remove legacy promo banners/pills, conversational subheads, and verbose paragraphs. Elevate high-contrast quantitative metrics, clean narrative chapters, and 2x2 specification grids while preserving all interactive GSAP animations, 3D tilts, clipboard flows, tabs, and CTAs.
-- **Success criteria**: Clean compilation, zero lint errors, build passing, all tests passing.
-- **Interface contracts**: PROJECT.md, ORIGINAL_REQUEST.md, and explorer handoff reports.
-- **Code layout**: src/components/
+- **What to build**: Supabase-styled Navbar, Hero, and Statement sections
+- **Success criteria**: Strict adherence to design specs, exact tokens, visual fidelity, zero regressions in tests/lint/build/typecheck
+- **Interface contracts**: PROJECT.md, navbar_plan.md, hero_plan.md, statement_plan.md
+- **Code layout**: `src/components/Navbar.tsx`, `src/components/Hero.tsx`, `src/components/Statement.tsx`
 
 ## Key Decisions Made
-- `Hero.tsx`: Removed version suffix from status badge, removed decorative 2026/SEASON 4 corner badges, removed narrative subhead paragraph, simplified button text to "Download Direct APK", replaced prose blocks with `<Stat />` primitive cards (`< 15s`, `1:1`, `100%`), and removed unused Lucide `CheckCircle2` / primitive `IconOrb` imports.
-- `Statement.tsx`: Removed verbose `detail` explanation paragraphs, updated Statement 01 headline to `"AI vision verifies scoreboards in seconds."` ensuring `tests/tier3-cross-feature.test.ts` passes, streamlined GSAP timeline to scrub words without `detail` tween, and set monumental typography.
-- `AppExperienceShowcase.tsx`: Removed section subtitle paragraph, refined chapter titles (`Match Credentials`, `AI Scoreboard`, `Dual-Vault Escrow`) without `tagline:` properties, modernized internal phone UI (removed `Contender`, `BALANCE`, `Room slots locked...`, `Used for match...`, `Result Verified...`), and added activeTab-driven 3D rotation sync.
-- `TournamentModes.tsx`: Implemented full blueprint from `explorer_m2_3`: mode switcher `Bermuda 48P` / `Clash Squad 4v4`, 2x2 specification cards (`SLOTS`, `ROSTER`, `ENTRY`, `PRIZE POOL`), eliminated category taglines and prose bullets, eliminated `ShieldAlert` helper banner and unused import, and added dynamic CS stage matchups.
+- Navbar: Implemented translucent carbon `#0B0E0D/85` backdrop with `backdrop-blur-md`, 1px hairline border `border-white/[0.08]`, 64px compact height (`h-16`), Supabase brand gradient `#249361` ➔ `#3ECF8E` scroll progress fill, Supabase carbon logo badge `#171717`, Inter text `#A0A0A0` with `#3ECF8E` active chip, and carbon mobile drawer with hairline dividers. Preserved all scroll spy logic and `sections` array aligned with tests.
+- Hero: Implemented canonical canvas `#121212`, subtle emerald radial glow `rgba(62, 207, 142, 0.08)`, micro-precision grid matrix, Supabase pill badge (`bg-[#041B10] border-[#3ECF8E]/30 text-[#3ECF8E]`), Manrope headline with Supabase green gradient wordmark on "Free Fire", dual primary/secondary buttons, character switcher with hairline frame, and 3-metric telemetry ribbon housed in Supabase carbon `#171717` cards. Preserved all metrics and handlers verbatim.
+- Statement: Implemented Manrope display typography (weight 800) with optical tracking, GSAP ScrollTrigger word scrub reveal, reduced motion accessibility guard, canonical carbon `#171717` row hover highlights, top hairline gradient divider (`.divider-gradient`), and preserved all 4 platform statements verbatim.
 
 ## Artifact Index
-- `.agents/teamwork/worker_m2/DISPATCH.md` — Assigned instructions from orchestrator
-- `.agents/teamwork/worker_m2/BRIEFING.md` — Persistent working memory and decisions
-- `.agents/teamwork/worker_m2/progress.md` — Liveness and progress tracking
-- `.agents/teamwork/worker_m2/handoff.md` — Final 5-component handoff report
+- `.agents/teamwork/worker_m2/DISPATCH.md` — Dispatch instructions
+- `.agents/teamwork/worker_m2/progress.md` — Progress tracker and liveness heartbeat
+- `.agents/teamwork/worker_m2/handoff.md` — Final handoff report
 
 ## Change Tracker
 - **Files modified**:
-  - `src/components/Hero.tsx` — Status badge, corner badges, subhead, CTA label, `<Stat />` metrics ribbon
-  - `src/components/Statement.tsx` — Statement 01 AI vision line, removed detail paragraphs, streamlined GSAP scrub
-  - `src/components/AppExperienceShowcase.tsx` — Subtitle removed, 3 clean chapters without taglines, modernized phone UI, 3D rotation sync
-  - `src/components/TournamentModes.tsx` — 2x2 spec cards, 48P/4v4 switcher, dynamic matchups, removed ShieldAlert banner and prose
-- **Build status**: PASS (Vite v8.3.5, zero errors)
+  - `src/components/Navbar.tsx`: Supabase global chrome, 64px height, translucent `#0B0E0D/85` surface, brand green gradient progress bar, mobile drawer overflow resets.
+  - `src/components/Hero.tsx`: Supabase `#121212` canvas, emerald radial glow, pill badges, Manrope gradient headline, carbon cards for telemetry.
+  - `src/components/Statement.tsx`: Manrope display typography, GSAP word scrub, prefers-reduced-motion guard, dark carbon row hover, hairline gradient divider.
+- **Build status**: All checks passed (tsc: PASS, eslint: PASS, vite build: PASS, tests: PASS).
 - **Pending issues**: None
 
 ## Quality Status
-- **Build/test result**: PASS (TypeScript, ESLint, Vite build, all 5 test tiers pass with 0 errors)
-- **Lint status**: 0 violations (ESLint exit code 0)
-- **Tests added/modified**: 0 tests modified (all existing tests pass without regressions)
+- **Build/test result**: Passed (TypeScript: pass, ESLint: pass, Vite build: pass, Node.js unified test runner: 100% pass across all test suites).
+- **Lint status**: 0 errors, 0 warnings
+- **Tests added/modified**: None (tests are read-only)
 
 ## Loaded Skills
-None
+- None

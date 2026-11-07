@@ -12,7 +12,7 @@ export const Stat = forwardRef<HTMLDivElement, StatProps>(
       <div ref={ref} className={`flex flex-col ${className}`.trim()} {...props}>
         <div
           className={`font-heading text-3xl font-extrabold leading-none tracking-tight tabular-nums sm:text-4xl md:text-5xl ${
-            accent ? 'text-accent drop-shadow-[0_0_18px_rgba(0,200,120,0.25)]' : 'text-text-1'
+            accent ? 'text-accent drop-shadow-[0_0_18px_rgba(62,207,142,0.25)]' : 'text-text-1'
           }`}
         >
           {value}

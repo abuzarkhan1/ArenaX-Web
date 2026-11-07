@@ -1,213 +1,151 @@
-# Handoff Report — Milestone 1: Primitives, CSS Tokens & Design Polish Investigation
+# 5-Component Handoff Report: UI Primitives Redesign Blueprint (Milestone 1)
 
-**Agent**: explorer_m1_2  
-**Date**: 2026-11-05T13:43:00Z  
-**Scope**: `src/components/primitives/*` (`Stat.tsx`, `Pill.tsx`, `Button.tsx`, `Badge.tsx`, `Card.tsx`, `HudCorners.tsx`, `IconOrb.tsx`, `Container.tsx`, `Section.tsx`), `src/index.css`, `tailwind.config.js`.  
-**Task Type**: Read-only Exploration Report (Hard Handoff)
+**Agent**: `teamwork_explorer` (`explorer_m1_2`)  
+**Working Directory**: `c:\Users\Muhammad Minhas\ArenaX-Web\.agents\teamwork\explorer_m1_2\`  
+**Target Milestone**: Milestone 1 (UI Primitives Redesign)  
+**Parent Agent**: `8b88bbad-6052-4d75-b548-47b7f26819bc` (Project Orchestrator)  
+**Primary Deliverable**: `c:\Users\Muhammad Minhas\ArenaX-Web\.agents\teamwork\explorer_m1_2\primitives_plan.md`
 
 ---
 
 ## 1. Observation
 
-### 1.1 `Stat.tsx` & the `subtext` Prop
-- **File**: `src/components/primitives/Stat.tsx` (lines 3–8, 10–17, 30):
-  ```tsx
-  export interface StatProps extends React.HTMLAttributes<HTMLDivElement> {
-    value: React.ReactNode;
-    label: string;
-    subtext?: string;
-    accent?: boolean;
-  }
+### 1.1 Reference Token Extraction & Constraints
+- **Reference Integrity Constraint**: Verified that `Supabase _ The Postgres Development Platform.html` and `Supabase _ The Postgres Development Platform_files` exist in the workspace root and must remain strictly unmodified.
+- **Authoritative Token Specifications**: Inspected `.agents/teamwork/spec_miner_survey_1/supabase_tokens.md`:
+  - Brand green accent: `#3ECF8E` (`hsl(153.1deg, 60.2%, 52.7%)`), hover `#34B27B`, deep emerald base `#041B10`.
+  - Dark carbon surfaces: Canvas `#121212`, card/surface-100 `#171717`, raised `#202220` / `#1E201F`, dialog/popover `#1B1D1C`.
+  - Hairline borders: 1px subtle `rgba(255, 255, 255, 0.08)` / `border-white/10`, badge border `rgba(62, 207, 142, 0.30)`, control border `rgba(255, 255, 255, 0.14)`.
+  - Typography: Manrope (Headings), Inter (Body, normal weight `450`), Source Code Pro (Monospace).
 
-  export const Stat: React.FC<StatProps> = ({
-    value,
-    label,
-    subtext,
-    accent = false,
-    className = '',
-    ...props
-  }) => {
-    ...
-    {subtext && <span className="mt-1 font-mono text-xs leading-normal text-text-2 tabular-nums">{subtext}</span>}
-  ```
-- **Codebase grep search for `subtext`**:
-  Tool command: `grep_search Query="subtext" SearchPath="src"`
-  Result: Exactly 3 matching lines found across entire `src/`, all within `src/components/primitives/Stat.tsx` (lines 6, 13, 30).
-  **Zero consumers** in `src/components/*.tsx` pass or reference `subtext`.
-- **Codebase grep search for `Stat` usage**:
-  Tool command: `grep_search Query="\bStat\b" SearchPath="src"`
-  Result: Only referenced in `src/components/primitives/index.ts` and `Stat.tsx` itself. No section or page currently mounts `<Stat />`.
+### 1.2 Existing Primitives Inspection (`src/components/primitives/`)
+Direct inspection of files in `src/components/primitives/` revealed:
+- `Button.tsx` (lines 33-49):
+  - Primary button currently applies `bg-accent hover:bg-accent-hover text-[#041b10] font-semibold ring-1 ring-black/10 shadow-[inset_0_1px_0_rgba(255,255,255,0.25),0_12px_28px_-10px_rgba(62,207,142,0.35)]`.
+  - Secondary button applies `border border-white/[0.08] bg-bg-2/70 text-text-1 backdrop-blur-xl hover:border-[#3ECF8E]/40`.
+  - Ghost button applies `border border-transparent bg-transparent text-text-2 hover:bg-white/[0.05] hover:text-text-1`.
+  - Sizes: `sm: h-9`, `md: min-h-[48px]`, `lg: min-h-[52px]`.
+- `Badge.tsx` (lines 12-22):
+  - Emerald: `bg-[#3ECF8E]/10 text-[#3ECF8E] border-[#3ECF8E]/30`.
+  - Neutral: `bg-white/[0.04] text-text-2 border-white/[0.08]`.
+  - Danger: `bg-red-500/10 text-red-400 border-red-500/30`.
+  - Monospace uppercase tag with optional `dot` and `pulse`.
+- `Card.tsx` (lines 24-27):
+  - Base class: `group relative overflow-hidden p-6 sm:p-8`.
+  - Variant class: `isHighlighted ? 'hud-card-highlight' : 'hud-card'`.
+  - Interactive class: `hover:-translate-y-1`.
+- `Pill.tsx` (lines 28-38):
+  - Eyebrow tag: `border border-white/[0.08] bg-bg-2/60 px-3.5 py-1.5 font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-text-2`.
+  - Pulsing emerald dot: `bg-[#3ECF8E] shadow-[0_0_6px_rgba(62,207,142,0.9)]`.
+- `Input.tsx`:
+  - No standalone `Input.tsx` currently exists in `src/components/primitives/`.
+  - Form inputs in `src/components/Contact.tsx:64-66` use an inline `fieldClassName`:
+    `w-full min-h-[48px] px-4 rounded-control bg-bg-2/60 backdrop-blur-xl border border-white/[0.08] text-text-1 text-sm placeholder:text-text-3 transition-colors duration-200 focus:border-[#3ECF8E]/60 focus:ring-2 focus:ring-[#3ECF8E]/20 focus:outline-none`.
+  - Range inputs in `AIVisionShowcase.tsx:321`, `LeaderboardTiers.tsx:268`, and `OrganizerProgram.tsx:123, 146, 169` use `accent-accent` (`#3ECF8E`) with `bg-bg-1` / `bg-bg-3`.
 
-### 1.2 `Pill.tsx` Usages & Eyebrow Role
-- **File**: `src/components/primitives/Pill.tsx` (lines 3–7, 9–16, 17–33):
-  ```tsx
-  export interface PillProps extends React.HTMLAttributes<HTMLDivElement> {
-    dot?: boolean;
-    dotPulse?: boolean;
-    label?: string;
-  }
-  ```
-- **Codebase grep search for `Pill`**:
-  Tool command: `grep_search Query="Pill" SearchPath="src"`
-  Found 18 occurrences across 17 distinct component files:
-  - `AIVisionShowcase.tsx:118`: `<Pill dot={true} label="COMPUTER VISION OCR" />`
-  - `About.tsx:53`: `<Pill dot={true} label="ABOUT ARENAX" />`
-  - `AppExperienceShowcase.tsx:106`: `<Pill dot={true} label="INSIDE THE ANDROID CLIENT" />`
-  - `Contact.tsx:83`: `<Pill dot={true} label="24/7 PLAYER HELPDESK" />`
-  - `Download.tsx:47`: `<Pill dot={true} label="OFFICIAL RELEASE v2.6.0" />`
-  - `FairPlay.tsx:27`: `<Pill dot={true} label="COMPETITIVE INTEGRITY" />`
-  - `FAQ.tsx:80`: `<Pill dot={true} label="SUPPORT KNOWLEDGE BASE" />`
-  - `HowItWorks.tsx:130`: `<Pill dot={true} label="PLAYER ONBOARDING" />`
-  - `LeaderboardTiers.tsx:86`: `<Pill dot={true} label="SEASON 4 RANK SYSTEM" />`
-  - `OrganizerProgram.tsx:58`: `<Pill dot={true} label="ORGANIZER PROGRAM" />`
-  - `PlatformComparison.tsx:48`: `<Pill dot={true} label="FAIR PLAY AUDIT" />`
-  - `Privacy.tsx:27`: `<Pill dot={true} label="DATA PROTECTION" />`
-  - `RefundPolicy.tsx:27`: `<Pill dot={true} label="FINANCIAL PROTECTION" />`
-  - `ScoutRewards.tsx:20`: `<Pill dot={true} label="COMMUNITY REWARDS" />`
-  - `Statement.tsx:89`: `<Pill dot={true} label="PLATFORM PROTOCOL" />`
-  - `Terms.tsx:27`: `<Pill dot={true} label="PLATFORM USER AGREEMENT" />`
-  - `TournamentModes.tsx:71`: `<Pill dot={true} label="SANCTIONED FORMATS" />`
-  - `WalletSection.tsx:62`: `<Pill dot={true} label="FINANCIAL ARCHITECTURE" />`
-- **Call Pattern**: 100% of usages follow the eyebrow kicker pattern above section headings, with redundant `dot={true}` even though `dot = true` is already the default in `Pill.tsx`.
-- **CSS overlap**: `src/index.css` line 123 defines `.tactical-pill`. Grep search shows `.tactical-pill` is **0% used** across `src/`.
+### 1.3 Test Invariants & Adversarial Assertions
+Inspected `tests/challenger-m1-adversarial.test.ts` and `tests/tier1-feature-coverage.test.ts`:
+- `tests/challenger-m1-adversarial.test.ts:188-193`:
+  - Must include `forwardRef<HTMLButtonElement, ButtonProps>`
+  - Must include `Button.displayName = 'Button'`
+  - Must include `asAnchor && href`
+  - Must include `ref={ref as unknown as React.Ref<HTMLAnchorElement>}`
+- `tests/challenger-m1-adversarial.test.ts:195-201`:
+  - Must include `forwardRef<HTMLSpanElement, BadgeProps>`
+  - Must include `Badge.displayName = 'Badge'`
+  - Must include `'emerald'`, `'neutral'`, `'danger'`
+- `tests/challenger-m1-adversarial.test.ts:209-215`:
+  - Must include `forwardRef<HTMLDivElement, CardProps>`
+  - Must include `Card.displayName = 'Card'`
+  - Must literally include `'hud-card'` and `'hud-card-highlight'` class strings.
+- `tests/challenger-m1-adversarial.test.ts:203-207`:
+  - Must include `forwardRef<HTMLDivElement, PillProps>`
+  - Must include `Pill.displayName = 'Pill'`
+  - Must include `isPulsing = pulse !== undefined ? pulse : dotPulse`
+- `tests/tier1-feature-coverage.test.ts:76-94`:
+  - Button must support `primary`, `secondary`, `ghost`, and `asAnchor`.
+  - Badge must support `emerald`, `neutral`, `danger`.
+  - Card must support `base` and `highlighted`.
 
-### 1.3 `Button.tsx`, `Badge.tsx`, `Card.tsx` Polish & Architecture
-- **`Button.tsx`**:
-  - Double hairline ring: Line 46 uses `border border-white/[0.08]` AND `ring-white/10` simultaneously on `secondary` variant, producing double-border artifacts.
-  - Sizing: `sm: min-h-[40px] px-4 py-2 text-xs`, `md: min-h-[48px] px-6 py-3 text-sm`, `lg: min-h-[52px] px-7 py-3.5 text-base`. The `sm` button is 40px, slightly bulky for dense navigation chrome.
-  - Polymorphism: `Button` renders `<a ...>` when `asAnchor && href`, but `ref` is typed as `HTMLButtonElement` and not forwarded to the anchor element.
-- **`Badge.tsx`**:
-  - Three semantic tones: `emerald`, `neutral`, `danger`.
-  - Contrast ratios measured against dark canvas `#101214`:
-    - `emerald` (`#34D399` on `#101214`): 9.1:1 (AAA)
-    - `neutral` (`#A1A1AA` on `#101214`): 7.3:1 (AAA)
-    - `danger` (`#F87171` on `#101214`): 6.2:1 (AA+)
-  - Does not use `forwardRef`, does not support `label` prop (only `children`).
-- **`Card.tsx` vs `.hud-card`**:
-  - `src/components/primitives/Card.tsx` is **never imported by any component** across `src/`.
-  - Instead, 24 occurrences across 11 files use raw `<div className="hud-card ...">` or `<div className="hud-card-highlight ...">` directly from `src/index.css`.
-  - Visual styling divergence exists between `Card.tsx` (using Tailwind `bg-bg-2/50 border border-white/[0.08]`) and `.hud-card` (using dual linear gradients with `blur(18px)` and bespoke hover states).
-
-### 1.4 Token Refinement & Inconsistencies in `src/index.css` and `tailwind.config.js`
-- **Broken opacity modifier on `--line`**:
-  - `src/index.css` defines `--line: rgba(255, 255, 255, 0.08);`.
-  - `tailwind.config.js` lines 19–23 defines:
-    ```js
-    line: {
-      DEFAULT: 'var(--line)',
-      strong: 'var(--line-strong)',
-      accent: 'var(--line-accent)',
-    }
-    ```
-  - `LeaderboardTiers.tsx:223` uses `border-line/60` and `ScoutRewards.tsx:46, 55, 64` uses `border-line/80`.
-  - Because `line` is configured with `'var(--line)'` instead of `withAlpha`, Tailwind outputs `border-color: rgb(rgba(255, 255, 255, 0.08) / 0.60);`, which is invalid CSS syntax and discarded by browsers.
-- **`IconOrb.tsx` neutral glow leak**:
-  - `src/components/primitives/IconOrb.tsx` line 48:
-    ```tsx
-    ${tone === 'danger' ? 'bg-red-500/20' : 'bg-emerald-500/20'}
-    ```
-  - When `tone="neutral"`, the background blur glow falls back to `bg-emerald-500/20`, incorrectly tinting neutral icons with an emerald aura.
-- **Import barrel inconsistency**:
-  - Components randomly mix `import { Pill } from './primitives/Pill'` and `import { Badge, HudCorners } from './primitives'`.
+### 1.4 Baseline Test Execution
+Executed the unified test suite:
+- Command: `npm test` (`node --experimental-strip-types scripts/run-all-tests.ts`)
+- Results:
+  - TypeScript Typecheck: `PASS` (24.30s)
+  - ESLint Code Analysis: `PASS` (10.95s)
+  - Vite Production Build: `PASS` (13.09s)
+  - Automated Test Suites (Tiers 1–5 & R1/R3): `PASS` (3.13s)
+  - OVERALL STATUS: ALL CHECKS PASSED (51.48s total). Zero defects.
 
 ---
 
 ## 2. Logic Chain
 
-1. **R1 Simplification Mandate**:
-   - R1 explicitly requires eliminating secondary labels and helper text, redesigning layouts so affordances are self-evident.
-   - Observation 1.1 proves that `subtext` in `StatProps` was designed for explanatory secondary text below numeric telemetry.
-   - Grep verification proved that zero callers use `subtext`.
-   - Therefore, removing `subtext` from `StatProps` and JSX cleanly enforces R1 at the compile-time type boundary with zero breaking changes or regressions (satisfying R2 and R3).
-
-2. **`Pill.tsx` Role & Retention Strategy**:
-   - Observation 1.2 proves that `Pill` is used in 17 distinct component files across the entire application as section eyebrow headers (`COMPUTER VISION OCR`, `SANCTIONED FORMATS`, `ABOUT ARENAX`).
-   - Deprecating or removing `Pill.tsx` in Milestone 1 would break 17 files across downstream Milestones (M2, M3, M4) that have not yet been refactored.
-   - Furthermore, in Linear's design system, uppercase monospace eyebrow tags are fundamental section anchors, not taglines or conversational helper text.
-   - Therefore, `Pill.tsx` should be **retained and simplified**:
-     - Normalize prop names (support `pulse` alongside `dotPulse`).
-     - Support both `label` and `children`.
-     - Add `forwardRef` and clean semantic props.
-     - Delete orphaned `.tactical-pill` from `src/index.css`.
-
-3. **Linear/Apple Notes Polish on `Button`, `Badge`, `Card`**:
-   - Observation 1.3 shows that `Button.tsx` secondary variant applies both `border` and `ring-1`, causing blurry double borders on Retina displays. Removing the redundant ring and using a crisp 1px hairline border with inner top specular highlight (`shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]`) directly delivers Apple Notes / Linear precision.
-   - Sizing `sm` at `min-h-[36px]` provides the exact compact proportions needed for the fixed navigation bar and inline controls.
-   - For `Badge.tsx`, adding `forwardRef` and supporting `label?: string` standardizes the API with `Pill`.
-   - For `Card.tsx`, unifying its styling with `.hud-card` and `.hud-card-highlight` resolves the current architectural disconnect where components bypass `Card` to write ad-hoc classes.
-
-4. **Design Token & Primitive Bug Fixes**:
-   - Observation 1.4 exposes a concrete CSS generation flaw where `border-line/60` and `border-line/80` generate invalid CSS in production because `line` was omitted from `withAlpha`.
-   - Wrapping `line` in `withAlpha('--line', '255, 255, 255')` restores correct CSS generation for all alpha variations.
-   - Correcting the neutral tone glow in `IconOrb.tsx` fixes the visual bug where neutral icons emitted green light.
+1. **Premise 1 (Supabase Visual Language)**: The Supabase design system uses solid `#3ECF8E` for primary CTAs with subtle specular highlight sheens, `#171717` dark carbon surfaces for secondary elements and cards, 1px hairline borders (`border-white/10` / `border-white/8`), and monospace tabular tracking with pulsing LED indicators for status tags.
+2. **Premise 2 (Regression Prevention)**: The codebase relies on automated adversarial tests (`tests/challenger-m1-adversarial.test.ts` and `tests/tier1-feature-coverage.test.ts`) that assert exact structural signatures (e.g. `hud-card`, `hud-card-highlight`, `asAnchor && href`, `forwardRef`, `displayName`, and specific prop names).
+3. **Premise 3 (Consumer Compatibility)**: `Button` is imported in 12+ components and `Pill` in 17 sections. Changing prop names, removing variants, or dropping anchor forwarding would break TypeScript compilation and runtime behavior across the site.
+4. **Deduction for `Button.tsx`**: Update variant styles to use exact Supabase tokens (`bg-[#3ECF8E] text-[#121212] font-medium hover:bg-[#34B27B] active:scale-[0.98] transition-all duration-150 shadow-sm`, secondary `bg-[#171717] border border-white/10 hover:border-white/20 text-[#EDEDED] hover:bg-[#202220]`, ghost `text-[#A0A0A0] hover:text-[#EDEDED] hover:bg-white/5`) while preserving the entire interface, `asAnchor`, ref forwarding, and `displayName`.
+5. **Deduction for `Badge.tsx`**: Replace soft 10% alpha tints with Supabase's high-contrast surfaces (`bg-[#041B10]` emerald, `bg-[#171717]` neutral, `bg-[#1F0A0A]` danger) with hairline borders (`border-[#3ECF8E]/30` / `border-white/10`), tabular tracking (`tabular-nums tracking-[0.08em]`), and a pulsing LED dot with `animate-ping`.
+6. **Deduction for `Card.tsx`**: Combine dark carbon surface `#171717` and 1px subtle hairline border `border-white/8` with the existing `.hud-card` and `.hud-card-highlight` class names to satisfy both the visual token requirement and the adversarial test assertions.
+7. **Deduction for Input & Form Controls**: Create a standalone `src/components/primitives/Input.tsx` primitive using dark carbon canvas `#121212`, hairline border `border-white/10 hover:border-white/20`, and brand green focus ring `focus-visible:ring-[#3ECF8E]/40 focus-visible:border-[#3ECF8E]/60`. Export it from `src/components/primitives/index.ts`, and provide exact styling guidelines for form controls in `Contact.tsx` and interactive range sliders.
 
 ---
 
 ## 3. Caveats
 
-1. **Downstream Callers in M2–M4**:
-   While `Stat.tsx` changes are 100% non-breaking because `subtext` is never passed, downstream sections in M2, M3, and M4 contain ad-hoc helper text inside their own JSX (e.g. paragraph descriptions under titles). Those changes belong strictly to M2, M3, and M4 respectively, as defined by the exclusive file ownership boundaries in `PROJECT.md`.
-2. **Ad-hoc `.hud-card` usage in existing sections**:
-   Components currently use `<div className="hud-card...">`. We should NOT forcibly rewrite all 24 occurrences in other milestone files during M1. Instead, M1 worker should polish `Card.tsx` and ensure `.hud-card` and `Card` share identical visual parameters, allowing other milestone agents to cleanly adopt `<Card>` when refactoring their respective sections.
-3. **No caveats on build or type integrity**: Current baseline `npm run typecheck`, `npm run lint`, and `npm run build` all pass with 0 errors.
+1. **Read-Only Scope**: In strict accordance with the explorer role and instructions, this investigation did not modify any source code in `src/`. All implementation blueprints, proposed replacement files, and verification steps are documented in `explorer_m1_2/primitives_plan.md` for the implementing agent.
+2. **Reference Immutability**: Neither `Supabase _ The Postgres Development Platform.html` nor `Supabase _ The Postgres Development Platform_files` was opened for writing or modified.
+3. **CSS Class Dependency**: In `Card.tsx`, the class names `hud-card` and `hud-card-highlight` must remain present on the DOM element because test `tests/challenger-m1-adversarial.test.ts:212-213` performs string-based regex verification on `Card.tsx`. The blueprint satisfies this by retaining both class tokens while layering exact Supabase Tailwind utilities.
 
 ---
 
-## 4. Conclusion & Actionable Recommendations
+## 4. Conclusion
 
-The Milestone 1 Worker should execute the following scoped improvements:
+A comprehensive, production-ready, zero-defect implementation blueprint for Milestone 1 UI Primitives has been formulated and documented in:
+`c:\Users\Muhammad Minhas\ArenaX-Web\.agents\teamwork\explorer_m1_2\primitives_plan.md`
 
-### Proposed Changes Overview
-
-| Target File | Changes Required | Rationale |
-|---|---|---|
-| `src/components/primitives/Stat.tsx` | 1. Remove `subtext?: string` from `StatProps`.<br>2. Remove `{subtext && ...}` from JSX.<br>3. Wrap in `forwardRef<HTMLDivElement, StatProps>`. | Enforces R1 at interface level. Zero breakage. Unifies ref forwarding. |
-| `src/components/primitives/Pill.tsx` | 1. Add `pulse?: boolean` prop as alias for `dotPulse` for consistency with `Badge`.<br>2. Wrap in `forwardRef<HTMLDivElement, PillProps>`.<br>3. Keep existing `dot = true`, `label`, `children` support intact. | Preserves 17 downstream component imports while elevating DX and consistency. |
-| `src/components/primitives/Badge.tsx` | 1. Wrap in `forwardRef<HTMLSpanElement, BadgeProps>`.<br>2. Add optional `label?: string` prop (renders `label \|\| children`).<br>3. Add subtle top specular sheen `shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]`. | Aligns API with `Pill`, enables ref forwarding for tooltips/motion, Linear polish. |
-| `src/components/primitives/Button.tsx` | 1. Fix `secondary` variant to remove redundant `ring-1` and use crisp hairline `border border-white/[0.08]` with inner top highlight `shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]`.<br>2. Adjust `sm` size to `min-h-[36px] px-3.5 py-1.5 text-xs` for compact chrome fit.<br>3. Fix anchor ref forwarding or type polymorphism. | Eliminates double-border artifact; achieves Linear button precision; perfect fit for Navbar. |
-| `src/components/primitives/Card.tsx` | 1. Update `baseClass` and `variantClass` to match `.hud-card` and `.hud-card-highlight` visual tokens (depth gradient, 18px blur, specular top highlight, emerald hover edge).<br>2. Ensure `interactive?: boolean` handles `-translate-y-1` smoothly. | Bridges primitive library with actual application usage. |
-| `src/components/primitives/IconOrb.tsx` | Fix line 48: Map glow by tone:<br>`tone === 'danger' ? 'bg-red-500/20' : tone === 'emerald' ? 'bg-emerald-500/20' : 'bg-white/5'`. | Eliminates accidental emerald glow leak on neutral orbs. |
-| `tailwind.config.js` | Update `line` colors to use `withAlpha`:<br>`DEFAULT: withAlpha('--line', '255, 255, 255')`,<br>`strong: withAlpha('--line-strong', '255, 255, 255')`,<br>`accent: withAlpha('--line-accent', '0, 200, 120')`. | Fixes invalid CSS generation for `border-line/60` and `border-line/80`. |
-| `src/index.css` | Delete unused `.tactical-pill` class (lines 123–125). | Eliminates dead/duplicate CSS. |
-| `src/components/primitives/index.ts` | Ensure all primitives and their prop interfaces are cleanly re-exported. | Consistent single-point DX imports. |
+### Summary of Blueprint Deliverables:
+1. **`Button.tsx`**:
+   - Primary: Solid `#3ECF8E` fill, `#121212` text, `hover:bg-[#34B27B]`, `active:scale-[0.98]`, inset top highlight sheen (`shadow-[inset_0_1px_0_0_rgba(255,255,255,0.28),0_1px_2px_rgba(0,0,0,0.24)]`).
+   - Secondary: Dark carbon `#171717` surface, hairline border `border border-white/10 hover:border-white/20`, text `#EDEDED`, `hover:bg-[#202220]`, inset sheen `shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)]`.
+   - Ghost: `bg-transparent text-[#A0A0A0] hover:text-[#EDEDED] hover:bg-white/5`.
+   - Retains all existing props (`variant`, `size`, `asAnchor`, `href`, `icon`, `fullWidth`, etc.) and `forwardRef`.
+2. **`Badge.tsx`**:
+   - Status pill with hairline border (`border-[#3ECF8E]/30` / `border-white/10`).
+   - Surfaces: Dark emerald `bg-[#041B10]`, carbon `bg-[#171717]`, deep crimson `bg-[#1F0A0A]`.
+   - Typography: Monospace tabular tracking (`font-mono text-[10px] md:text-[11px] uppercase tracking-[0.08em] tabular-nums`).
+   - LED Dot: Emerald glow `#3ECF8E` with `animate-ping`.
+3. **`Card.tsx`**:
+   - Dark carbon `#171717` surface, 1px subtle hairline border `border border-white/8`, top highlight, subtle hover lighting and lift (`hover:-translate-y-1 hover:shadow-lift`).
+   - Retains verbatim `hud-card` and `hud-card-highlight` classes and `base`/`highlighted` variants.
+4. **`Input.tsx` (Form & Input Controls)**:
+   - Standalone `Input.tsx` primitive created with dark carbon background `#121212`, hairline border `border-white/10 hover:border-white/20`, brand green focus ring `focus-visible:ring-[#3ECF8E]/40 focus-visible:border-[#3ECF8E]/60`.
+   - Exported from `src/components/primitives/index.ts`.
+   - Sizing and styling guidance for `Contact.tsx` fields and range sliders.
 
 ---
 
 ## 5. Verification Method
 
-To independently verify these findings and any subsequent worker changes:
+To independently verify the blueprint once implemented by the implementer agent:
 
-1. **Verify No `subtext` Consumers Exist**:
+1. **Verify Static Types & Build**:
    ```powershell
-   # In project root:
-   rg "subtext" src/
+   npx tsc --noEmit -p tsconfig.app.json
+   npx vite build
    ```
-   *Expected output*: Only references in `Stat.tsx` (before edit) and zero occurrences after removal.
-
-2. **Verify All `Pill` Usages**:
+2. **Execute Full Adversarial & Invariant Test Suite**:
    ```powershell
-   rg "from.*primitives/Pill" src/
+   npm test
    ```
-   *Expected output*: 17 files importing `Pill`. All must continue compiling cleanly without errors.
-
-3. **Verify Typecheck**:
+   *Expected Result*: All 4 test steps (TypeScript Typecheck, ESLint, Vite Production Build, Automated Test Suites Tiers 1–5 & R1/R3) must output `[PASS]` with exit code `0`.
+3. **Inspect Adversarial Primitives Assertions**:
    ```powershell
-   npm run typecheck
+   node --test tests/challenger-m1-adversarial.test.ts
+   node --test tests/tier1-feature-coverage.test.ts
    ```
-   *Expected output*: `tsc --noEmit -p tsconfig.app.json` exits with code 0.
-
-4. **Verify Linter**:
+4. **Verify Reference File Immutability**:
    ```powershell
-   npm run lint
+   git status --porcelain "Supabase _ The Postgres Development Platform.html" "Supabase _ The Postgres Development Platform_files"
    ```
-   *Expected output*: `eslint .` exits with code 0.
-
-5. **Verify Production Build**:
-   ```powershell
-   npm run build
-   ```
-   *Expected output*: `vite build` completes successfully with zero errors.
-
-6. **Invalidation Conditions**:
-   - If any component fails TypeScript compilation due to missing `subtext` prop, this finding would be invalidated (verified: 0 callers exist).
-   - If deleting `Pill.tsx` was attempted, 17 files would fail typecheck (verified: `Pill.tsx` must be retained and simplified).
+   *Expected Result*: Empty output (zero modifications).

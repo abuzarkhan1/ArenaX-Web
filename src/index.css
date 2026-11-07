@@ -3,33 +3,94 @@
 @tailwind utilities;
 
 :root {
-  /* Surfaces */
-  --bg-0: #0B0D0E;   /* deepest: pinned scenes, footer */
-  --bg-1: #101214;   /* page base (same as hero) */
-  --bg-2: #15181B;   /* cards */
-  --bg-3: #1B1F22;   /* raised / hover */
+  /* Surfaces - Supabase Canonical Dark Carbon Architecture */
+  --bg-0: #0E0F0E;
+  /* deepest: pinned scenes, tactical backdrop */
+  --bg-1: #121212;
+  /* page base canvas: Supabase canonical dark base */
+  --bg-2: #171717;
+  /* cards & panels: Supabase surface-100 (NORMALIZED from #171817) */
+  --bg-3: #1E201F;
+  /* raised / hover / surface-300 (NORMALIZED from #202220) */
+  --bg-alt: #161616;
+  /* alternative carbon: footer & alternating sections */
+  --bg-header: #0B0E0D;
+  /* sticky header translucent backdrop */
 
-  /* Lines */
-  --line:        rgba(255, 255, 255, 0.08);
-  --line-strong: rgba(255, 255, 255, 0.16);
-  --line-accent: rgba(0, 200, 120, 0.35);
+  /* Supabase Canonical Surface Aliases */
+  --background: var(--bg-1);
+  --background-default: var(--bg-1);
+  --background-surface-75: var(--bg-2);
+  --background-surface-100: #181A19;
+  --background-surface-200: var(--bg-3);
+  --background-surface-300: var(--bg-3);
+  --background-alternative: var(--bg-alt);
+  --card: var(--bg-2);
+  --popover: #1B1D1C;
+  --field: rgba(0, 0, 0, 0.24);
 
-  /* Text */
-  --text-1: #F3F4F6;
-  --text-2: #A1A1AA;
-  --text-3: #8A8A93;   /* min 12px mono, never below AA */
+  /* Lines - Supabase Hairline Architecture */
+  --line: rgba(255, 255, 255, 0.08);
+  --line-strong: rgba(255, 255, 255, 0.14);
+  --line-accent: rgba(62, 207, 142, 0.35);
 
-  /* Accent (the ONLY accent) */
-  --accent:      #00C878;
-  --accent-hover:#00DB86;
-  --accent-dim:  rgba(0, 200, 120, 0.12);
+  /* Supabase Canonical Border Aliases */
+  --border: var(--line);
+  --border-default: var(--line);
+  --border-strong: var(--line-strong);
+  --border-control: var(--line-strong);
+  --border-hover: rgba(255, 255, 255, 0.28);
+  --border-brand: var(--line-accent);
+
+  /* Text - Supabase Typography Hierarchy */
+  --text-1: #EDEDED;
+  --text-2: #A0A0A0;
+  --text-3: #707070;
+  /* min 12px mono, never below AA */
+
+  /* Supabase Canonical Text Aliases */
+  --foreground: var(--text-1);
+  --foreground-default: var(--text-1);
+  --foreground-light: var(--text-2);
+  --foreground-lighter: #8A8A8A;
+  --foreground-muted: var(--text-3);
+
+  /* Accent - Supabase Signature Emerald Brand (#3ECF8E) */
+  --accent: #3ECF8E;
+  --accent-hover: #34B27B;
+  --accent-dim: rgba(62, 207, 142, 0.12);
+
+  /* Supabase Brand Stops & Gradients */
+  --brand-default: #3ECF8E;
+  --brand-hover: #34B27B;
+  --brand-600: #85E0BA;
+  --brand-500: #3ECF8E;
+  --brand-400: #249361;
+  --brand-300: #002918;
+  --brand-200: #000A07;
+  --brand-100: #041B10;
+  --brand-gradient: linear-gradient(180deg, #249361 0%, #3ECF8E 100%);
+  --brand-gradient-h: linear-gradient(90deg, #249361 0%, #3ECF8E 100%);
+
+  /* Supabase Typography */
+  --font-manrope: 'Manrope', 'Outfit', sans-serif;
+  --font-inter: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'Source Code Pro', 'JetBrains Mono', monospace;
+  --font-weight-light: 300;
+  --font-weight-normal: 450;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
 
   /* Semantic only */
-  --danger:   #EF4444;  /* Criminal aura + errors only */
-  --whatsapp: #25D366;  /* WhatsApp button only */
+  --danger: #EF4444;
+  /* Criminal aura + errors only */
+  --whatsapp: #25D366;
+  /* WhatsApp button only */
 }
 
 @layer base {
+
   html,
   body {
     overflow-x: hidden;
@@ -37,7 +98,29 @@
     background-color: var(--bg-1);
     color: var(--text-1);
     color-scheme: dark;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-family: var(--font-inter);
+    font-weight: 450;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  .font-heading {
+    font-family: var(--font-manrope);
+  }
+
+  code,
+  pre,
+  kbd,
+  samp,
+  .font-mono {
+    font-family: var(--font-mono);
   }
 
   * {
@@ -62,22 +145,23 @@
 }
 
 @layer utilities {
+
   /* ==========================================================
-     BROADCAST HUD SURFACES
-     One glass surface language: hairline border, frosted depth,
+     SUPABASE-ALIGNED HUD SURFACES
+     Subtle dark surface, hairline border, frosted depth,
      a single top highlight, and an emerald hover edge.
      ========================================================== */
   .hud-card {
     background:
-      linear-gradient(180deg, rgba(21, 24, 27, 0.84) 0%, rgba(12, 14, 17, 0.76) 100%);
+      linear-gradient(180deg, rgba(23, 23, 23, 0.90) 0%, rgba(16, 17, 16, 0.85) 100%);
     -webkit-backdrop-filter: blur(18px);
     backdrop-filter: blur(18px);
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-top-color: rgba(255, 255, 255, 0.12);
-    border-radius: 20px;
+    border-radius: 16px;
     box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.04),
-      0 24px 60px -24px rgba(0, 0, 0, 0.70);
+      inset 0 1px 0 rgba(255, 255, 255, 0.05),
+      0 20px 48px -20px rgba(0, 0, 0, 0.75);
     transition:
       border-color 0.3s ease,
       transform 0.2s cubic-bezier(0.16, 1, 0.3, 1),
@@ -86,31 +170,31 @@
   }
 
   .hud-card:hover {
-    border-color: rgba(0, 200, 120, 0.40);
+    border-color: rgba(62, 207, 142, 0.40);
     box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.06),
-      0 12px 24px -10px rgba(0, 255, 163, 0.15),
-      0 24px 60px -24px rgba(0, 0, 0, 0.70);
+      inset 0 1px 0 rgba(255, 255, 255, 0.08),
+      0 12px 28px -10px rgba(62, 207, 142, 0.18),
+      0 20px 48px -20px rgba(0, 0, 0, 0.75);
   }
 
   .hud-card-highlight {
     background:
-      radial-gradient(120% 90% at 50% 0%, rgba(0, 200, 120, 0.10) 0%, transparent 58%),
-      linear-gradient(180deg, rgba(24, 30, 31, 0.88) 0%, rgba(12, 15, 16, 0.80) 100%);
+      radial-gradient(120% 90% at 50% 0%, rgba(62, 207, 142, 0.12) 0%, transparent 58%),
+      linear-gradient(180deg, rgba(26, 30, 28, 0.92) 0%, rgba(16, 18, 17, 0.86) 100%);
     -webkit-backdrop-filter: blur(18px);
     backdrop-filter: blur(18px);
-    border: 1px solid rgba(0, 200, 120, 0.35);
-    border-top-color: rgba(52, 211, 153, 0.55);
-    border-radius: 20px;
+    border: 1px solid rgba(62, 207, 142, 0.35);
+    border-top-color: rgba(76, 217, 155, 0.55);
+    border-radius: 16px;
     box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.06),
-      0 0 40px -18px rgba(0, 200, 120, 0.35),
-      0 24px 60px -24px rgba(0, 0, 0, 0.70);
+      inset 0 1px 0 rgba(255, 255, 255, 0.08),
+      0 0 40px -18px rgba(62, 207, 142, 0.35),
+      0 20px 48px -20px rgba(0, 0, 0, 0.75);
   }
 
   /* Frosted panel for nested HUD widgets */
   .glass-panel {
-    @apply border border-white/[0.08] bg-bg-2/60 backdrop-blur-xl;
+    @apply border border-white/[0.08] bg-bg-2/70 backdrop-blur-xl;
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
   }
 
@@ -132,7 +216,7 @@
     bottom: -4px;
     height: 2px;
     border-radius: 9999px;
-    background: linear-gradient(90deg, rgba(0, 200, 120, 0), #10B981 45%, rgba(0, 200, 120, 0));
+    background: linear-gradient(90deg, rgba(62, 207, 142, 0), #3ECF8E 45%, rgba(62, 207, 142, 0));
     transform: scaleX(0);
     transform-origin: left center;
     transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
@@ -149,7 +233,7 @@
   .ambient-glow {
     position: absolute;
     border-radius: 9999px;
-    background: rgba(16, 185, 129, 0.10);
+    background: rgba(62, 207, 142, 0.10);
     filter: blur(80px);
     pointer-events: none;
     z-index: 0;
@@ -166,7 +250,7 @@
   }
 
   .text-glow-accent {
-    text-shadow: 0 0 24px rgba(16, 185, 129, 0.35);
+    text-shadow: 0 0 24px rgba(62, 207, 142, 0.35);
   }
 
   /* CSS 3D Support */
@@ -206,6 +290,78 @@
   .animate-cine-badge-right {
     animation: cineBadgeRight 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.4s backwards;
   }
+
+  /* Supabase Accessible Focus Ring */
+  .focus-ring {
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3ECF8E]/55 focus-visible:ring-offset-2 focus-visible:ring-offset-[#121212];
+  }
+
+  /* Supabase Secondary / Raised Control Surface */
+  .raised-control-surface {
+    background-color: var(--bg-2);
+    background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.025), rgba(0, 0, 0, 0.03));
+    box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.06), inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+    color: var(--text-1);
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+  }
+
+  .raised-control-surface:hover {
+    background-color: var(--bg-3);
+  }
+
+  /* Supabase Dual-layer Hairline Gradient Card */
+  .gradient-border-card {
+    padding: 1px;
+    border-radius: 16px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.04) 50%, rgba(23, 23, 23, 0.5) 100%);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .gradient-border-card:hover {
+    background: linear-gradient(180deg, rgba(62, 207, 142, 0.35) 0%, rgba(255, 255, 255, 0.08) 50%, rgba(23, 23, 23, 0.5) 100%);
+  }
+
+  /* Supabase Hairline Gradient Dividers */
+  .divider-gradient {
+    height: 1px;
+    width: 100%;
+    background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.08) 50%, transparent 100%);
+  }
+
+  .divider-gradient-brand {
+    height: 1px;
+    width: 100%;
+    background: linear-gradient(90deg, transparent 0%, rgba(62, 207, 142, 0.35) 50%, transparent 100%);
+  }
+
+  /* Shorthand Color Utility Aliases for Direct Developer Ergonomics */
+  .bg-0 {
+    background-color: var(--bg-0);
+  }
+
+  .bg-1 {
+    background-color: var(--bg-1);
+  }
+
+  .bg-2 {
+    background-color: var(--bg-2);
+  }
+
+  .bg-3 {
+    background-color: var(--bg-3);
+  }
+
+  .text-1 {
+    color: var(--text-1);
+  }
+
+  .text-2 {
+    color: var(--text-2);
+  }
+
+  .text-3 {
+    color: var(--text-3);
+  }
 }
 
 @keyframes cineUnfurl {
@@ -214,6 +370,7 @@
     transform: scale(0.92) translateY(30px);
     filter: blur(12px);
   }
+
   100% {
     opacity: 1;
     transform: scale(1) translateY(0);
@@ -227,6 +384,7 @@
     transform: translateY(60px) scale(0.94);
     filter: brightness(0.6);
   }
+
   100% {
     opacity: 1;
     transform: translateY(0) scale(1);
@@ -239,9 +397,11 @@
     opacity: 0;
     transform: scale(0.5);
   }
+
   50% {
     opacity: 0.8;
   }
+
   100% {
     opacity: 0.4;
     transform: scale(1);
@@ -253,6 +413,7 @@
     opacity: 0;
     transform: translateY(40px);
   }
+
   100% {
     opacity: 1;
     transform: translateY(0);
@@ -264,6 +425,7 @@
     opacity: 0;
     transform: translateY(-20px);
   }
+
   100% {
     opacity: 1;
     transform: translateY(0);
@@ -275,6 +437,7 @@
     opacity: 0;
     transform: translateX(-30px);
   }
+
   100% {
     opacity: 1;
     transform: translateX(0);
@@ -286,6 +449,7 @@
     opacity: 0;
     transform: translateX(30px);
   }
+
   100% {
     opacity: 1;
     transform: translateX(0);
@@ -299,22 +463,22 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: #080A0F;
+  background: #0E0F0E;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #1B1F22;
+  background: #1E201F;
   border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #10B981;
+  background: #3ECF8E;
 }
 
 /* Firefox parity */
 * {
   scrollbar-width: thin;
-  scrollbar-color: #1B1F22 #080A0F;
+  scrollbar-color: #1E201F #0E0F0E;
 }
 
 .no-scrollbar::-webkit-scrollbar {
@@ -328,7 +492,10 @@
 
 /* Reduced motion preference */
 @media (prefers-reduced-motion: reduce) {
-  *, ::before, ::after {
+
+  *,
+  ::before,
+  ::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;

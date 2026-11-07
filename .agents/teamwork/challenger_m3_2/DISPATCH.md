@@ -1,27 +1,40 @@
-## 2026-11-05T15:27:30Z
-You are challenger_m3_2, a code-executing adversarial verifier.
-Your working directory is: c:\Users\Muhammad Minhas\ArenaX-Web\.agents\teamwork\challenger_m3_2\
+# DISPATCH — challenger_m3_2
+Scope: Milestone 3 Adversarial Challenge (Tokens, Hairlines, Responsive Layout, Copy & Section IDs across all 10 components)
 
-Read and follow these authoritative documents first:
-1. c:\Users\Muhammad Minhas\ArenaX-Web\.agents\teamwork\ORIGINAL_REQUEST.md
-2. c:\Users\Muhammad Minhas\ArenaX-Web\PROJECT.md
-3. c:\Users\Muhammad Minhas\ArenaX-Web\.agents\teamwork\worker_m3\handoff.md
 
-Target files:
-- src/components/AIVisionShowcase.tsx
-- src/components/WalletSection.tsx
-- src/components/LeaderboardTiers.tsx
-- src/components/OrganizerProgram.tsx
+## 2026-11-07T07:52:37Z
+You are challenger_m3_2, a teamwork_challenger for Milestone 3 (Interactive Product Showcases & Technical Features).
+Your working directory is: c:\Users\Muhammad Minhas\ArenaX-Web\.agents\teamwork\challenger_m3_2
 
-Your task:
-Adversarially challenge and stress-test the changes made in Milestone 3:
-1. Write a standalone test script (e.g. `tests/challenger-m3-2.test.ts`) that verifies:
-   - Check strict R1 copy compliance across all 4 files: no taglines, no subtitles, no conversational paragraphs, no footnotes (`Protected Escrow`, `Zero Hidden Commissions`, `Instant Winning Wallet credit`, `Credited directly to your dedicated Organizer Wallet`).
-   - Check UI layout and interactive affordances: segmented controls in AIVisionShowcase, 2x2 telemetry specs grid in WalletSection, high-contrast badges, buttons.
-   - Verify GSAP and DOM invariants: scanline animation and scroll triggers in AIVisionShowcase; carousel structure in LeaderboardTiers; slider steps and ranges in OrganizerProgram.
-   - Stress-test randomized inputs across all mathematical formulas to ensure no NaN, undefined, division by zero, or negative numbers occur.
-2. Run your test with `node --test tests/challenger-m3-2.test.ts` and also run `npm test`.
-3. Provide your verdict: **APPROVE** or **REJECT**.
+MANDATORY FIRST STEP: Read the original user request at:
+c:\Users\Muhammad Minhas\ArenaX-Web\.agents\teamwork\ORIGINAL_REQUEST.md
 
-Deliver your report in `c:\Users\Muhammad Minhas\ArenaX-Web\.agents\teamwork\challenger_m3_2\handoff.md`.
-Notify orchestrator via send_message when done.
+CRITICAL HARD CONSTRAINTS:
+1. READ-ONLY REFERENCE: The file `Supabase _ The Postgres Development Platform.html` and its associated folder `Supabase _ The Postgres Development Platform_files` MUST remain STRICTLY unmodified and unaltered. Do not write, touch, or edit them.
+2. CHALLENGER ROLE: Write stress tests / scanner scripts to adversarially inspect tokens, styling, copy preservation, and markup across all 10 Milestone 3 components:
+   - `AppExperienceShowcase.tsx`
+   - `TournamentModes.tsx`
+   - `AIVisionShowcase.tsx`
+   - `WalletSection.tsx`
+   - `LeaderboardTiers.tsx`
+   - `OrganizerProgram.tsx`
+   - `ScoutRewards.tsx`
+   - `HowItWorks.tsx`
+   - `PlatformComparison.tsx`
+   - `Download.tsx`
+
+ADVERSARIAL STRESS CHECKS:
+1. Tokens & Colors: Verify presence of Supabase `#121212` canvas, `#171717` cards, `#3ECF8E` green accent, and hairline `rgba(255, 255, 255, 0.08)` borders.
+2. Glitch & Bracket Check: Verify 0 syntax errors, 0 unbalanced Tailwind arbitrary brackets `[...]`, 0 `undefined`, 0 `NaN`, 0 `null` strings in JSX.
+3. R1 Prohibition Audit: 0 `<Pill />` eyebrows, 0 `subtext` prop on `<Stat />`, 0 `tagline:` properties, 0 prohibited footnotes.
+4. Copy & Structure Invariants:
+   - Verify all 6 steps in `HowItWorks.tsx` (`01` through `06`).
+   - Verify 2 columns in `PlatformComparison.tsx` (`ArenaX Official Client` vs `Informal WhatsApp / Social Scrims`).
+   - Verify 4 install steps and `QRCodeSVG` in `Download.tsx`.
+   - Verify all 10 anchor DOM section IDs exist (`#app-showcase`, `#tournaments`, `#ai-vision`, `#wallet`, `#ranks`, `#organizers`, `#how-it-works`, `#comparison`, `#scout-rewards`, `#download`).
+5. Run full verification pipeline: `npm test`
+6. Verify reference integrity: check SHA-256 and size of `Supabase _ The Postgres Development Platform.html`.
+
+DELIVERABLES:
+1. Write `c:\Users\Muhammad Minhas\ArenaX-Web\.agents\teamwork\challenger_m3_2\handoff.md` with test output and explicit verdict: **CONFIRMED** or **DISPROVED**.
+2. Send message to orchestrator with your verdict.

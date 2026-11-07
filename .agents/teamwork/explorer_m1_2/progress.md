@@ -1,21 +1,16 @@
 # Progress — explorer_m1_2
 
-Last visited: 2026-11-05T13:45:00Z
-Current Status: COMPLETE. Handoff report ready in handoff.md.
+Last visited: 2026-11-07T06:34:00Z
+Current Status: COMPLETE — Blueprint and 5-Component Handoff Report ready.
 
 ## Steps
-- [x] Initialized DISPATCH.md and BRIEFING.md
-- [x] Reviewed ORIGINAL_REQUEST.md and PROJECT.md
-- [x] Inspected all files in `src/components/primitives/*` (Stat, Pill, Button, Badge, Card, HudCorners, IconOrb, Container, Section, index.ts)
-- [x] Grep usages of `Stat`, `Pill`, `Button`, `Badge`, `Card`, `HudCorners`, `IconOrb`, `Container`, `Section` across `src/`
-- [x] Inspected `src/index.css` and `tailwind.config.js`
-- [x] Analyzed `subtext` removal from `Stat.tsx` (verified zero callers pass subtext, 100% safe to remove)
-- [x] Analyzed `Pill.tsx` usages across 17 components and formulated simplification / eyebrow standardization plan
-- [x] Analyzed `Button.tsx`, `Badge.tsx`, `Card.tsx` layout, hierarchy, micro-interactions, contrast, and Linear/Apple Notes polish
-- [x] Discovered key token bug: `border-line/60` and `border-line/80` opacity resolution failure in `tailwind.config.js`
-- [x] Discovered `IconOrb.tsx` neutral tone emerald glow leak bug
-- [x] Discovered orphaned `.tactical-pill` class in `src/index.css`
-- [x] Verified baseline typecheck, lint, and build (`npm run typecheck`, `npm run lint`, `npm run build` all pass)
-- [x] Wrote 5-component handoff report (`handoff.md`)
-- [x] Updated BRIEFING.md
-- [x] Send handoff completion message to parent
+- [x] Initialized DISPATCH.md and verified constraints
+- [x] Reviewed ORIGINAL_REQUEST.md, PROJECT.md, and `spec_miner_survey_1/supabase_tokens.md`
+- [x] Read and analyzed existing primitives in `src/components/primitives/` (`Button.tsx`, `Badge.tsx`, `Card.tsx`, `Pill.tsx`, `Stat.tsx`, `HudCorners.tsx`, `IconOrb.tsx`, `Container.tsx`, `Section.tsx`, `index.ts`)
+- [x] Analyzed input/form controls across codebase (`Contact.tsx`, `AIVisionShowcase.tsx`, `LeaderboardTiers.tsx`, `OrganizerProgram.tsx`)
+- [x] Executed and verified baseline test suite (`npm test` — all typechecks, lint, build, and adversarial tests passed in 51s)
+- [x] Audited test invariants (`tests/challenger-m1-adversarial.test.ts`, `tests/tier1-feature-coverage.test.ts`) to ensure 100% test compatibility
+- [x] Wrote concrete implementation blueprint to `primitives_plan.md`
+- [x] Updated BRIEFING.md with current state
+- [x] Produced 5-Component Handoff Report in `handoff.md`
+- [x] Send completion message to orchestrator

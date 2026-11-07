@@ -1,147 +1,154 @@
-# Milestone 2 Independent Review & Adversarial Audit Report
+# Quality & Adversarial Review Report: Milestone 2 (Global Chrome, Navigation & Hero Showcase)
 
-**Target Components**:
-1. `src/components/Hero.tsx`
-2. `src/components/Statement.tsx`
-3. `src/components/AppExperienceShowcase.tsx`
-4. `src/components/TournamentModes.tsx`
-
-**Agent**: `reviewer_m2_1` (Roles: reviewer, critic)  
-**Working Directory**: `c:\Users\Muhammad Minhas\ArenaX-Web\.agents\teamwork\reviewer_m2_1\`  
-**Project Root**: `c:\Users\Muhammad Minhas\ArenaX-Web`  
-**Parent Conversation ID**: `946cbb3b-435a-471b-a15d-9c388cab6b10`  
-**Date**: 2026-11-05T15:04:00Z  
-
----
-
-## Review Summary
-
-**Verdict**: **APPROVE**  
-**Overall Risk Assessment**: LOW  
-**Integrity Violations**: NONE (0 detected)  
-
-The Milestone 2 implementation executed by `worker_m2` has been independently reviewed, verified, and adversarially stress-tested. All 7 specified R1 clutter elements have been eliminated without visual or structural regressions. All 7 specified R3 interactive systems (character switching, scroll parallax title, dual action triggers, GSAP reveals, 3D phone rotation, tab switching, and 3D specular tilt) remain fully functional and responsive. All automated builds, typechecks, linter checks, and 124/124 automated tests pass cleanly with zero defects.
+- **Reviewer Agent**: teamwork_reviewer (`reviewer_m2_1`)
+- **Review Scope**:
+  - `src/components/Navbar.tsx`
+  - `src/components/Hero.tsx`
+  - `src/components/Statement.tsx`
+- **Reference Invariant Target**: `Supabase _ The Postgres Development Platform.html` & `Supabase _ The Postgres Development Platform_files/`
+- **Verdict**: **`APPROVE`**
+- **Date**: 2026-11-07
 
 ---
 
 ## 1. Observation
 
-Direct inspection of code, git diffs, DOM bindings, and verification execution logs yielded the following concrete observations:
+### 1.1 Source Code Inspection
 
-### 1.1 R1 Compliance Verification (De-cluttering & Simplification)
-- **Promo Bonus Pills**: Verbatim search in `src/components/Hero.tsx` confirms complete removal of the `25 AX Free Welcome Bonus For Referred Accounts` pill, `Sparkles` icon import, and associated background wrappers.
-- **Status Badge Version Suffix**: In `src/components/Hero.tsx:116-124`, the version text `<span className="ml-0.5 text-emerald-300/90">• v2.6.0</span>` was completely removed, leaving a clean `<Badge tone="emerald" dot pulse>OFFICIAL CLIENT</Badge>`.
-- **Floating Corner Badges**: In `src/components/Hero.tsx`, the floating corner badges (`[2026] Active Circuit` and `SEASON 4 Ranked Scrims`) were completely excised, removing visual obstruction between the parallax title and character cutouts.
-- **Conversational Paragraph Subheads**:
-  - `Hero.tsx`: Removed the 2-line conversational subhead (`Daily Bermuda BR & 4v4 Clash Squad scrims...`).
-  - `Statement.tsx`: Removed `<Pill dot label="PLATFORM PROTOCOL" />` and all 4 explanatory `detail` paragraphs (`detail: 'AI vision scans...'`, etc.).
-  - `AppExperienceShowcase.tsx`: Removed `<Pill>` eyebrow and subtitle paragraph (`Experience the actual tournament workflow...`).
-  - `TournamentModes.tsx`: Removed `<Pill>` eyebrow and descriptive paragraph (`Choose your battlefield format...`).
-- **Chapter Taglines**: In `src/components/AppExperienceShowcase.tsx:17-36`, `CHAPTERS` contains strictly `id`, `num`, `title`, and `desc`. All `tagline:` properties were completely eliminated.
-- **Internal Phone Mockup Helper Text**:
-  - `AppExperienceShowcase.tsx:228-238`: Replaced verbose text `Grandmaster Contender` with `Grandmaster` and uppercase `BALANCE` label with `1,450 AX` + `Verified` badge.
-  - `AppExperienceShowcase.tsx:294-304`: Replaced defensive banner `Room slots locked to verified player UIDs only.` with self-evident slot status: `<Shield /> Slot #12 Locked • UID 94829104`.
-  - `AppExperienceShowcase.tsx:319-351`: Replaced slogan badge `Result Verified within Seconds` with authentic latency telemetry: `Latency: 1.2s` + `<Badge tone="emerald" dot>Certified</Badge>`.
-  - `AppExperienceShowcase.tsx:358-388`: Replaced non-withdrawable/entry fee notes and 6-digit password text with institutional status badges `<Badge tone="neutral">Entry Vault</Badge>`, `<Badge tone="emerald" dot>Withdrawable</Badge>`, and security telemetry row `Fund Security • PIN Enabled`.
-- **Tournament Format Helper Prose**: In `src/components/TournamentModes.tsx`:
-  - Removed category banners `SURVIVAL FORMAT` and `BRACKET ELIMINATION`.
-  - Removed format narrative prose from `bermudaData` (`desc:`).
-  - Replaced two-line bullet text with high-contrast single-line platform specifications (`Verified In-Game UID Matchmaking`, `Automated AI Vision Verification`, `Automated Play Wallet Refund Guarantee`, `Live Bracket Tree Visualization`, `6-Digit Captain Squad Codes`, `Direct Winning Wallet Settlement`).
-  - Completely removed bottom `ShieldAlert` disclaimer banner.
+1. **`src/components/Navbar.tsx`**:
+   - **Translucent Carbon Surface**: Configured with `bg-[#0B0E0D]/85 backdrop-blur-md` and 1px hairline bottom border `border-b border-white/[0.08]` (line 112).
+   - **Dimensions**: Calibrated to sleek developer-tool height `h-16` (64px) with responsive container padding `max-w-[1200px] mx-auto px-4 sm:px-6` (lines 113-114).
+   - **Supabase Brand Gradient Scroll Progress**: Employs canonical `#249361` ➔ `#3ECF8E` gradient with glow drop shadow (lines 183-188):
+     ```tsx
+     <div className="w-full bg-white/[0.04] h-[2px]">
+       <div
+         className="bg-gradient-to-r from-[#249361] to-[#3ECF8E] h-[2px] shadow-[0_0_8px_rgba(62,207,142,0.45)] transition-all duration-150 ease-out"
+         style={{ width: `${scrollProgress}%` }}
+       />
+     </div>
+     ```
+   - **Brand Logo**: Restyled with dark carbon card badge `bg-[#171717] border border-white/[0.08]` and Manrope typography `Arena<span className="text-[#3ECF8E]">X</span>` (lines 124-129).
+   - **Navigation Items (Requirement R3)**: All 7 items preserved verbatim in `navItems` (`Tournaments`, `Vision Engine`, `Wallet`, `Ranks`, `Organizers`, `How It Works`, `FAQs`) (lines 60-68).
+   - **Desktop Links Styling**: Typography set to Inter font at `text-sm font-medium text-[#A0A0A0]` with hover brightening to `#EDEDED` and active chip styling `text-[#3ECF8E] font-medium bg-[#3ECF8E]/10 border border-[#3ECF8E]/20 shadow-[0_0_12px_-4px_rgba(62,207,142,0.3)]` (lines 145-149).
+   - **Primary Action**: Primary button `<Button variant="primary" size="sm">Download App</Button>` (lines 159-167).
+   - **Mobile Drawer & Overflow Locking**: Mobile drawer renders in `bg-[#171717]/98 backdrop-blur-2xl border-t border-white/[0.08]` (line 192). `document.body.style.overflow = 'hidden'` is applied when open and strictly reset to `''` on unmount, navigation item click, and download button click (lines 49-58, 72, 96).
 
-### 1.2 R3 Compliance Verification (Feature & Interaction Preservation)
-- **Character Switcher (`Hero.tsx:32, 147-165, 202-219`)**: `CHARACTERS` dictionary preserved for `tactical` (`Red Criminal`) and `rebel` (`Streetwear Rebel`), with dynamic state switching, responsive button controls, active background glow aura (`#EF4444` vs `#00C878`), and `<picture>` fallback sources.
-- **Parallax Title (`Hero.tsx:57-85, 171-221`)**: Z-axis recession calculation (`translate3d(0, ${scrollY * 0.16}px, -${Math.min(scrollY * 0.45, 240)}px)`) and desktop mouse tilt listener throttled with `requestAnimationFrame` preserved.
-- **Dual Action Buttons (`Hero.tsx:233-253`)**: Preserves primary `Download APK` triggering `handleDownload()` with `trackDownload("ArenaX.apk", "Android", "2.6.0")`, and secondary `Explore Tournaments` button smoothly scrolling to `#tournaments`.
-- **Telemetry Ribbon (`Hero.tsx:256-266`)**: Pure quantitative high-contrast metrics implemented using the `<Stat />` primitive without obsolete `subtext`: `<Stat value="< 15s" label="AI OCR Verification" accent />`, `<Stat value="1:1" label="Cash Parity (PKR)" />`, `<Stat value="100%" label="Automated Refund" />`.
-- **GSAP ScrollTrigger Reveals (`Statement.tsx:29-53`)**: Preserves `ScrollTrigger` registration, `useLayoutEffect`, `matchMedia` for reduced-motion safety, `ctx.revert()` cleanup, and scrubbed word reveals (`stagger: 0.08`, `scrub: 0.6`). Statement 01 headline retains `"AI vision verifies scoreboards in seconds."` satisfying cross-feature test assertions.
-- **3D Phone Mockup & Tab Switching (`AppExperienceShowcase.tsx:38-93, 178-206`)**:
-  - Desktop GSAP ScrollTrigger pinning preserved (`pin: true`, `start: 'top top'`, `end: '+=160%'`, `scrub: 0.5`).
-  - Added `handleTabSwitch` synchronizing `activeTab` with `ROTATION_MAP` transforms on direct user click.
-  - Preserved clipboard room copy interaction (`navigator.clipboard?.writeText`) with 2500ms feedback timeout and `aria-label`.
-- **Tournament Mode Switching & 3D Specular Tilt (`TournamentModes.tsx:11-23, 99-122, 168-189, 303-322`)**:
-  - Preserves mode toggle between `Bermuda 48P` and `Clash Squad 4v4`.
-  - Preserves Bermuda sub-format toggle (`solo`, `duo`, `squad`) with `aria-pressed` and `aria-label`.
-  - Added dynamic `csStage` selector (`Quarters`, `Semis`, `Finals`) connected to `csStageData`.
-  - Preserves 3D specular mouse tilt with perspective calculations and dynamic radial gradient sheen tracking mouse position.
-  - Smooth scroll to `#download` preserved.
+2. **`src/components/Hero.tsx`**:
+   - **Canvas Background**: Deep Supabase dark carbon `#121212` (`bg-[#121212]`, line 97).
+   - **Atmosphere & Tech Matrix**: Supabase emerald ambient radial glow `bg-[radial-gradient(ellipse_at_center,rgba(62,207,142,0.08)_0%,rgba(62,207,142,0)_70%)] blur-[100px]` with subtle scanlines and a 2% opacity developer grid matrix `bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:32px_32px] opacity-[0.02]` (lines 101-110).
+   - **Announcement Pill**: Clean Supabase pill architecture `<Badge tone="emerald" dot pulse className="... bg-[#041B10] text-[#3ECF8E] border border-[#3ECF8E]/30 shadow-[inset_0_1px_0_rgba(62,207,142,0.2)]">OFFICIAL CLIENT</Badge>` without legacy HUD clutter (lines 120-126).
+   - **Feature Fast-Travel Pills**: Hairline carbon capsules `bg-[#171717]/80 backdrop-blur-xl border border-white/[0.08]` with icon accents `#3ECF8E` and hover state `hover:border-[#3ECF8E]/40 hover:bg-[#1E201F] text-[#A0A0A0] hover:text-[#EDEDED]` (lines 137-144).
+   - **Character Switcher**: Polished toggle between `Red Criminal` (`#EF4444`) and `Streetwear Rebel` (`#3ECF8E`), with touch targets meeting WCAG 44px min-height standards (lines 150-168).
+   - **Display Headline Wordmark**: High-impact Manrope headline featuring the signature `#249361` ➔ `#3ECF8E` brand gradient on "Free Fire" (lines 234-240):
+     ```tsx
+     <h2 className="text-3xl sm:text-5xl md:text-6xl font-extrabold text-[#EDEDED] font-heading tracking-tight mb-8 text-balance">
+       Pakistan's Premier{' '}
+       <span className="bg-gradient-to-r from-[#249361] to-[#3ECF8E] bg-clip-text text-transparent">
+         Free Fire
+       </span>{' '}
+       Platform
+     </h2>
+     ```
+   - **Dual CTAs**: High-contrast primary green `<Button variant="primary" size="lg">Download APK</Button>` with shadow glow and secondary carbon `<Button variant="secondary" size="lg">Explore Tournaments</Button>` with ChevronRight in `#3ECF8E` (lines 244-263).
+   - **Dark Carbon Telemetry Cards (Requirement R3)**: All 3 metrics housed in dark carbon `#171717` cards with hairline borders `border border-white/[0.08] shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] hover:border-white/[0.14]`, preserving literal text verbatim: `<Stat value="< 15s" label="AI OCR Verification" accent />`, `<Stat value="1:1" label="Cash Parity (PKR)" />`, and `<Stat value="100%" label="Automated Refund" />` (lines 266-276).
+   - **Organic Curved Mask**: Supabase organic bottom transition curve with `#3ECF8E` glow stroke and `#121212` fill (lines 283-309).
 
-### 1.3 Integrity Violation Audit
-- Hardcoded test outputs in source code: **None found**.
-- Dummy or facade implementations: **None found**. All event handlers, transforms, animations, and state updates execute genuine logic.
-- Shortcuts bypassing requirements: **None found**.
-- Fabricated test outputs: **None found**. Verification commands executed directly in this environment.
+3. **`src/components/Statement.tsx`**:
+   - **Display Typography**: Manrope 800-weight display typography (`font-heading font-extrabold text-text-1 tracking-tight sm:tracking-[-0.03em] leading-[1.06]`, line 101).
+   - **GSAP ScrollTrigger Reveal**: Scrubbed word-by-word reveal from baseline opacity `0.25` to luminous `1.0` with power3 easing and proper `ctx.revert()` cleanup on unmount (lines 30-63).
+   - **Motion Accessibility Guard**: Implements `gsap.matchMedia('(prefers-reduced-motion: reduce)')` immediately setting `.statement-word` elements to `opacity: 1`, preventing contrast traps for users requesting reduced motion (lines 53-59).
+   - **Carbon Row Hovers & Sheen**: Numbered rows wrapped in `hover:bg-[#171717]/40 -mx-4 sm:-mx-8 px-4 sm:px-8 rounded-xl` with top emerald hairline sheen `bg-gradient-to-r from-transparent via-[#3ECF8E]/40 to-transparent group-hover:opacity-100` and monospace index nudge `group-hover:translate-x-1 group-hover:text-[#4CD99B]` (lines 87-98).
+   - **Content Invariant (Requirement R3)**: All 4 statements preserved verbatim:
+     1. `AI vision verifies scoreboards in seconds.`
+     2. `Cash out in 24 hours.`
+     3. `Money kept in two separate wallets.`
+     4. `Cheaters banned for life.`
 
-### 1.4 Verification Command Results
-1. `npm run typecheck`: Exited code 0 (`tsc --noEmit -p tsconfig.app.json`). 0 errors.
-2. `npm run lint`: Exited code 0 (`eslint .`). 0 warnings, 0 errors.
-3. `npm run build`: Exited code 0 (`vite build`). Production bundle built in 3.48s in `dist/`.
-4. `npm test`: Exited code 0. All 4 verification stages passed:
-   - TypeScript Typecheck: PASS
-   - ESLint Code Analysis: PASS
-   - Vite Production Build: PASS
-   - Automated Test Suites: PASS (124/124 tests passed across 54 suites, 0 failures).
-5. Strict R1 Verification (`process.env.STRICT_R1 = 'true'`): Exited code 0. Zero R1 violations detected across all components.
+### 1.2 Tool Commands and Execution Results
+
+- **`npm run typecheck`**: Exited with code `0` (Zero TypeScript diagnostics or type errors across the entire codebase).
+- **`npm run lint`**: Exited with code `0` (Zero ESLint warnings or errors).
+- **`npm run build`**: Exited with code `0` (Vite 8.3.5 production build completed cleanly in 14.37s).
+- **`npm test`**: Exited with code `0` (All 4 pipeline stages passed in 39.42s; 278 automated test cases passed across all 14 test suites).
+- **Targeted Test Execution**: `node --test tests/challenger-m1-adversarial.test.ts tests/challenger-m2-adversarial.test.ts tests/challenger-m2-2-adversarial.test.ts tests/supabase-tokens-and-invariants.test.ts` passed 101 tests across 24 suites with 0 failures in 765.6ms.
+- **Reference Immutability**:
+  - `Supabase _ The Postgres Development Platform.html`: Exactly `1,396,412` bytes, SHA-256 hash `cfbab0c0f7d9acaa887ecf3699ebde892647f81c1cd023e4f3c156f8b6707b50`.
+  - `Supabase _ The Postgres Development Platform_files/`: Exactly 66 files, `3,376,281` bytes.
+  - Zero modifications detected (`git status` confirms untracked pristine state).
 
 ---
 
 ## 2. Logic Chain
 
-1. **R1 Elimination Completeness**:
-   - Observations 1.1 directly demonstrate that every targeted verbal crutch (promo pills, version badges, corner badges, subhead paragraphs, chapter taglines, phone mockup explanatory sentences, format footnotes, and alert banners) was cleanly excised.
-   - The components replace verbal explanations with intuitive UI affordances: quantitative telemetry ribbons, high-contrast specification grids, and authentic system status indicators (`Certified`, `Withdrawable`, `Entry Vault`, `Slot #12 Locked`).
-2. **R3 Functionality & Interaction Integrity**:
-   - Observations 1.2 demonstrate that interactive states, mouse tilt tracking, parallax calculations, GSAP scrub animations, clipboard copying, and tab switching logic were not merely preserved, but in several cases enhanced (e.g. synchronizing 3D phone rotation on tab clicks, connecting Clash Squad stage selectors to dynamic bracket stats).
-3. **Absence of Integrity Violations**:
-   - Observation 1.3 confirms all logic is authentic with zero facades or test bypasses.
-4. **Independent Automated Verification**:
-   - Observation 1.4 confirms type safety, clean linting, successful production compilation, and 100% test pass rate across all test tiers and strict R1 gating.
+1. **Exact Token Adherence (Criterion 1)**:
+   - Observation 1.1 reveals that `Navbar.tsx` uses `#0B0E0D`/85 translucent carbon backdrop, `border-b border-white/[0.08]` hairline border, and `#249361` ➔ `#3ECF8E` brand gradient on scroll progress.
+   - `Hero.tsx` applies `#121212` canvas, emerald radial atmosphere `rgba(62,207,142,0.08)`, `#171717` dark carbon telemetry cards with 1px hairline borders `border-white/[0.08]`, and `#249361` ➔ `#3ECF8E` brand gradient on the "Free Fire" headline wordmark.
+   - `Statement.tsx` applies Manrope 800 display hierarchy, dark carbon row hovers `hover:bg-[#171717]/40`, and top emerald hairline sheen `via-[#3ECF8E]/40`.
+   - Therefore, Milestone 2 strictly complies with the authoritative Supabase design tokens extracted in `supabase_tokens.md`.
 
-Therefore, the work satisfies all requirements of Milestone 2 and is approved without reservation.
+2. **Verbatim Content Preservation (Criterion 2 - Requirement R3)**:
+   - In `Navbar.tsx`, all 7 navigation items (`Tournaments`, `Vision Engine`, `Wallet`, `Ranks`, `Organizers`, `How It Works`, `FAQs`) and the `Download App` CTA are intact.
+   - In `Hero.tsx`, the headline ("Pakistan's Premier Free Fire Platform"), character identities ("Red Criminal", "Streetwear Rebel"), pill tags, download URLs, and all 3 telemetry stats (`< 15s`, `1:1`, `100%`) are 100% preserved.
+   - In `Statement.tsx`, all 4 numbered platform statements are retained verbatim, satisfying cross-feature contracts.
+   - Therefore, Requirement R3 is completely fulfilled with zero content loss.
+
+3. **Interactive & Motion Integrity (Criterion 3)**:
+   - The scroll progress indicator gracefully clamps between `0` and `100%` and protects against zero-division (`height > 0 ? ... : 0`).
+   - The active section detector and fast-travel buttons query target element IDs using optional chaining (`document.getElementById()?.scrollIntoView()`), preventing null reference exceptions if DOM elements are missing.
+   - Mobile menu body overflow locking is synchronized with `mobileMenuOpen` and explicitly resets to `''` on nav clicks, download clicks, and unmount.
+   - `Hero.tsx` mouse parallax is strictly gated behind desktop viewports (`innerWidth >= 1024`) and scroll parallax is throttled using `requestAnimationFrame`.
+   - `Statement.tsx` wraps its GSAP ScrollTrigger animation in `gsap.context()` with `ctx.revert()` cleanup on unmount, and provides a dedicated `(prefers-reduced-motion: reduce)` accessibility fallback.
+   - Therefore, all interactive and animation states are fully resilient and accessible.
+
+4. **Independent Build & Test Verification (Criterion 4)**:
+   - Tool execution results in Section 1.2 demonstrate that `npm run typecheck`, `npm run lint`, `npm run build`, and `npm test` execute with zero errors, zero warnings, and 100% pass rates.
+   - No facades, shortcuts, or hardcoded cheating patterns were found in the codebase.
+   - Therefore, code quality and build integrity meet the highest standard.
+
+5. **Reference Immutability (Criterion 5)**:
+   - Automated tests and cryptographic SHA-256 checks confirm that the reference HTML file and its companion folder remain completely untouched and identical to the original snapshot.
 
 ---
 
 ## 3. Caveats
 
-- **Exclusive File Ownership**: Only the 4 assigned component files (`Hero.tsx`, `Statement.tsx`, `AppExperienceShowcase.tsx`, `TournamentModes.tsx`) were modified by Worker M2, respecting workspace modularity.
-- **Motion Reduction**: `Statement.tsx` wraps GSAP word animations in `(prefers-reduced-motion: no-preference)`. Under reduced-motion preference, the headline text remains legible with `opacity-25` styling transitioning gracefully on interaction.
-- No other caveats.
+- **Scope Boundary**: Review was scoped strictly to `src/components/Navbar.tsx`, `src/components/Hero.tsx`, and `src/components/Statement.tsx` as designated for Milestone 2. Subsequent showcase components (`AppExperienceShowcase.tsx`, `TournamentModes.tsx`, `AIVisionShowcase.tsx`, etc.) are under Milestone 3 scope.
+- **Hardware Acceleration**: Mouse and scroll parallax rely on CSS 3D transforms (`translate3d`, `perspective-1200`). This is GPU-accelerated across modern browsers; fallback behavior on legacy devices degrades gracefully to standard scrolling.
 
 ---
 
 ## 4. Conclusion
 
-**Verdict: APPROVE**
-
-Milestone 2 implementation strictly conforms to Requirements R1, R2, R3, and R4. Visual noise and explanatory crutches have been eliminated, while the core interactive signature features and motion fidelity have been preserved with production-grade quality.
+Milestone 2 (Global Chrome, Navigation & Hero Showcase) is completely verified and meets all design token, content preservation, and functional invariants:
+- **Verdict**: **`APPROVE`**
+- All 5 review criteria are satisfied with zero regressions and zero integrity violations.
+- The repository is in a clean, passing state ready for Milestone 3 progression.
 
 ---
 
 ## 5. Verification Method
 
-To independently reproduce and verify this review verdict:
+To independently reproduce and verify this review assessment:
 
-1. **Type Integrity**:
-   ```powershell
-   npm run typecheck
-   ```
-   *Expected Output*: Exit code 0, zero diagnostic errors.
+```powershell
+# 1. Verify TypeScript compilation
+npm run typecheck
 
-2. **Lint Analysis**:
-   ```powershell
-   npm run lint
-   ```
-   *Expected Output*: Exit code 0, zero warnings or errors.
+# 2. Verify ESLint compliance
+npm run lint
 
-3. **Production Compilation**:
-   ```powershell
-   npm run build
-   ```
-   *Expected Output*: Exit code 0, clean Vite output in `dist/`.
+# 3. Verify production Vite build
+npm run build
 
-4. **Full Test Suite & Strict R1 Audit**:
-   ```powershell
-   npm test
-   node --experimental-strip-types -e "process.env.STRICT_R1 = 'true'; import('./scripts/run-all-tests.ts');"
-   ```
-   *Expected Output*: Exit code 0, 124 passing tests, zero R1 violations.
+# 4. Run the full unified verification suite
+npm test
+
+# 5. Run targeted adversarial suites for Milestone 1 and Milestone 2
+node --test tests/challenger-m1-adversarial.test.ts tests/challenger-m2-adversarial.test.ts tests/challenger-m2-2-adversarial.test.ts tests/supabase-tokens-and-invariants.test.ts
+```
+
+### Invalidation Conditions
+This approval would be invalidated if:
+1. `Supabase _ The Postgres Development Platform.html` file size deviates from `1,396,412` bytes or SHA-256 hash changes.
+2. Any of the 7 navigation items in `Navbar.tsx`, 3 telemetry stats in `Hero.tsx`, or 4 statements in `Statement.tsx` are altered or removed.
+3. Any build or test command exits with non-zero exit code.

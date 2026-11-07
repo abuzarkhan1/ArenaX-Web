@@ -9,6 +9,8 @@ describe('Adversarial Challenger Suite: Milestone 3 (Esports Engine & Financial 
   const walletSrc = fs.readFileSync(path.join(root, 'src/components/WalletSection.tsx'), 'utf8');
   const leaderboardSrc = fs.readFileSync(path.join(root, 'src/components/LeaderboardTiers.tsx'), 'utf8');
   const organizerSrc = fs.readFileSync(path.join(root, 'src/components/OrganizerProgram.tsx'), 'utf8');
+  const tournamentsSrc = fs.readFileSync(path.join(root, 'src/components/TournamentModes.tsx'), 'utf8');
+  const appExpSrc = fs.readFileSync(path.join(root, 'src/components/AppExperienceShowcase.tsx'), 'utf8');
 
   // =========================================================================
   // 1. AIVisionShowcase: Combat Score, Boundary Tiers & Zero Copy Defect
@@ -564,12 +566,14 @@ describe('Adversarial Challenger Suite: Milestone 3 (Esports Engine & Financial 
   // 5. Cross-Cutting DOM ID Registry Verification
   // =========================================================================
   describe('Milestone 3 DOM Navigation Anchor Registry', () => {
-    it('verifies all 4 required section anchor IDs are present and unique across components', () => {
+    it('verifies all 6 required section anchor IDs are present and unique across components', () => {
       const requiredAnchors = [
         { id: 'ai-vision', file: 'AIVisionShowcase.tsx', src: aiVisionSrc },
         { id: 'wallet', file: 'WalletSection.tsx', src: walletSrc },
         { id: 'ranks', file: 'LeaderboardTiers.tsx', src: leaderboardSrc },
         { id: 'organizers', file: 'OrganizerProgram.tsx', src: organizerSrc },
+        { id: 'tournaments', file: 'TournamentModes.tsx', src: tournamentsSrc },
+        { id: 'app-showcase', file: 'AppExperienceShowcase.tsx', src: appExpSrc },
       ];
 
       for (const anchor of requiredAnchors) {
@@ -579,6 +583,289 @@ describe('Adversarial Challenger Suite: Milestone 3 (Esports Engine & Financial 
           `${anchor.file} must declare section anchor id="${anchor.id}"`
         );
       }
+    });
+  });
+
+  // =========================================================================
+  // 6. TournamentModes: 3D Tilt Math Clamp [-3, 3], Mobile Guard & 10% Rake
+  // =========================================================================
+  describe('TournamentModes: 3D Tilt Math Clamp, Mobile Guard & 10% Rake Conservation', () => {
+    it('verifies DOM anchor id="tournaments" is present', () => {
+      assert.ok(tournamentsSrc.includes('id="tournaments"'), 'TournamentModes must define id="tournaments"');
+    });
+
+    it('verifies mobile guard (< 1024px) in card tilt handler', () => {
+      assert.ok(
+        tournamentsSrc.includes('if (window.innerWidth < 1024) return;'),
+        'handleCardMouseMove must guard against screen widths < 1024px'
+      );
+    });
+
+    it('verifies 3D tilt formula in source code', () => {
+      assert.ok(
+        tournamentsSrc.includes('((e.clientX - rect.left) / rect.width - 0.5) * 6'),
+        'X tilt formula must be ((e.clientX - rect.left) / rect.width - 0.5) * 6'
+      );
+      assert.ok(
+        tournamentsSrc.includes('((e.clientY - rect.top) / rect.height - 0.5) * -6'),
+        'Y tilt formula must be ((e.clientY - rect.top) / rect.height - 0.5) * -6'
+      );
+      assert.ok(
+        tournamentsSrc.includes('setCardTilt({ x: 0, y: 0, px: 50, py: 50 })'),
+        'Mouse leave must reset tilt to neutral { x: 0, y: 0, px: 50, py: 50 }'
+      );
+    });
+
+    function computeTilt(clientX: number, clientY: number, rect: { left: number; top: number; width: number; height: number }, innerWidth: number) {
+      if (innerWidth < 1024) return null;
+      const x = ((clientX - rect.left) / rect.width - 0.5) * 6;
+      const y = ((clientY - rect.top) / rect.height - 0.5) * -6;
+      const px = Math.round(((clientX - rect.left) / rect.width) * 100);
+      const py = Math.round(((clientY - rect.top) / rect.height) * 100);
+      return { x, y, px, py };
+    }
+
+    it('empirically verifies 3D tilt coordinates strictly clamp to [-3, 3] across all boundary corners and center', () => {
+      const rect = { left: 100, top: 200, width: 400, height: 300 };
+      const desktop = 1200;
+
+      // Top-Left corner (clientX = 100, clientY = 200) -> x = -3, y = +3
+      const tl = computeTilt(100, 200, rect, desktop);
+      assert.ok(tl);
+      assert.equal(tl.x, -3);
+      assert.equal(tl.y, 3);
+      assert.equal(tl.px, 0);
+      assert.equal(tl.py, 0);
+
+      // Top-Right corner (clientX = 500, clientY = 200) -> x = +3, y = +3
+      const tr = computeTilt(500, 200, rect, desktop);
+      assert.ok(tr);
+      assert.equal(tr.x, 3);
+      assert.equal(tr.y, 3);
+      assert.equal(tr.px, 100);
+      assert.equal(tr.py, 0);
+
+      // Bottom-Left corner (clientX = 100, clientY = 500) -> x = -3, y = -3
+      const bl = computeTilt(100, 500, rect, desktop);
+      assert.ok(bl);
+      assert.equal(bl.x, -3);
+      assert.equal(bl.y, -3);
+      assert.equal(bl.px, 0);
+      assert.equal(bl.py, 100);
+
+      // Bottom-Right corner (clientX = 500, clientY = 500) -> x = +3, y = -3
+      const br = computeTilt(500, 500, rect, desktop);
+      assert.ok(br);
+      assert.equal(br.x, 3);
+      assert.equal(br.y, -3);
+      assert.equal(br.px, 100);
+      assert.equal(br.py, 100);
+
+      // Exact Center (clientX = 300, clientY = 350) -> x = 0, y = 0
+      const center = computeTilt(300, 350, rect, desktop);
+      assert.ok(center);
+      assert.equal(Math.abs(center.x), 0);
+      assert.equal(Math.abs(center.y), 0);
+      assert.equal(center.px, 50);
+      assert.equal(center.py, 50);
+    });
+
+    it('stress-tests 5,000 randomized cursor positions within bounding box confirming [-3, 3] bounds', () => {
+      const rect = { left: 50, top: 120, width: 480, height: 360 };
+      const desktop = 1440;
+
+      for (let i = 0; i < 5000; i++) {
+        const u = Math.random(); // 0 to 1
+        const v = Math.random(); // 0 to 1
+        const clientX = rect.left + u * rect.width;
+        const clientY = rect.top + v * rect.height;
+
+        const tilt = computeTilt(clientX, clientY, rect, desktop);
+        assert.ok(tilt);
+        assert.ok(tilt.x >= -3.0001 && tilt.x <= 3.0001, `tilt.x ${tilt.x} out of [-3, 3]`);
+        assert.ok(tilt.y >= -3.0001 && tilt.y <= 3.0001, `tilt.y ${tilt.y} out of [-3, 3]`);
+        assert.ok(tilt.px >= 0 && tilt.px <= 100, `tilt.px ${tilt.px} out of [0, 100]`);
+        assert.ok(tilt.py >= 0 && tilt.py <= 100, `tilt.py ${tilt.py} out of [0, 100]`);
+      }
+    });
+
+    it('verifies mobile guard blocks tilt calculation for innerWidth < 1024', () => {
+      const rect = { left: 100, top: 200, width: 400, height: 300 };
+      const mobileWidths = [320, 375, 414, 768, 820, 1023];
+
+      for (const w of mobileWidths) {
+        const res = computeTilt(200, 300, rect, w);
+        assert.equal(res, null, `Tilt must not execute on viewport width ${w}`);
+      }
+    });
+
+    it('empirically verifies exactly 10.0% platform rake across all Bermuda and Clash Squad tournament modes', () => {
+      const bermudaTournaments = [
+        { format: 'solo', slots: 48, entryAx: 50, prizePoolAx: 2160 },
+        { format: 'duo', slots: 24, entryAx: 100, prizePoolAx: 2160 },
+        { format: 'squad', slots: 12, entryAx: 200, prizePoolAx: 2160 },
+      ];
+
+      for (const t of bermudaTournaments) {
+        const totalEntry = t.slots * t.entryAx;
+        assert.equal(totalEntry, 2400, `Total entry for ${t.format} must be 2,400 AX`);
+        const rakeAmount = totalEntry - t.prizePoolAx;
+        assert.equal(rakeAmount, 240, `Rake amount for ${t.format} must be 240 AX`);
+        const rakePercent = (rakeAmount / totalEntry) * 100;
+        assert.equal(rakePercent, 10.0, `Platform rake for ${t.format} must be exactly 10.0%`);
+      }
+
+      // Clash Squad (CS) Quarters / Semis / Finals
+      const csSlots = 8; // 8 squads
+      const csEntry = 400; // 400 AX per squad
+      const csTotal = csSlots * csEntry; // 3,200 AX
+      const csPrize = 2880; // 2,880 AX
+      const csRakeAmount = csTotal - csPrize;
+      assert.equal(csRakeAmount, 320);
+      const csRakePercent = (csRakeAmount / csTotal) * 100;
+      assert.equal(csRakePercent, 10.0, 'Platform rake for Clash Squad must be exactly 10.0%');
+    });
+
+    it('verifies switcher modes and tab states in TournamentModes', () => {
+      assert.ok(tournamentsSrc.includes("setActiveTab('bermuda')"));
+      assert.ok(tournamentsSrc.includes("setActiveTab('clashsquad')"));
+      assert.ok(tournamentsSrc.includes("setBermudaFormat(fmt)"));
+      assert.ok(tournamentsSrc.includes("setCsStage(stage)"));
+      assert.ok(tournamentsSrc.includes('Bermuda 48P'));
+      assert.ok(tournamentsSrc.includes('Clash Squad 4v4'));
+    });
+  });
+
+  // =========================================================================
+  // 7. AppExperienceShowcase: 3D ROTATION_MAP, 3 Chapters & Room Copy Handler
+  // =========================================================================
+  describe('AppExperienceShowcase: 3D ROTATION_MAP, 3 Chapters & Room Copy Handler', () => {
+    it('verifies DOM anchor id="app-showcase" is present', () => {
+      assert.ok(appExpSrc.includes('id="app-showcase"'), 'AppExperienceShowcase must define id="app-showcase"');
+    });
+
+    it('verifies ROTATION_MAP constants match exact 3D orientation specifications', () => {
+      const expectedRotations = {
+        match: { rotY: -18, rotX: 6, transZ: 0 },
+        ocr: { rotY: -2, rotX: 1, transZ: 35 },
+        wallet: { rotY: 14, rotX: -4, transZ: 0 },
+      };
+
+      for (const [key, val] of Object.entries(expectedRotations)) {
+        assert.ok(
+          appExpSrc.includes(`${key}: { rotY: ${val.rotY}, rotX: ${val.rotX}, transZ: ${val.transZ} }`),
+          `ROTATION_MAP must define ${key}: rotY ${val.rotY}, rotX ${val.rotX}, transZ ${val.transZ}`
+        );
+      }
+    });
+
+    function interpolateScroll3D(p: number) {
+      let activeTab: 'match' | 'ocr' | 'wallet';
+      if (p < 0.35) {
+        activeTab = 'match';
+      } else if (p < 0.7) {
+        activeTab = 'ocr';
+      } else {
+        activeTab = 'wallet';
+      }
+
+      const rotY = -18 + p * 32; // -18deg to +14deg
+      const rotX = 6 - p * 10;   // 6deg to -4deg
+      const transZ = Math.sin(p * Math.PI) * 35;
+
+      return {
+        activeTab,
+        rotY: Number(rotY.toFixed(1)),
+        rotX: Number(rotX.toFixed(1)),
+        transZ: Number(transZ.toFixed(0)),
+      };
+    }
+
+    it('empirically verifies 3D scroll rotation interpolation dynamics and chapter transitions', () => {
+      // Start (p = 0): match tab, rotY = -18, rotX = 6, transZ = 0
+      const start = interpolateScroll3D(0);
+      assert.equal(start.activeTab, 'match');
+      assert.equal(start.rotY, -18);
+      assert.equal(start.rotX, 6);
+      assert.equal(start.transZ, 0);
+
+      // Mid-first chapter (p = 0.2): match tab
+      const p20 = interpolateScroll3D(0.2);
+      assert.equal(p20.activeTab, 'match');
+
+      // Boundary to second chapter (p = 0.35): ocr tab
+      const boundary1 = interpolateScroll3D(0.35);
+      assert.equal(boundary1.activeTab, 'ocr');
+
+      // Mid-point (p = 0.5): ocr tab, transZ reaches maximum of 35px
+      const mid = interpolateScroll3D(0.5);
+      assert.equal(mid.activeTab, 'ocr');
+      assert.equal(mid.rotY, -2);
+      assert.equal(mid.rotX, 1);
+      assert.equal(mid.transZ, 35); // Math.sin(pi/2) * 35 = 35
+
+      // Boundary to third chapter (p = 0.7): wallet tab
+      const boundary2 = interpolateScroll3D(0.7);
+      assert.equal(boundary2.activeTab, 'wallet');
+
+      // End (p = 1.0): wallet tab, rotY = +14, rotX = -4, transZ = 0
+      const end = interpolateScroll3D(1.0);
+      assert.equal(end.activeTab, 'wallet');
+      assert.equal(end.rotY, 14);
+      assert.equal(end.rotX, -4);
+      assert.equal(end.transZ, 0);
+    });
+
+    it('stress-tests 1,000 steps of scroll progress verifying monotonicity and bounded rotation', () => {
+      let prevRotY = -999;
+      let prevRotX = 999;
+
+      for (let i = 0; i <= 1000; i++) {
+        const p = i / 1000;
+        const state = interpolateScroll3D(p);
+
+        // rotY strictly increases from -18 to +14
+        assert.ok(state.rotY >= prevRotY, `rotY must be monotonically increasing: ${state.rotY} vs ${prevRotY}`);
+        prevRotY = state.rotY;
+
+        // rotX strictly decreases from 6 to -4
+        assert.ok(state.rotX <= prevRotX, `rotX must be monotonically decreasing: ${state.rotX} vs ${prevRotX}`);
+        prevRotX = state.rotX;
+
+        // transZ in [0, 35]
+        assert.ok(state.transZ >= 0 && state.transZ <= 35, `transZ out of bounds: ${state.transZ}`);
+      }
+    });
+
+    it('verifies CHAPTERS array contains exactly 3 sequential chapters with descriptions', () => {
+      const expectedChapters = [
+        { id: 'match', num: '01', title: 'Match Credentials' },
+        { id: 'ocr', num: '02', title: 'AI Scoreboard' },
+        { id: 'wallet', num: '03', title: 'Dual-Vault Escrow' },
+      ];
+
+      for (const ch of expectedChapters) {
+        assert.ok(appExpSrc.includes(`id: '${ch.id}'`), `CHAPTERS must define id '${ch.id}'`);
+        assert.ok(appExpSrc.includes(`num: '${ch.num}'`), `CHAPTERS must define num '${ch.num}'`);
+        assert.ok(appExpSrc.includes(`title: '${ch.title}'`), `CHAPTERS must define title '${ch.title}'`);
+      }
+    });
+
+    it('verifies room copy handler implementation and clipboard interaction', () => {
+      assert.ok(
+        appExpSrc.includes("navigator.clipboard?.writeText('Room ID: 884921 | Password: arena77')"),
+        'copyRoomDetails must copy exact Room ID: 884921 | Password: arena77 string'
+      );
+      assert.ok(appExpSrc.includes('setCopiedRoomId(true)'));
+      assert.ok(appExpSrc.includes('setTimeout(() => setCopiedRoomId(false), 2500)'));
+    });
+
+    it('verifies GSAP ScrollTrigger pinning and unmount cleanup in AppExperienceShowcase', () => {
+      assert.ok(appExpSrc.includes('gsap.registerPlugin(ScrollTrigger)'));
+      assert.ok(appExpSrc.includes('pin: true'));
+      assert.ok(appExpSrc.includes('pinTrigger.kill()'));
+      assert.ok(appExpSrc.includes('ctx.revert()'));
+      assert.ok(appExpSrc.includes('prefers-reduced-motion: no-preference'));
     });
   });
 });

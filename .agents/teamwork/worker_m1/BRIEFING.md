@@ -1,90 +1,50 @@
-# BRIEFING — 2026-11-05T14:02:00Z
+# BRIEFING — 2026-11-07T06:50:00Z
 
 ## Mission
-Implement Milestone 1: Navigation, Chrome & Primitives Polish with high craft, genuine logic, and zero regressions.
+Execute Milestone 1: Design System Tokens & UI Primitives for ArenaX Supabase redesign, implementing authentic dark carbon surfaces, brand green tokens, hairline borders, typography, and primitives (Button, Card, Badge, Input).
 
 ## 🔒 My Identity
-- Archetype: implementer
-- Roles: implementer, qa, specialist
-- Working directory: c:\Users\Muhammad Minhas\ArenaX-Web\.agents\teamwork\worker_m1
-- Original parent: 946cbb3b-435a-471b-a15d-9c388cab6b10
-- Milestone: Milestone 1: Navigation, Chrome & Primitives Polish
+- Archetype: implementer, qa
+- Roles: [implementer, qa]
+- Working directory: c:\Users\Muhammad Minhas\ArenaX-Web\.agents\teamwork\worker_m1\
+- Original parent: 8b88bbad-6052-4d75-b548-47b7f26819bc
+- Milestone: Milestone 1 - Design System Tokens & UI Primitives
 
 ## 🔒 Key Constraints
-- File ownership strictly limited to:
-  - src/components/primitives/Stat.tsx
-  - src/components/primitives/Button.tsx
-  - src/components/primitives/Badge.tsx
-  - src/components/primitives/Pill.tsx
-  - src/components/primitives/Card.tsx
-  - src/components/primitives/HudCorners.tsx
-  - src/components/primitives/IconOrb.tsx
-  - src/components/primitives/Container.tsx
-  - src/components/primitives/Section.tsx
-  - src/components/primitives/index.ts
-  - src/components/Navbar.tsx
-  - src/components/Footer.tsx
-  - src/components/WhatsAppButton.tsx
-  - src/components/SEO.tsx
-  - src/index.css
-  - tailwind.config.js
-- Do NOT modify any other files (other milestones own them).
-- DO NOT CHEAT: Genuine implementation only.
-- Strict verification: npm run typecheck, npm run lint, npm run build must pass with exit code 0.
+- READ-ONLY: `Supabase _ The Postgres Development Platform.html` and `Supabase _ The Postgres Development Platform_files` MUST remain STRICTLY unaltered.
+- File Write Boundaries: ONLY modify `tailwind.config.js`, `src/index.css`, `src/components/primitives/Button.tsx`, `src/components/primitives/Card.tsx`, `src/components/primitives/Badge.tsx`, `src/components/primitives/Input.tsx` (new), `src/components/primitives/index.ts`, `index.html` (if fonts needed).
+- DO NOT modify views in `src/components/*.tsx` or test files in `tests/*`.
+- DO NOT CHEAT: genuine implementations only, full backward compatibility with test invariants.
 
 ## Current Parent
-- Conversation ID: 946cbb3b-435a-471b-a15d-9c388cab6b10
-- Updated: not yet
+- Conversation ID: 8b88bbad-6052-4d75-b548-47b7f26819bc
+- Updated: 2026-11-07T06:50:00Z
 
 ## Task Summary
-- **What to build**: Polish navigation, chrome, primitives, tailwind config, and index.css according to design audit and explorer findings.
-- **Success criteria**: All 12 scope items implemented cleanly, typecheck, lint, and build pass with exit code 0.
-- **Interface contracts**: PROJECT.md & explorer handoffs
-- **Code layout**: src/components/primitives/, src/components/, tailwind.config.js, src/index.css
-
-## Key Decisions Made
-- `Stat.tsx`: Removed `subtext` prop and JSX element; wrapped in `forwardRef`.
-- `Button.tsx`: Removed `ring-1` from base styles and `secondary` variant to eliminate double-ring artifact; set `sm` button size to `h-9 px-3.5 py-2 text-xs` (36px height); preserved polymorphic `asAnchor` with forwarded ref.
-- `Badge.tsx`: Clean semantic tone styling with subtle specular highlight `shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]`; wrapped in `forwardRef`; supported `label` prop.
-- `Pill.tsx`: Wrapped in `forwardRef`; preserved `label` and `children` support; added `pulse` alias alongside `dotPulse`.
-- `Card.tsx`: Re-aligned with `.hud-card` and `.hud-card-highlight` broadcast surfaces from `src/index.css`; wrapped in `forwardRef`.
-- `IconOrb.tsx`: Fixed neutral tone emerald glow leak by mapping tone correctly to `bg-white/5` for neutral; wrapped in `forwardRef`.
-- `HudCorners.tsx`: Wrapped in `forwardRef`.
-- `tailwind.config.js`: Fixed `line` color opacity function using `withAlpha` so `border-line/60` and `border-line/80` generate valid CSS.
-- `src/index.css`: Removed orphaned `.tactical-pill` CSS class.
-- `Navbar.tsx`: Removed `ESPORTS CLIENT` logo subtitle; refined desktop and mobile drawer navigation typography to Linear/Apple Notes elegance; unified mobile drawer CTA copy to `Download App`; wired `trackDownload` and `trackButtonClick` to download click handler.
-- `Footer.tsx`: Removed conversational brand paragraph, `PLATFORM OPERATIONAL 24/7` badge, `100% Refund Policy` infomercial prefix, `Direct Helpline:` prefix, and bottom tagline chips; cleaned copyright string.
-- `WhatsAppButton.tsx`: Removed hover tooltip `Chat on WhatsApp` and `isHovered` state; maintained tactile WhatsApp FAB with safe-area insets, pulse effect, and accessibility attributes.
-- `SEO.tsx`: Synchronized Twitter card meta tags (`twitter:title`, `twitter:description`, `twitter:url`, `twitter:image`) and added `updateOrCreateMeta` fallback helper.
-
-## Artifact Index
-- DISPATCH.md — task assignment
-- BRIEFING.md — working memory
-- progress.md — liveness heartbeat
-- handoff.md — final handoff report
+- **What to build**: Design system tokens in `tailwind.config.js` and `src/index.css`, plus primitives in `src/components/primitives/` (Button, Card, Badge, Input).
+- **Success criteria**: Zero regression in `npm run typecheck`, `npm run lint`, `npm run build`, and `npm test`. Exact Supabase styling with backward compatibility.
+- **Interface contracts**: PROJECT.md, token_architecture_plan.md, primitives_plan.md, integration_compatibility.md.
 
 ## Change Tracker
 - **Files modified**:
-  - `src/components/primitives/Stat.tsx` — subtext removed, forwardRef added
-  - `src/components/primitives/Button.tsx` — double-border fixed, sm height 36px, polymorphism + ref preserved
-  - `src/components/primitives/Badge.tsx` — specular sheen, label prop, forwardRef added
-  - `src/components/primitives/Pill.tsx` — label/children support, pulse alias, forwardRef added
-  - `src/components/primitives/Card.tsx` — re-aligned with hud-card, forwardRef
-  - `src/components/primitives/IconOrb.tsx` — neutral tone glow leak fixed, forwardRef added
-  - `src/components/primitives/HudCorners.tsx` — forwardRef added
-  - `tailwind.config.js` — line color withAlpha opacity fix
-  - `src/index.css` — dead .tactical-pill removed
-  - `src/components/Navbar.tsx` — logo subtitle removed, drawer CTA unified to Download App, download tracking wired, typography refined
-  - `src/components/Footer.tsx` — paragraph, badge, 100% prefix, helpline prefix, tagline chips removed; clean copyright
-  - `src/components/WhatsAppButton.tsx` — tooltip and isHovered removed; FAB affordance preserved
-  - `src/components/SEO.tsx` — Twitter card sync and element fallback creation added
-- **Build status**: All checks passed (typecheck, lint, build, unit/e2e tests)
-- **Pending issues**: none
+  - `tailwind.config.js`: Normalized carbon RGB tuples (`bg-2`: '23, 23, 23', `bg-3`: '30, 32, 31'), added `bg-alt`, `bg-header`, full Supabase `surface`, `border`, `foreground`, `brand` palettes, calibrated `450` font weight, shadows and brand gradients.
+  - `src/index.css`: Added canonical `--bg-0` through `--bg-header`, aliases for surfaces, hairline borders, typography hierarchy, brand stops, calibrated `font-weight: 450` in `@layer base`, normalized `.hud-card` & `.hud-card-highlight`, added `.focus-ring`, `.raised-control-surface`, `.gradient-border-card`, `.divider-gradient`, `.divider-gradient-brand`, color aliases, and `#1E201F` scrollbar thumb.
+  - `index.html`: Updated Inter font link to `wght@100..900` for native 450 weight support.
+  - `src/components/primitives/Button.tsx`: Supabase solid green `#3ECF8E` fill with hover `#34B27B`, tactile active scale, top highlight sheen, secondary dark carbon `#171717` with hairline border, ghost button, preserving `forwardRef`, `displayName`, anchor polymorphism, and using `cn(...)`.
+  - `src/components/primitives/Card.tsx`: Dark carbon `#171717` surface, hairline border, top highlight, preserving `forwardRef`, `displayName`, `hud-card`, `hud-card-highlight`, `base`/`highlighted` variants, and using `cn(...)`.
+  - `src/components/primitives/Badge.tsx`: Hairline border, dark emerald `#041B10` or dark carbon `#171717` background, monospace tabular tracking (`tabular-nums tracking-[0.08em]`), pulsing LED indicator, preserving `forwardRef`, `displayName`, and using `cn(...)`.
+  - `src/components/primitives/Input.tsx`: Standalone input primitive with `#121212` carbon background, hairline border `border-white/10 hover:border-white/20`, brand green focus ring `focus-visible:ring-[#3ECF8E]/40 focus-visible:border-[#3ECF8E]/60`, forwardRef, displayName.
+  - `src/components/primitives/index.ts`: Re-exported `Input` and `InputProps`.
+- **Build status**: All checks passed (typecheck, lint, build, test 100%).
+- **Pending issues**: None.
 
 ## Quality Status
-- **Build/test result**: Pass (typecheck 0 errors, lint 0 errors / 0 warnings, build success in 3.42s, tests pass)
-- **Lint status**: 0 errors, 0 warnings
-- **Tests added/modified**: Verified against all test suites (Tiers 1-4 & R1/R3)
+- **Build/test result**: PASS (100% test pass rate across 278 tests in 94 suites).
+- **Lint status**: 0 errors, 0 warnings.
+- **Tests added/modified**: 0 (test files strictly preserved in read-only mode).
 
-## Loaded Skills
-None
+## Artifact Index
+- `.agents/teamwork/worker_m1/DISPATCH.md` — Dispatch message
+- `.agents/teamwork/worker_m1/BRIEFING.md` — Liveness & memory
+- `.agents/teamwork/worker_m1/progress.md` — Progress log
+- `.agents/teamwork/worker_m1/handoff.md` — Milestone 1 completion report

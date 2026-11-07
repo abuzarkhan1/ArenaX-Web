@@ -1,7 +1,7 @@
-# BRIEFING — 2026-11-05T15:02:00Z
+# BRIEFING — 2026-11-07T07:17:09Z
 
 ## Mission
-Adversarially challenge and stress-test Hero.tsx and Statement.tsx for Milestone 2, verifying rapid toggle state, responsive layout bounds, CTA scroll triggers, absence of leaked helper copy, and full test/lint/typecheck/build suites.
+Adversarially challenge and stress-test Milestone 2 changes in `Navbar.tsx`, `Hero.tsx`, and `Statement.tsx` against the Supabase design tokens specification, testing extreme viewports, drawer body overflow lifecycle, rapid transitions, character switcher toggling, 3D mouse parallax gating, telemetry stats, GSAP ScrollTrigger reverts, reduced-motion accessibility, automated tests, and reference immutability.
 
 ## 🔒 My Identity
 - Archetype: challenger
@@ -16,38 +16,23 @@ Adversarially challenge and stress-test Hero.tsx and Statement.tsx for Milestone
 - Report failures as findings — do NOT fix them yourself
 - Deliver an explicit verdict: APPROVE or REJECT
 - Empirical verification required: run code and verification tests directly
+- The reference file `Supabase _ The Postgres Development Platform.html` and the folder `Supabase _ The Postgres Development Platform_files` MUST remain STRICTLY unaltered.
 
 ## Current Parent
-- Conversation ID: 946cbb3b-435a-471b-a15d-9c388cab6b10
-- Updated: 2026-11-05T15:02:00Z
+- Conversation ID: 8b88bbad-6052-4d75-b548-47b7f26819bc
+- Updated: 2026-11-07T07:17:09Z
 
 ## Review Scope
-- **Files to review**: `src/components/Hero.tsx`, `src/components/Statement.tsx`, `src/components/AppExperienceShowcase.tsx`, `src/components/TournamentModes.tsx`
-- **Interface contracts**: `PROJECT.md`, `.agents/teamwork/ORIGINAL_REQUEST.md`, `worker_m2/handoff.md`
-- **Review criteria**: Rapid toggle stability, responsive layout bounds, CTA button scroll triggers, zero leaked helper copy/taglines, clean typecheck, lint, build, test.
-
-## Attack Surface
-- **Hypotheses tested**:
-  1. Rapid character switcher clicking could induce race conditions or undefined character states. (DISPROVED: Atomic state transitions with fallback `CHARACTERS.tactical` withstand 10k rapid toggles).
-  2. Character cutout assets in `public/` might be missing or empty. (DISPROVED: All 4 webp and png assets verified present with non-zero byte sizes).
-  3. Parallax formulas on extreme or negative scroll values might yield NaN or negative scales. (DISPROVED: Clamping logic bounds scale >= 0.86, title opacity >= 0.18, character opacity >= 0).
-  4. Missing DOM elements in `scrollToSection` could trigger uncaught TypeErrors. (DISPROVED: Safe optional chaining `?.scrollIntoView` prevents crashes).
-  5. Helper copy or version strings might leak in Hero or Statement. (DISPROVED: Scanned and verified zero helper copy, zero taglines, zero subtitles).
-  6. Prefers-reduced-motion in Statement.tsx leaves words at `opacity-25`. (OBSERVED & DOCUMENTED: Inherited baseline behavior, recommended enhancement noted).
-- **Vulnerabilities found**: None that break functionality or violate contracts.
-- **Untested angles**: Hardware-accelerated GPU memory limits on lower-end devices during 3D phone rotation (covered under M5 overall testing).
-
-## Loaded Skills
-- None
+- **Files to review**: `src/components/Navbar.tsx`, `src/components/Hero.tsx`, `src/components/Statement.tsx`
+- **Interface contracts**: `PROJECT.md`, `.agents/teamwork/ORIGINAL_REQUEST.md`, `.agents/teamwork/spec_miner_survey_1/supabase_tokens.md`, `worker_m2/handoff.md`, `TEST_READY.md`
+- **Review criteria**: Supabase tokens adherence, extreme viewports, mobile drawer lifecycle, 3D parallax gating, telemetry ribbons, GSAP cleanup, reduced-motion fallbacks, test passing, reference immutability.
 
 ## Key Decisions Made
-- Authored and integrated `tests/challenger-m2-adversarial.test.ts` into the unified test runner `scripts/run-all-tests.ts`.
-- Verified all 4 verification commands: `npm run typecheck`, `npm run lint`, `npm run build`, `npm test` empirically.
-- Rendered definitive verdict: **APPROVE**.
+- Executing empirical stress tests across all 5 assigned challenge dimensions.
+- Verifying SHA-256 hash and byte sizes of read-only reference files.
 
 ## Artifact Index
-- `DISPATCH.md` — Initial dispatch message
+- `DISPATCH.md` — Dispatch logs and task instructions
 - `BRIEFING.md` — Persistent working memory and state
 - `progress.md` — Heartbeat tracker
-- `tests/challenger-m2-adversarial.test.ts` — Code-executing adversarial test suite (19 passing tests)
-- `handoff.md` — Formal 5-component handoff report with APPROVE verdict
+- `handoff.md` — Formal 5-component adversarial challenge report

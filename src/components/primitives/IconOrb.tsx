@@ -11,7 +11,7 @@ export interface IconOrbProps extends React.HTMLAttributes<HTMLDivElement> {
 
 const TONE_STYLES: Record<IconOrbTone, string> = {
   emerald:
-    'bg-emerald-500/10 border-emerald-500/20 text-emerald-400 shadow-[0_0_24px_-6px_rgba(16,185,129,0.45)]',
+    'bg-emerald-500/10 border-emerald-500/20 text-emerald-400 shadow-[0_0_24px_-6px_rgba(62,207,142,0.45)]',
   neutral:
     'bg-white/[0.04] border-white/[0.08] text-text-2 shadow-[0_0_24px_-10px_rgba(255,255,255,0.20)]',
   danger:

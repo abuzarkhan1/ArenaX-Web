@@ -2,7 +2,7 @@ import { DownloadCloud, Smartphone, Clock, QrCode, CheckCircle2 } from 'lucide-r
 import { QRCodeSVG } from 'qrcode.react';
 import { trackDownload } from '../utils/analytics';
 import { Button } from './primitives/Button';
-import { Badge, HudCorners, IconOrb } from './primitives';
+import { Badge } from './primitives';
 
 export const Download = () => {
   const downloadUrl = 'https://github.com/abuzarkhan1/ArenaX-Web/releases/download/v2.6/ArenaX.apk';
@@ -30,44 +30,46 @@ export const Download = () => {
   return (
     <section
       id="download"
-      className="py-[clamp(80px,10vw,140px)] bg-bg-1 border-b border-line relative overflow-hidden"
+      className="py-[clamp(80px,10vw,140px)] bg-[#121212] border-b border-white/[0.08] relative overflow-hidden"
       aria-label="Download ArenaX Mobile Client"
     >
       <div className="max-w-[1200px] mx-auto px-6 relative z-10">
         {/* Giant ARENAX Echo of Hero Typography */}
         <div className="text-center mb-10 select-none pointer-events-none">
-          <span className="text-[14vw] font-extrabold uppercase tracking-tighter leading-none text-transparent bg-clip-text bg-gradient-to-b from-white/20 via-white/5 to-transparent font-heading whitespace-nowrap block">
-            ARENA<span className="text-accent/35">X</span>
+          <span className="text-[14vw] font-extrabold uppercase tracking-tighter leading-none text-transparent bg-clip-text bg-gradient-to-b from-white/15 via-white/5 to-transparent font-heading whitespace-nowrap block">
+            ARENA<span className="text-[#3ECF8E]/30">X</span>
           </span>
         </div>
 
         {/* Header */}
         <div className="text-center mb-14 -mt-10 sm:-mt-16">
-          <h2 className="text-3xl sm:text-5xl md:text-6xl font-extrabold uppercase tracking-tight text-text-1 font-heading">
-            Download <span className="text-accent text-glow-accent">ArenaX</span>
+          <h2 className="text-3xl sm:text-5xl md:text-6xl font-extrabold uppercase tracking-tight text-[#EDEDED] font-heading">
+            Download <span className="text-[#3ECF8E]">ArenaX</span>
           </h2>
-          <p className="text-base sm:text-lg text-text-2 max-w-2xl mx-auto mt-3 leading-relaxed">
+          <p className="text-base sm:text-lg text-[#A0A0A0] max-w-2xl mx-auto mt-3 leading-relaxed">
             Get started in seconds. Download our official Android application and start competing in Free Fire tournaments today.
           </p>
         </div>
 
         {/* Dual Release Cards: Android Primary & iOS Secondary */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 max-w-4xl mx-auto mb-16 relative isolate">
+          {/* Subtle atmospheric glow behind the primary card */}
           <div
             aria-hidden="true"
-            className="ambient-glow left-4 top-6 h-[300px] w-[300px] opacity-80"
+            className="pointer-events-none absolute -left-10 top-0 h-[350px] w-[350px] rounded-full bg-[radial-gradient(ellipse_at_center,rgba(62,207,142,0.08)_0%,rgba(62,207,142,0)_70%)]"
           />
 
           {/* Card 1: Android APK (Highlighted Card) */}
-          <div className="hud-card-highlight relative z-10 p-6 sm:p-8 rounded-card flex flex-col justify-between transition-[transform,box-shadow] duration-200 ease-out hover:-translate-y-1 hover:shadow-lift-strong">
-            <HudCorners tone="emerald" size="md" className="opacity-60" />
+          <div className="relative z-10 p-6 sm:p-8 rounded-card bg-[#171717] border border-[#3ECF8E]/35 shadow-[inset_0_1px_0_rgba(62,207,142,0.15),0_20px_48px_-20px_rgba(0,0,0,0.8)] flex flex-col justify-between transition-[transform,box-shadow,border-color] duration-200 ease-out hover:-translate-y-1 hover:border-[#3ECF8E]/50">
             <div>
-              <div className="flex items-center justify-between pb-4 border-b border-line mb-6">
+              <div className="flex items-center justify-between pb-4 border-b border-white/[0.08] mb-6">
                 <div className="flex items-center gap-3">
-                  <IconOrb icon={Smartphone} tone="emerald" size="lg" />
+                  <div className="w-11 h-11 rounded-md bg-[#041B10] border border-[#3ECF8E]/30 flex items-center justify-center text-[#3ECF8E] flex-shrink-0">
+                    <Smartphone className="w-5 h-5" strokeWidth={1.5} />
+                  </div>
                   <div>
-                    <h3 className="text-2xl font-bold font-heading text-text-1">Android Client</h3>
-                    <span className="text-xs font-mono text-accent tabular-nums tracking-tight">Package: com.arenax.app</span>
+                    <h3 className="text-2xl font-bold font-heading text-[#EDEDED]">Android Client</h3>
+                    <span className="text-xs font-mono text-[#3ECF8E] tabular-nums tracking-tight">Package: com.arenax.app</span>
                   </div>
                 </div>
                 <Badge tone="emerald" dot>
@@ -75,17 +77,17 @@ export const Download = () => {
                 </Badge>
               </div>
 
-              <div className="space-y-3 font-mono text-xs text-text-2 mb-8 tabular-nums">
+              <div className="space-y-3 font-mono text-xs text-[#A0A0A0] mb-8 tabular-nums">
                 <div className="flex items-center gap-2.5">
-                  <CheckCircle2 className="w-4 h-4 text-accent flex-shrink-0" strokeWidth={1.5} />
+                  <CheckCircle2 className="w-4 h-4 text-[#3ECF8E] flex-shrink-0" strokeWidth={1.5} />
                   <span>Compatible with Android 8.0 through Android 15</span>
                 </div>
                 <div className="flex items-center gap-2.5">
-                  <CheckCircle2 className="w-4 h-4 text-accent flex-shrink-0" strokeWidth={1.5} />
+                  <CheckCircle2 className="w-4 h-4 text-[#3ECF8E] flex-shrink-0" strokeWidth={1.5} />
                   <span>Build Size: ~45–55 MB (Native optimized client)</span>
                 </div>
                 <div className="flex items-center gap-2.5">
-                  <CheckCircle2 className="w-4 h-4 text-accent flex-shrink-0" strokeWidth={1.5} />
+                  <CheckCircle2 className="w-4 h-4 text-[#3ECF8E] flex-shrink-0" strokeWidth={1.5} />
                   <span>Google Play Protect compatible & SHA-256 verified</span>
                 </div>
               </div>
@@ -103,52 +105,54 @@ export const Download = () => {
               </Button>
 
               {/* QR Code for Desktop Users: scannable, encodes the live APK URL */}
-              <div className="hidden sm:flex items-center justify-between p-3.5 rounded-control bg-bg-1/70 border border-line transition-colors duration-200 hover:border-emerald-500/25">
+              <div className="hidden sm:flex items-center justify-between p-3.5 rounded-control bg-[#121212] border border-white/[0.08] transition-colors duration-200 hover:border-[#3ECF8E]/30">
                 <div className="flex items-center gap-3">
-                  <div className="bg-white rounded-lg p-1 flex items-center justify-center flex-shrink-0 shadow-[inset_0_1px_0_rgba(255,255,255,0.3)]">
+                  <div className="bg-white rounded-md p-1.5 flex items-center justify-center flex-shrink-0 shadow-[inset_0_1px_0_rgba(255,255,255,0.3)]">
                     <QRCodeSVG
                       value={downloadUrl}
                       size={48}
                       level="L"
                       bgColor="#FFFFFF"
-                      fgColor="#0B0D0E"
-                      includeMargin={true}
+                      fgColor="#121212"
+                      includeMargin={false}
                       aria-label="QR code: download ArenaX APK on your Android phone"
                     />
                   </div>
                   <div>
-                    <span className="text-xs font-bold text-text-1 block">Scan on Android Phone</span>
+                    <span className="text-xs font-bold text-[#EDEDED] block">Scan on Android Phone</span>
                   </div>
                 </div>
-                <QrCode className="w-4 h-4 text-accent" strokeWidth={1.5} />
+                <QrCode className="w-4 h-4 text-[#3ECF8E]" strokeWidth={1.5} />
               </div>
             </div>
           </div>
 
           {/* Card 2: iOS Client (Muted Secondary Card) */}
-          <div className="hud-card relative z-10 p-6 sm:p-8 rounded-card flex flex-col justify-between opacity-80 transition-[transform,border-color,box-shadow] duration-200 ease-out hover:-translate-y-1 hover:shadow-lift">
+          <div className="relative z-10 p-6 sm:p-8 rounded-card bg-[#171717] border border-white/[0.08] shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] flex flex-col justify-between opacity-80 transition-[transform,border-color,box-shadow] duration-200 ease-out hover:-translate-y-1 hover:border-white/[0.14]">
             <div>
-              <div className="flex items-center justify-between pb-4 border-b border-line mb-6">
+              <div className="flex items-center justify-between pb-4 border-b border-white/[0.08] mb-6">
                 <div className="flex items-center gap-3">
-                  <IconOrb icon={Smartphone} tone="neutral" size="lg" />
+                  <div className="w-11 h-11 rounded-md bg-[#181A19] border border-white/[0.08] flex items-center justify-center text-[#707070] flex-shrink-0">
+                    <Smartphone className="w-5 h-5" strokeWidth={1.5} />
+                  </div>
                   <div>
-                    <h3 className="text-2xl font-bold font-heading text-text-1">Apple iOS</h3>
+                    <h3 className="text-2xl font-bold font-heading text-[#EDEDED]">Apple iOS</h3>
                   </div>
                 </div>
                 <Badge tone="neutral">Coming Soon</Badge>
               </div>
 
-              <div className="space-y-3 font-mono text-xs text-text-3 mb-8 tabular-nums">
+              <div className="space-y-3 font-mono text-xs text-[#707070] mb-8 tabular-nums">
                 <div className="flex items-center gap-2.5">
-                  <Clock className="w-4 h-4 text-text-3 flex-shrink-0" strokeWidth={1.5} />
+                  <Clock className="w-4 h-4 text-[#707070] flex-shrink-0" strokeWidth={1.5} />
                   <span>Apple App Store submission in review</span>
                 </div>
                 <div className="flex items-center gap-2.5">
-                  <Clock className="w-4 h-4 text-text-3 flex-shrink-0" strokeWidth={1.5} />
+                  <Clock className="w-4 h-4 text-[#707070] flex-shrink-0" strokeWidth={1.5} />
                   <span>Requires iOS 15.0 or later</span>
                 </div>
                 <div className="flex items-center gap-2.5">
-                  <Clock className="w-4 h-4 text-text-3 flex-shrink-0" strokeWidth={1.5} />
+                  <Clock className="w-4 h-4 text-[#707070] flex-shrink-0" strokeWidth={1.5} />
                   <span>Cross-platform scrim matchmaking with Android</span>
                 </div>
               </div>
@@ -161,18 +165,17 @@ export const Download = () => {
         </div>
 
         {/* 4 Install Steps as a Simple Numbered Row */}
-        <div className="p-6 sm:p-8 rounded-card bg-bg-2/70 border border-line max-w-4xl mx-auto backdrop-blur-xl relative">
-
+        <div className="p-6 sm:p-8 rounded-card bg-[#171717] border border-white/[0.08] max-w-4xl mx-auto shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] relative">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
             {installSteps.map((step) => (
               <div
                 key={step.num}
-                className="p-4 rounded-control bg-bg-1/70 border border-line backdrop-blur-sm flex flex-col justify-between transition-[transform,border-color,background-color,box-shadow] duration-200 ease-out hover:-translate-y-1 hover:border-emerald-500/25 hover:bg-bg-2/70"
+                className="p-4 rounded-control bg-[#121212] border border-white/[0.08] flex flex-col justify-between transition-[transform,border-color,background-color,box-shadow] duration-200 ease-out hover:-translate-y-1 hover:border-[#3ECF8E]/30 hover:bg-[#181A19]"
               >
-                <span className="text-xs font-mono font-bold text-accent tabular-nums tracking-tight mb-2">/{step.num}</span>
+                <span className="text-xs font-mono font-bold text-[#3ECF8E] tabular-nums tracking-tight mb-2">/{step.num}</span>
                 <div>
-                  <h4 className="text-sm font-bold text-text-1 font-heading mb-1">{step.title}</h4>
-                  <p className="text-xs text-text-2 leading-relaxed tabular-nums">{step.desc}</p>
+                  <h4 className="text-sm font-bold text-[#EDEDED] font-heading mb-1">{step.title}</h4>
+                  <p className="text-xs text-[#A0A0A0] leading-relaxed tabular-nums">{step.desc}</p>
                 </div>
               </div>
             ))}

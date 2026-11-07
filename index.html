@@ -1,58 +1,70 @@
 <!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/x-icon" href="/fav.ico" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <meta name="color-scheme" content="dark" />
+<html lang="en" class="dark" data-theme="dark" style="color-scheme: dark;">
 
-    <!-- Primary Meta Tags -->
-    <title>ArenaX - Pakistan's Premier Free Fire Tournament Platform</title>
-    <meta name="title" content="ArenaX - Pakistan's Premier Free Fire Tournament Platform" />
-    <meta name="description" content="Compete in daily Free Fire Bermuda and Clash Squad tournaments. Automated AI scoreboard verification and 24-hour JazzCash/EasyPaisa cash payouts." />
-    <meta name="keywords" content="ArenaX, Free Fire tournament, esports Pakistan, Bermuda battle royale, Clash Squad 4v4, Free Fire Pakistan, gaming tournament Pakistan, mobile esports, JazzCash esports, EasyPaisa esports" />
-    <meta name="author" content="ArenaX" />
-    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-    <meta name="language" content="English" />
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/x-icon" href="/fav.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="color-scheme" content="dark" />
 
-    <!-- Canonical URL -->
-    <link rel="canonical" href="https://marenax.site/" />
+  <!-- Supabase Typography: Inter (Body), Manrope (Headings), Source Code Pro (Monospace) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Manrope:wght@400;500;600;700;800&family=Source+Code+Pro:wght@400;500;600;700&display=swap"
+    rel="stylesheet" />
 
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://marenax.site/" />
-    <meta property="og:title" content="ArenaX - Pakistan's Premier Free Fire Tournament Platform" />
-    <meta property="og:description" content="Compete in daily Free Fire Bermuda and Clash Squad tournaments with automated AI scoreboard verification and 24-hour payouts." />
-    <meta property="og:image" content="https://marenax.site/og-image.jpg" />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
-    <meta property="og:site_name" content="ArenaX" />
-    <meta property="og:locale" content="en_US" />
+  <!-- Primary Meta Tags -->
+  <title>ArenaX - Pakistan's Premier Free Fire Tournament Platform</title>
+  <meta name="title" content="ArenaX - Pakistan's Premier Free Fire Tournament Platform" />
+  <meta name="description"
+    content="Compete in daily Free Fire Bermuda and Clash Squad tournaments. Automated AI scoreboard verification and 24-hour JazzCash/EasyPaisa cash payouts." />
+  <meta name="keywords"
+    content="ArenaX, Free Fire tournament, esports Pakistan, Bermuda battle royale, Clash Squad 4v4, Free Fire Pakistan, gaming tournament Pakistan, mobile esports, JazzCash esports, EasyPaisa esports" />
+  <meta name="author" content="ArenaX" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+  <meta name="language" content="English" />
 
-    <!-- Twitter -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:url" content="https://marenax.site/" />
-    <meta name="twitter:title" content="ArenaX - Pakistan's Premier Free Fire Tournament Platform" />
-    <meta name="twitter:description" content="Compete in daily Free Fire Bermuda and Clash Squad tournaments with automated AI scoreboard verification and 24-hour payouts." />
-    <meta name="twitter:image" content="https://marenax.site/twitter-image.jpg" />
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://marenax.site/" />
 
-    <!-- Additional Meta Tags -->
-    <meta name="application-name" content="ArenaX" />
-    <meta name="apple-mobile-web-app-title" content="ArenaX" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-    <meta name="mobile-web-app-capable" content="yes" />
-    <meta name="theme-color" content="#101214" />
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://marenax.site/" />
+  <meta property="og:title" content="ArenaX - Pakistan's Premier Free Fire Tournament Platform" />
+  <meta property="og:description"
+    content="Compete in daily Free Fire Bermuda and Clash Squad tournaments with automated AI scoreboard verification and 24-hour payouts." />
+  <meta property="og:image" content="https://marenax.site/og-image.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:site_name" content="ArenaX" />
+  <meta property="og:locale" content="en_US" />
 
-    <!-- Geographic Meta Tags -->
-    <meta name="geo.region" content="PK" />
-    <meta name="geo.placename" content="Pakistan" />
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:url" content="https://marenax.site/" />
+  <meta name="twitter:title" content="ArenaX - Pakistan's Premier Free Fire Tournament Platform" />
+  <meta name="twitter:description"
+    content="Compete in daily Free Fire Bermuda and Clash Squad tournaments with automated AI scoreboard verification and 24-hour payouts." />
+  <meta name="twitter:image" content="https://marenax.site/twitter-image.jpg" />
 
-    <!-- JSON-LD Schema Markup (Truthful, no fake reviews) -->
-    <script type="application/ld+json">
+  <!-- Additional Meta Tags -->
+  <meta name="application-name" content="ArenaX" />
+  <meta name="apple-mobile-web-app-title" content="ArenaX" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="theme-color" content="#121212" />
+
+  <!-- Geographic Meta Tags -->
+  <meta name="geo.region" content="PK" />
+  <meta name="geo.placename" content="Pakistan" />
+
+  <!-- JSON-LD Schema Markup (Truthful, no fake reviews) -->
+  <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@graph": [
@@ -113,9 +125,11 @@
       ]
     }
     </script>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+</head>
+
+<body>
+  <div id="root"></div>
+  <script type="module" src="/src/main.tsx"></script>
+</body>
+
 </html>

@@ -1,4 +1,5 @@
 import React, { forwardRef } from 'react';
+import { cn } from '../../lib/utils';
 
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'primary' | 'secondary' | 'ghost';
@@ -31,7 +32,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     ref
   ) => {
     const baseStyles =
-      'group relative inline-flex select-none items-center justify-center gap-2.5 overflow-hidden rounded-control font-bold tracking-tight transition-[transform,background-color,border-color,box-shadow,color,opacity] duration-200 ease-out cursor-pointer active:translate-y-px active:scale-[0.98] active:duration-100 disabled:pointer-events-none disabled:opacity-50 disabled:active:scale-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/70 focus-visible:ring-offset-2 focus-visible:ring-offset-bg-1';
+      'group relative inline-flex select-none items-center justify-center gap-2.5 overflow-hidden rounded-control font-medium tracking-tight transition-[transform,background-color,border-color,box-shadow,color,opacity] duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] cursor-pointer active:translate-y-px motion-safe:active:scale-[0.97] active:duration-100 disabled:pointer-events-none disabled:opacity-50 disabled:active:scale-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3ECF8E]/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[#121212]';
 
     const sizeStyles = {
       sm: 'h-9 px-3.5 py-2 text-xs',
@@ -41,15 +42,15 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 
     const variantStyles = {
       primary:
-        'bg-accent hover:bg-accent-hover text-bg-1 ring-1 ring-white/25 hover:ring-emerald-300/60 shadow-[inset_0_1px_0_rgba(255,255,255,0.22),0_16px_36px_-12px_rgba(0,200,120,0.30)] hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.28),0_20px_40px_-10px_rgba(0,200,120,0.40)]',
+        'bg-accent hover:bg-accent-hover text-[#121212] font-semibold ring-1 ring-black/10 shadow-[inset_0_1px_0_rgba(255,255,255,0.28),0_1px_2px_rgba(0,0,0,0.24)] shadow-sm hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.32),0_12px_28px_-10px_rgba(62,207,142,0.35)]',
       secondary:
-        'border border-white/[0.08] bg-bg-2/40 text-text-1 backdrop-blur-xl hover:border-emerald-500/40 hover:bg-bg-2/70 shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]',
+        'border border-white/[0.08] hover:border-white/20 bg-[#171717] hover:bg-[#1E201F] text-[#EDEDED] shadow-[inset_0_1px_0_rgba(255,255,255,0.06)] backdrop-blur-xl',
       ghost:
-        'border border-transparent bg-transparent text-text-2 hover:bg-white/[0.04] hover:text-text-1',
+        'border border-transparent bg-transparent text-[#A0A0A0] hover:bg-white/[0.05] hover:text-[#EDEDED]',
     }[variant];
 
     const widthStyle = fullWidth ? 'w-full' : '';
-    const combinedClassName = `${baseStyles} ${sizeStyles} ${variantStyles} ${widthStyle} ${className}`.trim();
+    const combinedClassName = cn(baseStyles, sizeStyles, variantStyles, widthStyle, className);
 
     const content = (
       <>

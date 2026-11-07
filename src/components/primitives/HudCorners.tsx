@@ -7,7 +7,7 @@ export interface HudCornersProps extends React.HTMLAttributes<HTMLSpanElement> {
 }
 
 const TONE_STYLES = {
-  emerald: 'border-emerald-400/50',
+  emerald: 'border-[#3ECF8E]/50',
   neutral: 'border-white/[0.18]',
 };
 

@@ -1,55 +1,46 @@
-# BRIEFING — 2026-11-05T15:11:30Z
+# BRIEFING — 2026-11-07T07:31:30Z
 
 ## Mission
-Investigate `LeaderboardTiers.tsx` and `OrganizerProgram.tsx` for Milestone 3 (Esports Engine & Financial Architecture copy condensation and visual refinement), cataloging eyebrow badges, subtitles, tags, tactical simulator elements, capabilities, earnings simulator, economics math, and test invariants.
+Investigate and design Supabase-themed redesign blueprints for HowItWorks.tsx, PlatformComparison.tsx, and Download.tsx, ensuring 100% copy preservation and exact token mapping.
 
 ## 🔒 My Identity
 - Archetype: explorer
-- Roles: read-only investigation, evidence chain tracing, synthesis
-- Working directory: c:\Users\Muhammad Minhas\ArenaX-Web\.agents\teamwork\explorer_m3_3\
-- Original parent: 946cbb3b-435a-471b-a15d-9c388cab6b10
-- Milestone: Milestone 3 - Esports Engine & Financial Architecture
+- Roles: Teamwork explorer
+- Working directory: c:\Users\Muhammad Minhas\ArenaX-Web\.agents\teamwork\explorer_m3_3
+- Original parent: 8b88bbad-6052-4d75-b548-47b7f26819bc
+- Milestone: Milestone 3 (Interactive Product Showcases & Technical Features)
 
 ## 🔒 Key Constraints
-- Read-only investigation — do NOT implement
-- Do NOT modify any source code files
-- Preserve math formulas, interactive states, sliders, and test invariants
+- Read-only investigation — do NOT implement or modify application source code
+- Strictly do NOT modify or touch `Supabase _ The Postgres Development Platform.html` or `Supabase _ The Postgres Development Platform_files`
+- Preserve 100% of all existing copy, headlines, descriptions, calculator formulas, and interactive controls verbatim (R3)
+- Deliver complete blueprint.md and handoff.md in working directory
+- Notify orchestrator (8b88bbad-6052-4d75-b548-47b7f26819bc) via send_message
 
 ## Current Parent
-- Conversation ID: 946cbb3b-435a-471b-a15d-9c388cab6b10
-- Updated: 2026-11-05T15:11:30Z
+- Conversation ID: 8b88bbad-6052-4d75-b548-47b7f26819bc
+- Updated: 2026-11-07T07:31:30Z
 
 ## Investigation State
 - **Explored paths**:
-  - `src/components/LeaderboardTiers.tsx`
-  - `src/components/OrganizerProgram.tsx`
-  - `src/components/AIVisionShowcase.tsx`
-  - `src/components/WalletSection.tsx`
-  - `src/App.tsx`
-  - `tests/tier1-feature-coverage.test.ts`
-  - `tests/tier2-boundary-corner-cases.test.ts`
-  - `tests/tier3-cross-feature.test.ts`
-  - `tests/tier4-real-world-scenarios.test.ts`
-  - `tests/tier5-adversarial-hardening.test.ts`
-  - `tests/layout-copy-verification.test.ts`
-  - `tests/functional-invariants.test.ts`
-  - `scripts/run-all-tests.ts`
+  - `ORIGINAL_REQUEST.md`, `PROJECT.md`, `supabase_tokens.md`, `views_catalog.md`
+  - `src/components/primitives/Button.tsx`, `Card.tsx`, `Badge.tsx`, `Input.tsx`
+  - `src/components/HowItWorks.tsx`, `PlatformComparison.tsx`, `Download.tsx`
+  - `tests/tier1-feature-coverage.test.ts`, `tests/supabase-tokens-and-invariants.test.ts`, `tests/challenger-m2-adversarial.test.ts`
 - **Key findings**:
-  - `<Pill>` eyebrows were already removed in commit `bd37ac4`.
-  - Header badge `8 TIERS // ACTIVE CIRCUIT` and `10% Platform Rake` are explicitly prohibited footnote regexes in `layout-copy-verification.test.ts`.
-  - In `OrganizerProgram.tsx`, string `'Bermuda or Clash Squad'` in pillar 01 desc is strictly required by `tests/tier3-cross-feature.test.ts` line 90.
-  - In `OrganizerProgram.tsx`, `0.10` or `0.1` platform fee calculation is strictly required by `tier1` and `tier3` tests.
-  - In `LeaderboardTiers.tsx`, `RANK_TIERS`, `Bronze`, `Grandmaster`, `ptsNeeded`, and `booyahsNeeded` are strictly checked by `tier1-feature-coverage.test.ts`.
-  - DOM anchor IDs `id="ranks"` and `id="organizers"` are mandatory for navbar and route invariant tests.
-  - All test suites currently pass 100%.
-- **Unexplored areas**: None remaining for this scope.
+  - Reconciled dispatch prompt text vs test invariants: HowItWorks has 6 steps (not 4), PlatformComparison has 2 columns (no Traditional Apps), and Download has 4 install steps (not 3).
+  - De-HUDification strategy established: strip all `ambient-glow`, `text-glow-accent`, and `HudCorners` in favor of Supabase dark carbon cards (`#171717`), hairline borders (`border-white/[0.08]`), and emerald `#3ECF8E` accents.
+  - Complete drop-in code implementations provided in `blueprint.md`.
+  - Baseline verification suite passes 100% (20.68s).
+- **Unexplored areas**: None within M3 Part 3 scope.
 
 ## Key Decisions Made
-- Fully documented exact code lines, git history, and test assertions in handoff report.
-- Formulated concrete before/after code proposals and preservation guidelines for the implementer agent.
+- Authored comprehensive `blueprint.md` covering all 3 target components with line-by-line recommendations, copy checklists, and full drop-in code.
+- Authored 5-component `handoff.md`.
 
 ## Artifact Index
-- DISPATCH.md — Initial dispatch log
-- BRIEFING.md — Persistent context & state
-- progress.md — Liveness heartbeat & step log
-- handoff.md — Comprehensive 5-component handoff report
+- `DISPATCH.md` — Initial dispatch from orchestrator
+- `BRIEFING.md` — Persistent situational memory
+- `progress.md` — Liveness heartbeat
+- `blueprint.md` — Architectural blueprint & replacement code for HowItWorks, PlatformComparison, and Download
+- `handoff.md` — 5-component handoff report

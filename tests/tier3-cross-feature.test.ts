@@ -159,4 +159,57 @@ describe('Tier 3: Cross-Feature Interactions Suite', () => {
       assert.ok(stmtSrc.includes('AI') || stmtSrc.includes('Vision'));
     });
   });
+
+  describe('Theme Tokens with Interactive Calculators & Tab State', () => {
+    it('combines Supabase emerald theme tokens with dynamic combat points calculation in AIVisionShowcase', () => {
+      const visionSrc = readSrcFile('components/AIVisionShowcase.tsx');
+
+      // Uses hud-card for dark carbon surface
+      assert.ok(visionSrc.includes('hud-card'), 'AIVisionShowcase must use Supabase hud-card');
+      // Uses #3ECF8E / accent for active combat points telemetry
+      assert.ok(
+        visionSrc.includes('#3ECF8E') || visionSrc.includes('text-accent'),
+        'Combat points display must use Supabase green token'
+      );
+      // Reactive formula calculates points dynamically
+      assert.ok(visionSrc.includes('totalPoints'), 'Must maintain reactive totalPoints state');
+    });
+
+    it('combines Supabase theme tokens with segmented tab state in TournamentModes', () => {
+      const tourneySrc = readSrcFile('components/TournamentModes.tsx');
+
+      // Segmented tab bar uses dark carbon container with hairline border
+      assert.ok(
+        tourneySrc.includes('bg-bg-2') && tourneySrc.includes('border-white/[0.08]'),
+        'Tab container must use dark carbon surface with hairline border'
+      );
+      // Active tab pill uses Supabase accent green fill
+      assert.ok(
+        tourneySrc.includes('bg-accent text-bg-1'),
+        'Active tab pill must use Supabase solid green fill with dark text'
+      );
+      // Inactive tab pill uses muted text with hover state
+      assert.ok(
+        tourneySrc.includes('text-text-2'),
+        'Inactive tab pill must use Supabase muted text-2 token'
+      );
+    });
+
+    it('combines Supabase carbon cards with real-time Host Earnings Simulator in OrganizerProgram', () => {
+      const orgSrc = readSrcFile('components/OrganizerProgram.tsx');
+
+      // Uses hud-card for host calculator container
+      assert.ok(orgSrc.includes('hud-card'), 'OrganizerProgram must use Supabase hud-card');
+      // Uses accent highlight on net earnings payout
+      assert.ok(
+        orgSrc.includes('text-accent') || orgSrc.includes('#3ECF8E'),
+        'Host earnings payout must highlight in brand green'
+      );
+      // Conservation invariant holds while interactive sliders update
+      assert.ok(
+        orgSrc.includes('totalRevenue - adminFee - hostEarnings'),
+        'Must preserve economic conservation invariant in state'
+      );
+    });
+  });
 });

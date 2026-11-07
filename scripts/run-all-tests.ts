@@ -104,6 +104,10 @@ function main() {
     'tests/tier3-cross-feature.test.ts',
     'tests/tier4-real-world-scenarios.test.ts',
     'tests/tier5-adversarial-hardening.test.ts',
+    'tests/supabase-tokens-and-invariants.test.ts',
+    'tests/challenger-m4-1.test.ts',
+    'tests/challenger-m4-2-adversarial.test.ts',
+    'tests/challenger-m5-adversarial.test.ts',
   ];
 
   const testArgs = ['--test', ...testFiles];

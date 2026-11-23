@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useRef } from 'react';
+﻿import { useEffect, useLayoutEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import Lenis from 'lenis';
 import gsap from 'gsap';
@@ -20,6 +20,7 @@ export default function SmoothScroll() {
 
   useEffect(() => {
     // 1. Initialize Lenis
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     const lenis = new Lenis({
       duration: 1.0,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -44,12 +45,13 @@ export default function SmoothScroll() {
     const handleAnchorClick = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
       const anchor = target.closest('a');
-      if (anchor && anchor.hash && anchor.hash.length > 1 && anchor.hash.startsWith('#')) {
+      if (anchor && anchor.origin === window.location.origin && anchor.pathname === window.location.pathname && anchor.hash && anchor.hash.length > 1 && anchor.hash.startsWith('#')) {
         try {
           const element = document.querySelector(anchor.hash);
           if (element) {
             e.preventDefault();
-            lenis.scrollTo(element as HTMLElement);
+            lenis.scrollTo(element as HTMLElement, { offset: -100 });
+            if (anchor.classList.contains('ax-skip')) (element as HTMLElement).focus({ preventScroll: true });
           }
         } catch {
           // Ignore invalid selector queries safely
@@ -93,3 +95,4 @@ export default function SmoothScroll() {
 
   return null;
 }
+

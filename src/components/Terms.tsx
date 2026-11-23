@@ -33,7 +33,7 @@ export const Terms = () => {
           className="pointer-events-none absolute top-12 left-1/2 -translate-x-1/2 h-72 w-[42rem] max-w-[95vw] rounded-full bg-[#3ECF8E]/[0.03] blur-3xl"
         />
 
-        <div className="relative z-10 max-w-[1200px] mx-auto px-6">
+        <div className="relative z-10 max-w-[1200px] mx-auto px-5 sm:px-6">
           {/* Breadcrumb Navigation */}
           <nav aria-label="Breadcrumb" className="mb-6 flex items-center gap-2 text-xs font-mono text-text-3">
             <Link to="/" className="text-text-2 hover:text-[#3ECF8E] transition-colors focus-ring rounded-sm">
@@ -57,7 +57,7 @@ export const Terms = () => {
 
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
               <div>
-                <h1 className="text-3xl sm:text-5xl font-bold font-heading text-text-1 tracking-tight">
+                <h1 className="page-title">
                   Terms & <span className="text-accent text-glow-accent">Conditions</span>
                 </h1>
                 <p className="text-sm text-text-3 mt-2 tracking-tight">

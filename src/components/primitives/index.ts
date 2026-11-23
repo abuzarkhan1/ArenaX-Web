@@ -27,3 +27,9 @@ export type { ContainerProps } from './Container';
 
 export { Section } from './Section';
 export type { SectionProps } from './Section';
+
+export { SectionHeader } from './SectionHeader';
+export type { SectionHeaderProps } from './SectionHeader';
+
+export { Reveal } from './Reveal';
+export type { RevealProps } from './Reveal';

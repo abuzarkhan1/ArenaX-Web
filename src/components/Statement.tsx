@@ -66,7 +66,7 @@ export const Statement = () => {
     <section
       ref={statementRef}
       id="statement"
-      className="relative z-20 py-[clamp(80px,10vw,140px)] bg-bg-1 border-b border-line overflow-hidden"
+      className="relative z-20 py-[clamp(64px,8vw,112px)] bg-bg-1 border-b border-line overflow-hidden"
       aria-label="ArenaX Platform Statement"
     >
       {/* Top Hairline Gradient Divider */}
@@ -77,14 +77,14 @@ export const Statement = () => {
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] bg-accent/[0.025] rounded-full blur-[160px]" />
       </div>
 
-      <div className="max-w-[1200px] mx-auto px-6 w-full">
+      <div className="max-w-[1200px] mx-auto px-5 sm:px-6 w-full">
         {/* 4 Numbered Editorial Rows */}
         <div className="space-y-0 divide-y divide-line">
           {STATEMENTS.map((item, index) => (
             <div
               key={item.num}
               data-statement-row={index}
-              className="group relative py-12 sm:py-16 md:py-20 px-4 sm:px-8 -mx-4 sm:-mx-8 rounded-xl transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:bg-[#171717]/40 flex items-baseline gap-6 sm:gap-10 md:gap-14"
+              className="group relative py-9 sm:py-14 md:py-18 px-3 sm:px-8 -mx-3 sm:-mx-8 transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:bg-[#171717]/40 flex items-baseline gap-4 sm:gap-10 md:gap-14"
             >
               {/* Dynamic Emerald Hairline Top Accent on Hover */}
               <span
@@ -93,12 +93,12 @@ export const Statement = () => {
               />
 
               {/* Mono Index Number with Supabase Accent and Micro-Nudge */}
-              <span className="font-mono text-sm sm:text-base md:text-lg lg:text-xl font-bold text-accent tracking-[0.14em] tabular-nums select-none flex-shrink-0 pt-1.5 sm:pt-2 md:pt-3 transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-1 group-hover:text-[#4CD99B]">
+              <span className="font-mono text-xs sm:text-base md:text-lg lg:text-xl font-bold text-accent tracking-[0.14em] tabular-nums select-none flex-shrink-0 pt-1.5 sm:pt-2 md:pt-3 transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-1 group-hover:text-[#4CD99B]">
                 /{item.num}
               </span>
 
               {/* High-Contrast Scrubbed Statement Words in Manrope Display Hierarchy */}
-              <p className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-text-1 font-heading tracking-tight sm:tracking-[-0.03em] leading-[1.06] max-w-5xl">
+              <p className="text-[1.75rem] leading-[1.08] sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-text-1 font-heading tracking-tight sm:tracking-[-0.03em] max-w-5xl">
                 {item.line.split(' ').map((word, wIdx) => (
                   <span
                     key={wIdx}

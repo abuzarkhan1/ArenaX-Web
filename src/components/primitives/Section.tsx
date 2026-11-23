@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+﻿import React, { forwardRef } from 'react';
 
 export interface SectionProps extends React.HTMLAttributes<HTMLElement> {
   as?: React.ElementType;
@@ -27,7 +27,7 @@ export const Section = forwardRef<HTMLElement, SectionProps>(
     return (
       <Component
         ref={ref}
-        className={`relative py-[clamp(80px,10vw,140px)] ${bgClass} ${borderTopClass} ${borderBottomClass} ${className}`.trim()}
+        className={`relative py-[clamp(64px,8vw,112px)] ${bgClass} ${borderTopClass} ${borderBottomClass} ${className}`.trim()}
         {...props}
       >
         {children}

@@ -11,23 +11,19 @@ export interface IconOrbProps extends React.HTMLAttributes<HTMLDivElement> {
 
 const TONE_STYLES: Record<IconOrbTone, string> = {
   emerald:
-    'bg-emerald-500/10 border-emerald-500/20 text-emerald-400 shadow-[0_0_24px_-6px_rgba(62,207,142,0.45)]',
+    'text-[#3ECF8E] bg-[#3ECF8E]/[0.08] border-[#3ECF8E]/25 shadow-[0_0_20px_-6px_rgba(62,207,142,0.4),inset_0_1px_0_rgba(255,255,255,0.06)]',
   neutral:
-    'bg-white/[0.04] border-white/[0.08] text-text-2 shadow-[0_0_24px_-10px_rgba(255,255,255,0.20)]',
+    'text-[#A0A0A0] bg-white/[0.04] border-white/[0.1] shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]',
   danger:
-    'bg-red-500/10 border-red-500/20 text-red-400 shadow-[0_0_24px_-6px_rgba(239,68,68,0.40)]',
+    'text-red-400 bg-red-500/[0.08] border-red-500/25 shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]',
 };
 
 const SIZE_STYLES: Record<IconOrbSize, { box: string; icon: string }> = {
-  sm: { box: 'p-2 rounded-lg', icon: 'w-4 h-4' },
-  md: { box: 'p-2.5 rounded-xl', icon: 'w-5 h-5' },
-  lg: { box: 'p-3 rounded-xl', icon: 'w-6 h-6' },
+  sm: { box: 'h-9 w-9 rounded-[10px]', icon: 'w-4 h-4' },
+  md: { box: 'h-11 w-11 rounded-xl', icon: 'w-5 h-5' },
+  lg: { box: 'h-[52px] w-[52px] rounded-2xl', icon: 'w-6 h-6' },
 };
 
-/**
- * A tactile lucide icon container with a hairline border, emerald backlight
- * and a consistent 1.5 stroke weight. Keeps iconography uniform across sections.
- */
 export const IconOrb = forwardRef<HTMLDivElement, IconOrbProps>(
   ({ icon: Icon, tone = 'emerald', size = 'md', className = '', ...props }, ref) => {
     const sizing = SIZE_STYLES[size];
@@ -42,9 +38,9 @@ export const IconOrb = forwardRef<HTMLDivElement, IconOrbProps>(
       >
         <span
           aria-hidden="true"
-          className={`pointer-events-none absolute inset-0 rounded-[inherit] opacity-60 blur-md ${glowClass}`}
+          className={`pointer-events-none absolute inset-0 rounded-[inherit] blur-md ${glowClass}`}
         />
-        <Icon className={`relative z-10 ${sizing.icon}`} strokeWidth={1.5} />
+        <Icon className={`relative ${sizing.icon}`} strokeWidth={1.6} />
       </div>
     );
   }

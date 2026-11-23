@@ -1,12 +1,11 @@
-import { useEffect } from 'react';
+﻿import { useEffect } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import SmoothScroll from './components/SmoothScroll';
 import Hero from './components/Hero';
-import Statement from './components/Statement';
+import ArenaFilm from './components/ArenaFilm';
 import AppExperienceShowcase from './components/AppExperienceShowcase';
 import TournamentModes from './components/TournamentModes';
-import AIVisionShowcase from './components/AIVisionShowcase';
 import WalletSection from './components/WalletSection';
 import LeaderboardTiers from './components/LeaderboardTiers';
 import OrganizerProgram from './components/OrganizerProgram';
@@ -30,44 +29,28 @@ const HomePage = () => {
   return (
     <>
       <SEO
-        title="ArenaX - Pakistan's Premier Free Fire Tournament Platform"
-        description="Join Pakistan's premier Free Fire esports platform. Daily Bermuda BR & 4v4 Clash Squad scrims, automated AI scoreboard verification, and 24-hour payouts."
+        title="ArenaX | Free Fire Tournaments in Pakistan"
+        description="Explore Free Fire competition with ArenaX. Discover Bermuda Battle Royale and Clash Squad formats, understand the match journey, and download the Android app."
         canonical="https://marenax.site/"
       />
-      {/* SECTION 01: Hero */}
       <Hero />
 
-      {/* SECTION 02: Full-Bleed Editorial Statement (Replaces TrustBar) */}
-      <Statement />
-
-      {/* SECTION 03: App Experience (Signature Scene 1: 3D Phone) */}
+      <TournamentModes />
+      <ArenaFilm />
       <AppExperienceShowcase />
 
-      {/* SECTION 04: Tournament Modes (Bermuda & Clash Squad) */}
-      <TournamentModes />
-
-      {/* SECTION 05: Vision Engine (Signature Scene 2: Scoreboard in Perspective) */}
-      <AIVisionShowcase />
-
-      {/* SECTION 06: Two-Vault Wallet Flow */}
-      <WalletSection />
-
-      {/* SECTION 07: Competitive Ranks (Mounted LeaderboardTiers) */}
       <LeaderboardTiers />
 
-      {/* SECTION 08: Organizer Program */}
-      <OrganizerProgram />
+      <WalletSection />
 
-      {/* SECTION 09: How It Works Vertical Timeline */}
       <HowItWorks />
 
-      {/* SECTION 10: Platform Comparison */}
+      <OrganizerProgram />
+
       <PlatformComparison />
 
-      {/* SECTION 11: Scout Program & In-App Rewards Store */}
       <ScoutRewards />
 
-      {/* SECTION 12: Download Client (Giant ARENAX Echo + QR + Steps) */}
       <Download />
     </>
   );
@@ -85,8 +68,9 @@ export default function App() {
   return (
     <div className="min-h-screen bg-bg-1 text-text-1">
       <SmoothScroll />
+      <a className="ax-skip" href="#main-content">Skip to content</a>
       <Navbar />
-      <main>
+      <main id="main-content" tabIndex={-1} className={location.pathname !== '/' ? 'ax-support-page' : undefined}>
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/about" element={<About />} />
@@ -96,7 +80,6 @@ export default function App() {
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/refund-policy" element={<RefundPolicy />} />
           <Route path="/fair-play" element={<FairPlay />} />
-          <Route path="*" element={<HomePage />} />
         </Routes>
       </main>
       <Footer />
@@ -104,3 +87,7 @@ export default function App() {
     </div>
   );
 }
+
+
+
+

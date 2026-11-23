@@ -32,11 +32,13 @@ describe('Tier 3: Cross-Feature Interactions Suite', () => {
       const footerSrc = readSrcFile('components/Footer.tsx');
       const appSrc = readSrcFile('App.tsx');
 
-      // Extract all <Link to="..."> targets from Footer
+      // Extract all <Link to="..."> targets and link-table entries from Footer
       const linkMatches = [...footerSrc.matchAll(/<Link\s+to=["']([^"']+)["']/g)].map((m) => m[1]);
-      assert.ok(linkMatches.length >= 7, 'Footer must contain at least 7 internal links');
+      const tableMatches = [...footerSrc.matchAll(/to:\s*['"]([^'"]+)['"]/g)].map((m) => m[1]);
+      const allLinks = [...new Set([...linkMatches, ...tableMatches])];
+      assert.ok(allLinks.length >= 7, 'Footer must contain at least 7 internal links');
 
-      for (const target of linkMatches) {
+      for (const target of allLinks) {
         assert.ok(
           EXPECTED_APP_ROUTES.includes(target as typeof EXPECTED_APP_ROUTES[number]),
           `Footer link "${target}" must be in EXPECTED_APP_ROUTES`

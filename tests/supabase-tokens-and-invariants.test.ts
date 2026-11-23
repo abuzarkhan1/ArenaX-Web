@@ -125,11 +125,15 @@ describe('Supabase Design Tokens & Requirement Invariants Suite', () => {
       assert.ok(tailwindSrc.includes('Inter'), 'tailwind.config.js must configure Inter sans font');
       assert.ok(tailwindSrc.includes('Source Code Pro'), 'tailwind.config.js must configure Source Code Pro mono font');
 
-      // Preconnect & Google Fonts link in index.html
-      assert.ok(indexHtml.includes('fonts.googleapis.com'), 'index.html must include font preconnect/stylesheet');
-      assert.ok(indexHtml.includes('Manrope'), 'index.html must load Manrope font');
-      assert.ok(indexHtml.includes('Inter'), 'index.html must load Inter font');
-      assert.ok(indexHtml.includes('Source+Code+Pro'), 'index.html must load Source Code Pro font');
+      // Self-hosted font loading through @fontsource (no third-party font requests)
+      const mainSrc = readProjectFile('src/main.tsx');
+      assert.ok(mainSrc.includes('@fontsource/manrope'), 'main.tsx must self-host Manrope');
+      assert.ok(mainSrc.includes('@fontsource/inter'), 'main.tsx must self-host Inter');
+      assert.ok(mainSrc.includes('@fontsource/source-code-pro'), 'main.tsx must self-host Source Code Pro');
+      assert.ok(
+        !indexHtml.includes('fonts.googleapis.com'),
+        'index.html must not block rendering on third-party font requests'
+      );
     });
 
     it('verifies UI Primitives strictly conform to Supabase styling contracts', () => {

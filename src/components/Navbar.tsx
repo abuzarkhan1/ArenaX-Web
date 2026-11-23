@@ -1,51 +1,187 @@
-import { useState, useEffect } from 'react';
+﻿import { useState, useEffect, useCallback, useId, useRef, type RefObject } from 'react';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
-import { Menu, X, DownloadCloud } from 'lucide-react';
+import { ChevronRight, DownloadCloud } from 'lucide-react';
+import { AnimatePresence, MotionConfig, motion, useMotionValue, useMotionValueEvent } from 'motion/react';
 import { Button } from './primitives/Button';
 import { trackDownload, trackButtonClick } from '../utils/analytics';
+import { cn } from '../lib/utils';
+
+interface NavItem {
+  id: string;
+  label: string;
+  isSection?: boolean;
+  path?: string;
+}
+
+const NAV_ITEMS: NavItem[] = [
+  { id: 'tournaments', label: 'Tournaments', isSection: true },
+  { id: 'organizers', label: 'Organizers', isSection: true },
+  { id: 'how-it-works', label: 'How It Works', isSection: true },
+  { id: 'faq', label: 'FAQs', path: '/faq' },
+];
+
+// Scroll-spy anchor set, kept in sync with the sections rendered on the home page.
+const sections = ['tournaments', 'organizers', 'how-it-works'];
+
+// Prestige UI "navbar-condense" hysteresis: condense past 40px, expand again
+// only near the very top so a pointer resting on the threshold never flickers.
+const CONDENSE_AT = 40;
+const EXPAND_AT = 8;
+
+const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
+
+const ring =
+  'outline-none focus-visible:ring-2 focus-visible:ring-[#3ECF8E]/50 focus-visible:ring-offset-1 focus-visible:ring-offset-[#121212]';
+
+const surface =
+  'border border-white/[0.08] bg-[#161616] shadow-[0_1px_2px_rgba(0,0,0,0.4),0_24px_64px_-24px_rgba(0,0,0,0.95)] backdrop-blur-xl';
+
+function useScrollY(ref: RefObject<HTMLElement | null>) {
+  const y = useMotionValue(0);
+
+  useEffect(() => {
+    let source: HTMLElement | Window = window;
+    let el = ref.current?.parentElement ?? null;
+    while (el && el !== document.body) {
+      if (/(auto|scroll|overlay)/.test(getComputedStyle(el).overflowY)) {
+        source = el;
+        break;
+      }
+      el = el.parentElement;
+    }
+
+    const read = () => {
+      const top = source === window ? window.scrollY : (source as HTMLElement).scrollTop;
+      y.set(Math.max(0, top));
+    };
+    read();
+    source.addEventListener('scroll', read, { passive: true });
+    return () => source.removeEventListener('scroll', read);
+  }, [ref, y]);
+
+  return y;
+}
+
+function useDismiss(
+  open: boolean,
+  close: () => void,
+  refs: RefObject<HTMLElement | null>[],
+  trigger?: RefObject<HTMLElement | null>
+) {
+  const closeRef = useRef(close);
+  useEffect(() => {
+    closeRef.current = close;
+  });
+
+  useEffect(() => {
+    if (!open) return;
+    const onPointer = (event: PointerEvent) => {
+      const target = event.target as Node;
+      if (refs.some((ref) => ref.current?.contains(target))) return;
+      closeRef.current();
+    };
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key !== 'Escape') return;
+      closeRef.current();
+      trigger?.current?.focus();
+    };
+    document.addEventListener('pointerdown', onPointer);
+    document.addEventListener('keydown', onKey);
+    return () => {
+      document.removeEventListener('pointerdown', onPointer);
+      document.removeEventListener('keydown', onKey);
+    };
+    // refs are stable ref objects
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open]);
+}
+
+function MenuGlyph({ open }: { open: boolean }) {
+  return (
+    <span aria-hidden="true" className="relative block h-3 w-4">
+      <span
+        className={cn(
+          'absolute left-0 top-[5px] h-[1.5px] w-4 rounded-full bg-current transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]',
+          open ? 'rotate-45' : '-translate-y-[3px]'
+        )}
+      />
+      <span
+        className={cn(
+          'absolute left-0 top-[5px] h-[1.5px] w-4 rounded-full bg-current transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]',
+          open ? '-rotate-45' : 'translate-y-[3px]'
+        )}
+      />
+    </span>
+  );
+}
 
 export const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
-  const [activeSection, setActiveSection] = useState('home');
+  const [activeSection, setActiveSection] = useState('');
+  const [condensed, setCondensed] = useState(false);
+  const headerRef = useRef<HTMLElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
+  const toggleRef = useRef<HTMLButtonElement>(null);
+  const panelId = useId();
+  const y = useScrollY(headerRef);
   const navigate = useNavigate();
   const location = useLocation();
 
   const isHomePage = location.pathname === '/';
 
-  // Track scroll progress for the top emerald indicator
+  useMotionValueEvent(y, 'change', (value) => {
+    if (!condensed && value > CONDENSE_AT) setCondensed(true);
+    else if (condensed && value < EXPAND_AT) setCondensed(false);
+  });
+
+  useDismiss(mobileMenuOpen, () => setMobileMenuOpen(false), [panelRef, toggleRef], toggleRef);
+
+  // Keep the capsule honest on reloads that begin mid-page.
+  useEffect(() => {
+    setCondensed(window.scrollY > CONDENSE_AT);
+  }, []);
+
+  // Reading progress + honest in-view section detection.
   useEffect(() => {
     const handleScroll = () => {
-      const winScroll = document.documentElement.scrollTop;
-      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-      const scrolled = height > 0 ? Math.min(100, Math.max(0, (winScroll / height) * 100)) : 0;
-      setScrollProgress(scrolled);
+      const doc = document.documentElement;
+      const winScroll = doc.scrollTop;
+      const height = doc.scrollHeight - doc.clientHeight;
+      setScrollProgress(height > 0 ? Math.min(100, Math.max(0, (winScroll / height) * 100)) : 0);
 
-      // Simple active section detection on home page
-      if (isHomePage) {
-        if (window.scrollY < 160) {
-          setActiveSection('home');
-          return;
-        }
-        const sections = ['tournaments', 'ai-vision', 'wallet', 'ranks', 'organizers', 'how-it-works'];
-        for (const sec of sections) {
-          const el = document.getElementById(sec);
-          if (el) {
-            const rect = el.getBoundingClientRect();
-            if (rect.top <= 140 && rect.bottom >= 140) {
-              setActiveSection(sec);
-              break;
-            }
+      if (!isHomePage) {
+        setActiveSection('');
+        return;
+      }
+
+      // Mark a nav item active only while its section actually crosses the header line.
+      const probe = 132;
+      let current = '';
+      for (const sec of sections) {
+        const el = document.getElementById(sec);
+        if (el) {
+          const rect = el.getBoundingClientRect();
+          if (rect.top <= probe && rect.bottom > probe) {
+            current = sec;
+            break;
           }
         }
       }
+      setActiveSection(current);
     };
 
+    handleScroll();
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, [isHomePage]);
 
-  // Synchronize document body overflow with mobile menu open state
+  // Close the sheet whenever the route changes.
+  useEffect(() => {
+    setMobileMenuOpen(false);
+  }, [location.pathname]);
+
+  // Dedicated overflow synchronisation: the sheet and the document never diverge.
   useEffect(() => {
     if (mobileMenuOpen) {
       document.body.style.overflow = 'hidden';
@@ -57,37 +193,41 @@ export const Navbar = () => {
     };
   }, [mobileMenuOpen]);
 
-  const navItems = [
-    { id: 'tournaments', label: 'Tournaments', isSection: true },
-    { id: 'ai-vision', label: 'Vision Engine', isSection: true },
-    { id: 'wallet', label: 'Wallet', isSection: true },
-    { id: 'ranks', label: 'Ranks', isSection: true },
-    { id: 'organizers', label: 'Organizers', isSection: true },
-    { id: 'how-it-works', label: 'How It Works', isSection: true },
-    { id: 'faq', label: 'FAQs', path: '/faq' },
-  ];
+  // Crossing into the desktop layout retires the sheet instead of trapping scroll.
+  useEffect(() => {
+    if (!mobileMenuOpen) return;
+    const mq = window.matchMedia('(min-width: 1024px)');
+    const onChange = () => {
+      if (mq.matches) setMobileMenuOpen(false);
+    };
+    mq.addEventListener('change', onChange);
+    return () => mq.removeEventListener('change', onChange);
+  }, [mobileMenuOpen]);
 
-  const handleNavClick = (item: { id: string; label: string; isSection?: boolean; path?: string }) => {
-    setMobileMenuOpen(false);
-    document.body.style.overflow = '';
+  const handleNavClick = useCallback(
+    (item: NavItem) => {
+      setMobileMenuOpen(false);
+      document.body.style.overflow = '';
 
-    if (item.path) {
-      navigate(item.path);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      return;
-    }
+      if (item.path) {
+        navigate(item.path);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        return;
+      }
 
-    if (item.isSection) {
+      if (!item.isSection) return;
+
       if (!isHomePage) {
         navigate('/');
         setTimeout(() => {
           document.getElementById(item.id)?.scrollIntoView({ behavior: 'smooth' });
-        }, 120);
+        }, 160);
       } else {
         document.getElementById(item.id)?.scrollIntoView({ behavior: 'smooth' });
       }
-    }
-  };
+    },
+    [isHomePage, navigate]
+  );
 
   const handleDownloadClick = () => {
     trackButtonClick('download_app', 'navbar');
@@ -98,160 +238,233 @@ export const Navbar = () => {
       navigate('/');
       setTimeout(() => {
         document.getElementById('download')?.scrollIntoView({ behavior: 'smooth' });
-      }, 120);
+      }, 160);
     } else {
       document.getElementById('download')?.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
-  const toggleMobileMenu = () => {
-    setMobileMenuOpen(!mobileMenuOpen);
-  };
+  const isItemActive = (item: NavItem) =>
+    item.path ? location.pathname === item.path : isHomePage && activeSection === item.id;
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-[#0B0E0D]/85 backdrop-blur-md border-b border-white/[0.08] transition-all duration-300">
-      <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
-        <div className="flex items-center justify-between h-16">
-          {/* Logo */}
-          <Link
-            to="/"
-            onClick={() => {
-              window.scrollTo({ top: 0, behavior: 'smooth' });
-              setActiveSection('home');
-            }}
-            className="flex items-center gap-2.5 sm:gap-3 group cursor-pointer"
+    <MotionConfig reducedMotion="user">
+      <header ref={headerRef} className="fixed inset-x-0 top-0 z-50 w-full">
+        <div className="mx-auto w-full max-w-[1200px] px-5 sm:px-6">
+          <div
+            className={cn(
+              'relative mx-auto flex h-16 items-center justify-between gap-4 border transition-[max-width,transform,padding,border-radius,background-color,border-color,box-shadow] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] motion-reduce:transition-none',
+              condensed || mobileMenuOpen
+                ? 'translate-y-3 max-w-[960px] rounded-2xl border-white/[0.08] bg-[#121212]/80 pl-4 pr-2 shadow-[0_1px_2px_rgba(0,0,0,0.45),0_18px_48px_-16px_rgba(0,0,0,0.85)] backdrop-blur-xl'
+                : 'translate-y-1 max-w-[1200px] rounded-none border-transparent bg-transparent px-1 shadow-none'
+            )}
           >
-            <div className="w-8 h-8 rounded-md overflow-hidden border border-white/[0.08] bg-[#171717] flex items-center justify-center transition-all duration-300 group-hover:scale-105 group-hover:border-[#3ECF8E]/40 group-hover:bg-[#1E201F] shadow-[0_0_16px_-6px_rgba(62,207,142,0.4)]">
-              <img src="/logo.webp" alt="ArenaX Logo" width={32} height={32} className="w-full h-full object-cover" />
-            </div>
-            <span className="text-lg sm:text-xl font-semibold text-[#EDEDED] font-heading tracking-tight group-hover:text-white transition-colors">
-              Arena<span className="text-[#3ECF8E]">X</span>
-            </span>
-          </Link>
-
-          {/* Desktop Nav Links */}
-          <div className="hidden lg:flex items-center gap-1">
-            {navItems.map((item) => {
-              const isActive =
-                item.path && location.pathname === item.path
-                  ? true
-                  : isHomePage && item.isSection && activeSection === item.id;
-
-              return (
-                <button
-                  key={item.id}
-                  onClick={() => handleNavClick(item)}
-                  data-active={isActive}
-                  className={`px-3 py-1.5 text-sm font-medium tracking-normal rounded-md transition-all duration-150 cursor-pointer ${
-                    isActive
-                      ? 'text-[#3ECF8E] font-medium bg-[#3ECF8E]/10 border border-[#3ECF8E]/20 shadow-[0_0_12px_-4px_rgba(62,207,142,0.3)]'
-                      : 'text-[#A0A0A0] hover:text-[#EDEDED] hover:bg-white/[0.04] border border-transparent'
-                  }`}
-                >
-                  {item.label}
-                </button>
-              );
-            })}
-          </div>
-
-          {/* Right Action: Download App Button */}
-          <div className="flex items-center gap-2.5 sm:gap-3">
-            <Button
-              variant="primary"
-              size="sm"
-              onClick={handleDownloadClick}
-              icon={<DownloadCloud className="w-3.5 h-3.5" strokeWidth={1.5} />}
-              className="hidden sm:inline-flex"
+            {/* Brand lockup */}
+            <Link
+              to="/"
+              aria-label="ArenaX home"
+              onClick={() => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                setActiveSection('home');
+              }}
+              className={cn('inline-flex shrink-0 items-center gap-2.5 rounded-lg', ring)}
             >
-              Download App
-            </Button>
+              <span className="relative grid h-9 w-9 place-items-center overflow-hidden rounded-[10px] border border-white/[0.1] bg-[#141715] shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_8px_20px_-12px_rgba(62,207,142,0.6)]">
+                <img
+                  src="/logo.webp"
+                  alt=""
+                  width={30}
+                  height={30}
+                  className="h-[30px] w-[30px] object-contain"
+                />
+              </span>
+              <span className="font-heading text-[1.06rem] font-bold tracking-[-0.02em] text-[#EDEDED]">
+                Arena<span className="text-[#3ECF8E]">X</span>
+              </span>
+            </Link>
 
-            {/* Mobile Menu Hamburger */}
-            <button
-              onClick={toggleMobileMenu}
-              className="lg:hidden w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center bg-[#171717] hover:bg-[#1E201F] rounded-md border border-white/[0.08] hover:border-[#3ECF8E]/40 text-[#EDEDED] cursor-pointer transition-[background-color,border-color,transform] duration-200 active:scale-[0.97]"
-              aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
-              aria-expanded={mobileMenuOpen}
-            >
-              {mobileMenuOpen ? <X size={18} strokeWidth={1.75} /> : <Menu size={18} strokeWidth={1.75} />}
-            </button>
-          </div>
-        </div>
-      </div>
+            {/* Desktop navigation â€” quiet text rail that rides the condense */}
+            <nav aria-label="Primary" className="hidden lg:flex items-center gap-0.5">
+              {NAV_ITEMS.map((item) => {
+                const active = isItemActive(item);
+                return (
+                  <button
+                    key={item.id}
+                    type="button"
+                    onClick={() => handleNavClick(item)}
+                    aria-current={active ? 'page' : undefined}
+                    className={cn(
+                      'whitespace-nowrap rounded-lg px-3 py-1.5 text-[13px] font-medium transition-colors duration-200',
+                      active
+                        ? 'text-[#EDEDED]'
+                        : 'text-[#A0A0A0] hover:bg-white/[0.05] hover:text-[#EDEDED]',
+                      ring
+                    )}
+                  >
+                    {item.label}
+                  </button>
+                );
+              })}
+            </nav>
 
-      {/* Supabase Brand Green Scroll Progress Line */}
-      <div className="w-full bg-white/[0.04] h-[2px]">
-        <div
-          className="bg-gradient-to-r from-[#249361] to-[#3ECF8E] h-[2px] shadow-[0_0_8px_rgba(62,207,142,0.45)] transition-all duration-150 ease-out"
-          style={{ width: `${scrollProgress}%` }}
-        />
-      </div>
-
-      {/* Mobile Drawer */}
-      {mobileMenuOpen && (
-        <div className="lg:hidden bg-[#171717]/98 backdrop-blur-2xl border-t border-white/[0.08] shadow-[0_20px_40px_rgba(0,0,0,0.8)] max-h-[calc(100dvh-4.5rem)] overflow-y-auto overscroll-contain">
-          <div className="px-5 py-5 space-y-2 max-w-md mx-auto">
-            {navItems.map((item) => {
-              const isActive =
-                item.path && location.pathname === item.path
-                  ? true
-                  : isHomePage && item.isSection && activeSection === item.id;
-
-              return (
-                <button
-                  key={item.id}
-                  onClick={() => handleNavClick(item)}
-                  className={`block w-full min-h-[44px] text-left px-4 py-2.5 rounded-md text-sm font-medium transition-all cursor-pointer border-l-2 ${
-                    isActive
-                      ? 'text-[#3ECF8E] bg-[#3ECF8E]/10 border-[#3ECF8E] font-medium'
-                      : 'text-[#A0A0A0] hover:text-[#EDEDED] hover:bg-[#1E201F] border-transparent'
-                  }`}
-                >
-                  {item.label}
-                </button>
-              );
-            })}
-
-            <div className="pt-3 border-t border-white/[0.08] flex flex-wrap gap-2">
-              <Link
-                to="/about"
-                onClick={() => setMobileMenuOpen(false)}
-                className="px-3 py-1.5 rounded-md bg-[#121212] border border-white/[0.08] text-xs font-medium text-[#A0A0A0] hover:text-[#EDEDED] hover:border-[#3ECF8E]/40 transition-colors active:scale-[0.97]"
-              >
-                About
-              </Link>
-              <Link
-                to="/contact"
-                onClick={() => setMobileMenuOpen(false)}
-                className="px-3 py-1.5 rounded-md bg-[#121212] border border-white/[0.08] text-xs font-medium text-[#A0A0A0] hover:text-[#EDEDED] hover:border-[#3ECF8E]/40 transition-colors active:scale-[0.97]"
-              >
-                Contact
-              </Link>
-              <Link
-                to="/terms"
-                onClick={() => setMobileMenuOpen(false)}
-                className="px-3 py-1.5 rounded-md bg-[#121212] border border-white/[0.08] text-xs font-medium text-[#A0A0A0] hover:text-[#EDEDED] hover:border-[#3ECF8E]/40 transition-colors active:scale-[0.97]"
-              >
-                Terms
-              </Link>
-            </div>
-
-            <div className="pt-3">
+            {/* Actions */}
+            <div className="flex flex-shrink-0 items-center gap-1.5">
               <Button
                 variant="primary"
-                fullWidth
-                size="md"
+                size="sm"
                 onClick={handleDownloadClick}
-                icon={<DownloadCloud className="w-4 h-4" strokeWidth={1.5} />}
+                icon={<DownloadCloud className="h-4 w-4" strokeWidth={1.75} />}
+                iconPosition="left"
+                className="hidden sm:inline-flex"
               >
                 Download App
               </Button>
+
+              <button
+                type="button"
+                onClick={handleDownloadClick}
+                aria-label="Download the ArenaX app"
+                className={cn(
+                  'grid h-10 w-10 place-items-center rounded-lg text-[#3ECF8E] transition-colors duration-200 hover:bg-white/[0.06] sm:hidden',
+                  ring
+                )}
+              >
+                <DownloadCloud className="h-[18px] w-[18px]" strokeWidth={1.75} />
+              </button>
+
+              <button
+                ref={toggleRef}
+                type="button"
+                onClick={() => setMobileMenuOpen((open) => !open)}
+                aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
+                aria-expanded={mobileMenuOpen}
+                aria-controls={panelId}
+                className={cn(
+                  'grid h-10 w-10 cursor-pointer place-items-center rounded-lg text-[#EDEDED] transition-colors duration-200 hover:bg-white/[0.06] lg:hidden',
+                  ring
+                )}
+              >
+                <MenuGlyph open={mobileMenuOpen} />
+              </button>
             </div>
+
+            {/* Reading progress â€” a hairline that only appears as you travel */}
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-x-5 bottom-0 h-[2px] overflow-hidden rounded-full"
+            >
+              <div
+                className="h-full rounded-full bg-gradient-to-r from-[#249361] to-[#3ECF8E] transition-[width] duration-150 ease-out"
+                style={{ width: `${scrollProgress}%` }}
+              />
+            </div>
+
+            {/* Floating mobile panel â€” the condensed bar reveals a frosted sheet */}
+            <AnimatePresence>
+              {mobileMenuOpen ? (
+                <motion.div
+                  ref={panelRef}
+                  id={panelId}
+                  initial={{ opacity: 0, y: -6 }}
+                  animate={{ opacity: 1, y: 0, transition: { duration: 0.28, ease: EASE } }}
+                  exit={{ opacity: 0, y: -4, transition: { duration: 0.15, ease: 'easeOut' } }}
+                  className={cn(
+                    'absolute inset-x-0 top-full mt-2 max-h-[calc(100dvh-6.5rem)] overflow-y-auto overscroll-contain rounded-2xl p-2 lg:hidden',
+                    surface
+                  )}
+                >
+                  <nav aria-label="Mobile">
+                    {NAV_ITEMS.map((item, index) => {
+                      const active = isItemActive(item);
+                      return (
+                        <motion.button
+                          key={item.id}
+                          type="button"
+                          onClick={() => handleNavClick(item)}
+                          aria-current={active ? 'page' : undefined}
+                          initial={{ opacity: 0, y: -4 }}
+                          animate={{
+                            opacity: 1,
+                            y: 0,
+                            transition: { duration: 0.3, delay: 0.04 + index * 0.035, ease: EASE },
+                          }}
+                          className={cn(
+                            'flex min-h-[44px] w-full items-center justify-between gap-4 rounded-lg px-3 py-2 text-left text-[15px] font-medium transition-colors hover:bg-white/[0.05]',
+                            active ? 'text-[#EDEDED]' : 'text-[#A0A0A0]',
+                            ring
+                          )}
+                        >
+                          <span className="flex items-center gap-3">
+                            <span
+                              aria-hidden="true"
+                              className={cn(
+                                'h-1.5 w-1.5 rounded-full',
+                                active ? 'bg-[#3ECF8E] shadow-[0_0_8px_rgba(62,207,142,0.8)]' : 'bg-white/20'
+                              )}
+                            />
+                            {item.label}
+                          </span>
+                          <ChevronRight className="h-4 w-4 flex-shrink-0 text-[#707070]" strokeWidth={1.5} />
+                        </motion.button>
+                      );
+                    })}
+                  </nav>
+
+                  <div className="mt-2 flex flex-wrap items-center gap-1.5 border-t border-white/[0.08] px-1 pt-3">
+                    <Link
+                      to="/about"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className={cn(
+                        'inline-flex h-9 items-center rounded-full border border-white/[0.08] bg-white/[0.03] px-3.5 text-xs font-medium text-[#A0A0A0] transition-colors hover:border-[#3ECF8E]/35 hover:text-[#EDEDED]',
+                        ring
+                      )}
+                    >
+                      About
+                    </Link>
+                    <Link
+                      to="/contact"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className={cn(
+                        'inline-flex h-9 items-center rounded-full border border-white/[0.08] bg-white/[0.03] px-3.5 text-xs font-medium text-[#A0A0A0] transition-colors hover:border-[#3ECF8E]/35 hover:text-[#EDEDED]',
+                        ring
+                      )}
+                    >
+                      Contact
+                    </Link>
+                    <Link
+                      to="/terms"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className={cn(
+                        'inline-flex h-9 items-center rounded-full border border-white/[0.08] bg-white/[0.03] px-3.5 text-xs font-medium text-[#A0A0A0] transition-colors hover:border-[#3ECF8E]/35 hover:text-[#EDEDED]',
+                        ring
+                      )}
+                    >
+                      Terms
+                    </Link>
+                  </div>
+
+                  <div className="px-1 pb-1 pt-3">
+                    <Button
+                      variant="primary"
+                      fullWidth
+                      size="md"
+                      onClick={handleDownloadClick}
+                      icon={<DownloadCloud className="h-4 w-4" strokeWidth={1.75} />}
+                      iconPosition="left"
+                    >
+                      Download App
+                    </Button>
+                  </div>
+                </motion.div>
+              ) : null}
+            </AnimatePresence>
           </div>
         </div>
-      )}
-    </nav>
+      </header>
+    </MotionConfig>
   );
 };
 
 export default Navbar;
+
+

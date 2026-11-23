@@ -48,7 +48,6 @@ export const Contact = () => {
       )}`;
       window.location.href = mailtoUrl;
       setStatus('success');
-      setFormData({ name: '', email: '', subject: '', message: '' });
     }
   };
 
@@ -77,13 +76,14 @@ export const Contact = () => {
           className="pointer-events-none absolute left-1/2 top-16 h-72 w-[40rem] max-w-[90vw] -translate-x-1/2 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(62,207,142,0.06)_0%,transparent_70%)] blur-2xl"
         />
 
-        <div className="relative z-10 max-w-[1200px] mx-auto px-6">
+        <div className="relative z-10 max-w-[1200px] mx-auto px-5 sm:px-6">
           {/* Header */}
           <div className="mb-14 sm:mb-20 text-center max-w-3xl mx-auto">
-            <h1 className="text-4xl sm:text-6xl font-extrabold uppercase tracking-tight text-[#EDEDED] font-heading">
+            <span className="title-rule mx-auto mb-5" aria-hidden="true" />
+            <h1 className="page-title">
               Get in <span className="text-[#3ECF8E]">Touch</span>
             </h1>
-            <p className="text-base sm:text-lg text-[#A0A0A0] mt-3 leading-relaxed">
+            <p className="body-copy mt-4 text-balance">
               Have questions about a Free Fire tournament, need deposit assistance, or interested in organizing community scrims? We are here to help.
             </p>
           </div>
@@ -146,15 +146,15 @@ export const Contact = () => {
             <div className="lg:col-span-7 relative overflow-hidden rounded-2xl bg-[#171717] border border-white/[0.08] p-6 sm:p-8 shadow-[inset_0_1px_0_rgba(255,255,255,0.05),0_20px_48px_-20px_rgba(0,0,0,0.7)]">
               <h2 className="text-2xl font-bold font-heading text-[#EDEDED] mb-2">Send Direct Message</h2>
               <p className="text-sm text-[#A0A0A0] mb-6 leading-relaxed">
-                Fill out the form below. Your ticket connects directly to our tournament support desk.
+                {endpoint ? 'Send your question to the support team.' : 'Prepare an email to support. Review and send it from your email application.'}
               </p>
 
               {status === 'success' && (
                 <div className="mb-6 p-4 rounded-lg bg-[#041B10] border border-[#3ECF8E]/30 flex items-start gap-3 text-[#3ECF8E] text-sm shadow-[inset_0_1px_0_rgba(62,207,142,0.15)]">
                   <CheckCircle2 className="w-5 h-5 flex-shrink-0 mt-0.5" strokeWidth={1.5} />
                   <div>
-                    <span className="font-bold block">Message Prepared</span>
-                    <span className="text-[#A0A0A0]">Your inquiry has been queued or transferred to your email client. Our team will review promptly.</span>
+                    <span className="font-bold block">{endpoint ? 'Message submitted' : 'Email prepared'}</span>
+                    <span className="text-[#A0A0A0]">{endpoint ? 'The support endpoint accepted your message.' : 'Complete sending in your email application. If it did not open, your message remains below so you can copy it.'}</span>
                   </div>
                 </div>
               )}

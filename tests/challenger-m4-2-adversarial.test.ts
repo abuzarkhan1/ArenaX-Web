@@ -171,7 +171,9 @@ describe('Adversarial Challenger Suite M4-2: Tokens, Syntax Balance & Copy Parit
           '#EDEDED', // High-contrast primary text
           '#FFFFFF', // Pure white
           '#A0A0A0', // Secondary neutral text
+          '#9A9D9B', // Refined secondary neutral text
           '#707070', // Subtle tertiary/muted text
+          '#5E615F', // Deepest muted micro-label text
         ]);
 
         for (const hex of matches) {

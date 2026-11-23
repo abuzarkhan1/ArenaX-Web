@@ -20,7 +20,7 @@ describe('Adversarial Challenger Suite: Milestone 2 (Navbar, Hero & Statement)',
     it('verifies responsive layout bounds across 320px mobile, 768px tablet, and 1920px desktop', () => {
       // 1. Max width constraint and horizontal padding
       assert.ok(navbarSrc.includes('max-w-[1200px]'), 'Must restrict desktop header content to 1200px');
-      assert.ok(navbarSrc.includes('px-4 sm:px-6'), 'Must apply mobile 16px (px-4) scaling to 24px (px-6) padding');
+      assert.ok(navbarSrc.includes('px-5 sm:px-6'), 'Must apply a 20px → 24px responsive header gutter');
       assert.ok(navbarSrc.includes('h-16'), 'Must calibrate sticky header height to canonical 64px (h-16)');
 
       // 2. Desktop navigation hidden on mobile/tablet viewports (< 1024px)
@@ -39,8 +39,8 @@ describe('Adversarial Challenger Suite: Milestone 2 (Navbar, Hero & Statement)',
 
       // Hamburger button dimensions
       assert.ok(
-        navbarSrc.includes('w-9 h-9 sm:w-10 sm:h-10'),
-        'Hamburger button must provide adequate target bounds (36px mobile / 40px sm)'
+        navbarSrc.includes('h-10 w-10'),
+        'Hamburger button must provide a 40px finger target'
       );
     });
 
@@ -337,7 +337,7 @@ describe('Adversarial Challenger Suite: Milestone 2 (Navbar, Hero & Statement)',
       assert.ok(heroSrc.includes('<Stat value="1:1" label="Cash Parity (PKR)" />'));
       assert.ok(heroSrc.includes('<Stat value="100%" label="Automated Refund" />'));
       assert.ok(heroSrc.includes('bg-[#171717] border border-white/[0.08]'));
-      assert.ok(heroSrc.includes('grid grid-cols-1 sm:grid-cols-3'));
+      assert.ok(heroSrc.includes('grid grid-cols-3'), 'Telemetry ribbon must be a 3-up grid at every breakpoint');
     });
 
     it('verifies Stat primitive handles diverse and extreme numeric/string formats safely', () => {

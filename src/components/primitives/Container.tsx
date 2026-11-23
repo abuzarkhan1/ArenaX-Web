@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+﻿import React, { forwardRef } from 'react';
 
 export interface ContainerProps extends React.HTMLAttributes<HTMLDivElement> {
   as?: React.ElementType;
@@ -9,7 +9,7 @@ export const Container = forwardRef<HTMLDivElement, ContainerProps>(
     return (
       <Component
         ref={ref}
-        className={`max-w-[1200px] mx-auto px-6 w-full ${className}`.trim()}
+        className={`max-w-[1200px] mx-auto px-5 sm:px-6 w-full ${className}`.trim()}
         {...props}
       >
         {children}

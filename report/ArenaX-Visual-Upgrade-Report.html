@@ -1,0 +1,515 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>ArenaX — Visual Design Upgrade Report</title>
+<style>
+  :root {
+    --ink: #121614;
+    --ink-2: #3f4744;
+    --ink-3: #6b7470;
+    --line: #dfe5e1;
+    --emerald: #0f9d6a;
+    --emerald-dark: #0a6b49;
+    --bg-soft: #f5f8f6;
+    --carbon: #0b0d0c;
+  }
+
+  * { box-sizing: border-box; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+  @page { size: A4; margin: 15mm 14mm 14mm; }
+
+  html, body { margin: 0; padding: 0; }
+
+  body {
+    font-family: "Segoe UI", Inter, Arial, sans-serif;
+    color: var(--ink);
+    font-size: 9.6pt;
+    line-height: 1.55;
+    background: #fff;
+  }
+
+  h1, h2, h3, h4 { font-family: "Segoe UI Semibold", "Segoe UI", Manrope, Arial, sans-serif; letter-spacing: -0.02em; margin: 0; }
+
+  h2 { font-size: 17pt; line-height: 1.15; margin: 0 0 4mm; }
+  h2 .num { color: var(--emerald); font-family: "Consolas", monospace; font-size: 10pt; letter-spacing: 0.12em; display: block; margin-bottom: 2mm; }
+  h3 { font-size: 11.5pt; margin: 5mm 0 2mm; }
+  p { margin: 0 0 2.6mm; color: var(--ink-2); }
+  ul, ol { margin: 0 0 3mm; padding-left: 5mm; color: var(--ink-2); }
+  li { margin-bottom: 1.4mm; }
+  strong { color: var(--ink); }
+
+  .page { page-break-after: always; }
+  .page:last-child { page-break-after: auto; }
+
+  /* Cover */
+  .cover {
+    background: var(--carbon);
+    color: #e9edeb;
+    margin: -15mm -14mm 0;
+    padding: 26mm 20mm 16mm;
+    min-height: 282mm;
+    position: relative;
+    overflow: hidden;
+  }
+  .cover::before {
+    content: "";
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(60% 45% at 18% 10%, rgba(15,157,106,0.35), transparent 70%),
+      radial-gradient(55% 40% at 90% 80%, rgba(15,157,106,0.18), transparent 70%),
+      linear-gradient(180deg, #0b0d0c 0%, #0f1311 100%);
+  }
+  .cover > * { position: relative; }
+  .cover .brand { display: flex; align-items: center; gap: 4mm; }
+  .cover .brand img { width: 13mm; height: 13mm; border-radius: 3mm; border: 1px solid rgba(255,255,255,0.14); }
+  .cover .brand span { font-size: 15pt; font-weight: 700; letter-spacing: -0.02em; }
+  .cover .brand span b { color: #3ecf8e; font-weight: 800; }
+  .cover .eyebrow { margin-top: 38mm; font-family: Consolas, monospace; font-size: 8.5pt; letter-spacing: 0.28em; text-transform: uppercase; color: #3ecf8e; }
+  .cover h1 { font-size: 40pt; line-height: 1.02; margin-top: 5mm; max-width: 150mm; color: #fff; }
+  .cover h1 .thin { color: #9fb3aa; font-weight: 400; display: block; font-size: 24pt; margin-top: 4mm; letter-spacing: -0.01em; }
+  .cover .lede { margin-top: 10mm; max-width: 128mm; color: #b9c6c0; font-size: 10.5pt; line-height: 1.65; }
+  .cover .meta { position: absolute; left: 20mm; right: 20mm; bottom: 18mm; display: flex; justify-content: space-between; gap: 8mm; border-top: 1px solid rgba(255,255,255,0.12); padding-top: 6mm; font-size: 8.5pt; color: #93a29b; }
+  .cover .meta b { display: block; color: #dfe6e2; font-weight: 600; margin-bottom: 1mm; font-size: 9pt; }
+  .cover .ticks { position: absolute; right: 20mm; top: 26mm; font-family: Consolas, monospace; font-size: 8pt; letter-spacing: 0.2em; color: #4d5a54; text-align: right; line-height: 2; }
+
+  /* Stat strip */
+  .kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3mm; margin: 6mm 0 8mm; }
+  .kpi { border: 1px solid var(--line); border-radius: 3mm; padding: 4mm; background: var(--bg-soft); }
+  .kpi .v { font-size: 16pt; font-weight: 700; letter-spacing: -0.03em; color: var(--ink); }
+  .kpi .l { font-family: Consolas, monospace; font-size: 7.2pt; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); margin-top: 1.5mm; }
+
+  /* Tables */
+  table { width: 100%; border-collapse: collapse; margin: 3mm 0 5mm; font-size: 8.6pt; }
+  th, td { text-align: left; padding: 2.4mm 2.6mm; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { background: var(--bg-soft); font-family: Consolas, monospace; font-size: 7.4pt; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); font-weight: 600; }
+  td strong { font-weight: 600; }
+  tr:last-child td { border-bottom: none; }
+
+  /* Callouts */
+  .callout { border-left: 2.5px solid var(--emerald); background: var(--bg-soft); padding: 4mm 5mm; border-radius: 0 2mm 2mm 0; margin: 4mm 0; }
+  .callout p { margin: 0; }
+  .callout .t { font-family: Consolas, monospace; font-size: 7.4pt; letter-spacing: 0.14em; text-transform: uppercase; color: var(--emerald-dark); margin-bottom: 1.5mm; }
+
+  /* Figures */
+  figure { margin: 3mm 0 5mm; page-break-inside: avoid; }
+  figure img { width: 100%; display: block; border-radius: 2.5mm; border: 1px solid #d8dedb; background: #0b0d0c; }
+  figcaption { font-family: Consolas, monospace; font-size: 7.4pt; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); margin-top: 2mm; }
+  .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 4mm; align-items: start; }
+  .pair figure { margin: 0; }
+  .pair figcaption b { color: var(--emerald-dark); }
+  .pair.compact img { max-height: 62mm; width: auto; max-width: 100%; margin: 0 auto; }
+  .pair.compact figcaption { text-align: center; }
+
+  .split { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 7mm; }
+  .cols-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 7mm; }
+
+  .lead { font-size: 10.5pt; color: var(--ink-2); line-height: 1.65; }
+
+  .tag { display: inline-block; font-family: Consolas, monospace; font-size: 7.2pt; letter-spacing: 0.1em; text-transform: uppercase; color: var(--emerald-dark); background: #e7f5ef; border: 1px solid #c8e9dc; padding: 1mm 2mm; border-radius: 99px; }
+
+  .foot { margin-top: 8mm; padding-top: 3mm; border-top: 1px solid var(--line); font-family: Consolas, monospace; font-size: 7.2pt; color: var(--ink-3); display: flex; justify-content: space-between; }
+
+  .small { font-size: 8.4pt; color: var(--ink-3); }
+  .avoid { page-break-inside: avoid; }
+  .mt { margin-top: 6mm; }
+</style>
+</head>
+<body>
+
+<!-- ============ COVER ============ -->
+<section class="cover page">
+  <div class="ticks">ARENAX<br />VISUAL SYSTEM<br />2026</div>
+  <div class="brand">
+    <img src="../public/logo.webp" alt="ArenaX" />
+    <span>Arena<b>X</b></span>
+  </div>
+
+  <div class="eyebrow">Design Upgrade Report</div>
+  <h1>
+    A sharper face<br />for competitive<br />Free Fire.
+    <span class="thin">Visual redesign, responsive rebuild and quality audit of the ArenaX web platform.</span>
+  </h1>
+
+  <p class="lede">
+    A presentation-only upgrade of the ArenaX marketing site: one typographic system, one carbon
+    surface language, a recomposed hero, a rebuilt navigation and footer, and a mobile experience
+    engineered from 320 px upward. All product copy, pricing, legal text and calculator logic remain
+    exactly as they were.
+  </p>
+
+  <div class="meta">
+    <div><b>Prepared</b>9 November 2026</div>
+    <div><b>Platform</b>React 18 · Vite 8 · Tailwind CSS</div>
+    <div><b>Scope</b>Visual + responsive only</div>
+    <div><b>Verification</b>546 / 546 tests passing</div>
+  </div>
+</section>
+
+<!-- ============ 1. SUMMARY ============ -->
+<section class="page">
+  <h2><span class="num">/ 01</span>Executive summary</h2>
+  <p class="lead">
+    The site had strong raw material — real product features, a distinctive dark palette and a
+    recognisable emerald accent — but it read as twelve separately designed sections. The upgrade
+    gives it a single editorial voice and fixes the mobile layouts where the previous composition
+    broke down.
+  </p>
+
+  <div class="kpis">
+    <div class="kpi"><div class="v">−25%</div><div class="l">Hero height, desktop</div></div>
+    <div class="kpi"><div class="v">0</div><div class="l">Horizontal overflow 320–1920</div></div>
+    <div class="kpi"><div class="v">546</div><div class="l">Tests passing</div></div>
+    <div class="kpi"><div class="v">14.6 kB</div><div class="l">CSS gzipped</div></div>
+  </div>
+
+  <div class="split">
+    <div>
+      <h3>What the redesign fixes</h3>
+      <ul>
+        <li><strong>Inconsistent hierarchy.</strong> Ten different section headers become one <em>SectionHeader</em> grammar: emerald rule, fluid title, optional prose, optional aside.</li>
+        <li><strong>Font sprawl.</strong> Manrope, Inter and Source Code Pro are now the only families, self-hosted, Latin-subset, with no Google Fonts request.</li>
+        <li><strong>Hero dead space.</strong> A split editorial hero with a framed character stage and a single telemetry ribbon replaces a 1,144 px stack.</li>
+        <li><strong>Mobile breakage.</strong> Clipped chips, 600 px wallet cards, wrapping tabs and an oversized footer are all resolved.</li>
+        <li><strong>Content defects.</strong> Mojibake punctuation and a watermarked Master badge were repaired.</li>
+      </ul>
+    </div>
+    <div>
+      <h3>What was deliberately preserved</h3>
+      <ul>
+        <li>Every headline, paragraph, bullet and CTA label.</li>
+        <li>All tier names, point ranges, rewards and calculator formulas.</li>
+        <li>FAQ answers, legal clauses, About story, contact channels.</li>
+        <li>Footer links, social URLs, email and copyright.</li>
+        <li>Analytics events and the APK release URL.</li>
+      </ul>
+      <div class="callout">
+        <div class="t">Design principle</div>
+        <p>One accent. One carbon ramp. One type scale. If a visual element does not help the reader decide, compare or act, it was removed.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot"><span>ARENAX / VISUAL UPGRADE</span><span>01</span></div>
+</section>
+
+<!-- ============ 2. AUDIT ============ -->
+<section class="page">
+  <h2><span class="num">/ 02</span>What the audit found</h2>
+  <p class="lead">
+    Every section was captured at 1440, 1280, 1024, 834, 768, 390, 360 and 320 px before any change.
+    The issues clustered into five groups.
+  </p>
+
+  <table>
+    <thead><tr><th style="width:22%">Area</th><th style="width:46%">Finding</th><th>Impact</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Header system</strong></td><td>Five competing header treatments: 60 px ALL-CAPS, 76 px sentence case, floating icon orb, right-side badge, no support copy.</td><td>The page felt assembled from different templates.</td></tr>
+      <tr><td><strong>Typography</strong></td><td>Five font families declared; three Google families loaded over the network <em>and</em> self-hosted fallbacks shipped.</td><td>Unpredictable rendering and a render-blocking request.</td></tr>
+      <tr><td><strong>Accent</strong></td><td>Emerald on headlines, borders, glows, badges, icons and values simultaneously.</td><td>Nothing looked important; the CTA lost priority.</td></tr>
+      <tr><td><strong>Hero</strong></td><td>Badge row + four chips + operator switch + headline + two CTAs + wordmark + character + three stat cards in 1,144 px.</td><td>No single focal point; character buried.</td></tr>
+      <tr><td><strong>Mobile nav</strong></td><td>No download action; translucent drawer let hero copy ghost through labels.</td><td>Menu felt unfinished and hard to read.</td></tr>
+      <tr><td><strong>Wallet</strong></td><td>Five vertical 190 px cards for five short labels.</td><td>~600 px of scroll for 20 words.</td></tr>
+      <tr><td><strong>Ranks</strong></td><td>Horizontal strip with no snap, second card half-cut, 10–11 px copy.</td><td>Carousel felt accidental.</td></tr>
+      <tr><td><strong>Tabs</strong></td><td>“Clash Squad 4v4” wrapped to two lines inside the segmented control.</td><td>Control heights became uneven.</td></tr>
+      <tr><td><strong>Footer</strong></td><td>Empty brand column; mobile wordmark collided with copyright; 32 px link targets.</td><td>Weak close to the page.</td></tr>
+      <tr><td><strong>Assets</strong></td><td>Mojibake in 12 files; “chinatown” watermark on the Master badge; 65.5 kB logo shown at 30 px.</td><td>Visible corruption on production pages.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="pair compact">
+    <figure><img src="../report-assets/before-hero-desktop.jpg" alt="Before hero" /><figcaption><b>Before</b> — cluttered meta row, unanchored headline, character floating in empty space</figcaption></figure>
+    <figure><img src="../report-assets/before-wallet-mobile.jpg" alt="Before wallet" /><figcaption><b>Before</b> — five oversized cards, weak labels, floating support button</figcaption></figure>
+  </div>
+
+  <div class="foot"><span>ARENAX / VISUAL UPGRADE</span><span>02</span></div>
+</section>
+
+<!-- ============ 3. SYSTEM ============ -->
+<section class="page">
+  <h2><span class="num">/ 03</span>The design system</h2>
+  <p class="lead">
+    “Broadcast editorial” — the restraint of a developer product site, with the hierarchy of a sports
+    broadcast package. One accent, one carbon ramp, one type scale, one card language.
+  </p>
+
+  <div class="cols-2">
+    <div>
+      <h3>Typography</h3>
+      <table>
+        <tbody>
+          <tr><td><strong>Manrope</strong></td><td>Display, 500–800</td></tr>
+          <tr><td><strong>Inter</strong></td><td>Body/UI, 400–600</td></tr>
+          <tr><td><strong>Source Code Pro</strong></td><td>Telemetry, 400–600</td></tr>
+          <tr><td><strong>Hero</strong></td><td><code>clamp(2.15rem, 5.2vw, 4.2rem)</code></td></tr>
+          <tr><td><strong>Section</strong></td><td><code>clamp(1.95rem, 3.5vw, 3.05rem)</code></td></tr>
+          <tr><td><strong>Page</strong></td><td><code>clamp(2.25rem, 4.6vw, 3.75rem)</code></td></tr>
+        </tbody>
+      </table>
+      <p class="small">All three families are self-hosted as Latin-subset WOFF2 via <code>@fontsource</code>. The Google Fonts link was removed.</p>
+    </div>
+    <div>
+      <h3>Surfaces & accent</h3>
+      <table>
+        <tbody>
+          <tr><td><strong>Canvas</strong></td><td><code>#121212</code></td></tr>
+          <tr><td><strong>Card</strong></td><td><code>#171717</code></td></tr>
+          <tr><td><strong>Raised</strong></td><td><code>#1E201F</code></td></tr>
+          <tr><td><strong>Footer</strong></td><td><code>#161616</code></td></tr>
+          <tr><td><strong>Accent</strong></td><td><code>#3ECF8E</code> (hover <code>#34B27B</code>)</td></tr>
+          <tr><td><strong>Hairline</strong></td><td><code>rgba(255,255,255,0.08)</code></td></tr>
+        </tbody>
+      </table>
+      <p class="small">Radius scale is 10 px (controls), 12 px (inset), 18 px (panels/pillows), with a single inner top highlight.</p>
+    </div>
+  </div>
+
+  <h3>New primitives & utilities</h3>
+  <p>
+    <span class="tag">SectionHeader</span>
+    <span class="tag">hero-title</span>
+    <span class="tag">section-title</span>
+    <span class="tag">page-title</span>
+    <span class="tag">body-copy</span>
+    <span class="tag">eyebrow</span>
+    <span class="tag">panel</span>
+    <span class="tag">panel-accent</span>
+    <span class="tag">hero-stage</span>
+    <span class="tag">stage-grid</span>
+    <span class="tag">snap-track</span>
+  </p>
+  <p>
+    <code>SectionHeader</code> accepts a title, optional description, optional aside badge/action and an
+    optional centre alignment. It is now used by App Showcase, Tournament Modes, Vision Engine, Wallet,
+    Ranks, Organizer Program, How It Works, Comparison, Scout Rewards and Download — ten sections with
+    identical words and identical rhythm.
+  </p>
+
+  <div class="callout">
+    <div class="t">Rhythm</div>
+    <p>Sections use <code>clamp(64px, 8vw, 112px)</code> vertical padding and a 1,200 px max-width container with 20 px mobile gutters. Every title sits above a 34 px emerald rule and below a consistent 40–56 px gap.</p>
+  </div>
+
+  <div class="foot"><span>ARENAX / VISUAL UPGRADE</span><span>03</span></div>
+</section>
+
+<!-- ============ 4. HERO / CHROME ============ -->
+<section class="page">
+  <h2><span class="num">/ 04</span>Hero, navigation & footer</h2>
+
+  <div class="split">
+    <div>
+      <h3>Hero recomposition</h3>
+      <p>
+        At ≥1024 px the hero is a two-column editorial layout: brand badge, headline and CTAs on the
+        left; a framed character stage on the right; a single three-up telemetry ribbon underneath.
+      </p>
+      <p>
+        On phones the reading order is badge → headline → CTAs → <strong>character stage</strong> →
+        feature chips → telemetry. The product visual is now visible in the first scroll instead of
+        being buried after a wall of chips.
+      </p>
+      <ul>
+        <li>Stage: 22 px carbon frame, 44 px grid, ARENAX echo, corner ticks, coloured aura, docked operator switch.</li>
+        <li>Feature chips: 2×2 grid on phones — no clipped scroller.</li>
+        <li>Pointer tilt at ≥1024 px only; scroll recess capped at 640 px.</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Chrome</h3>
+      <ul>
+        <li><strong>Header:</strong> 72 px desktop / 64 px mobile, glass at top, opaque on scroll, 1 px progress.</li>
+        <li><strong>Scroll-spy:</strong> activates only while a section crosses the header line.</li>
+        <li><strong>Mobile:</strong> download icon + menu, opaque sheet, dimmed backdrop, 44 px rows, route chips, full-width CTA, Escape close.</li>
+        <li><strong>Footer:</strong> 12-column desktop; two-column nav/legal on phones; oversized ARENAX echo in a clipped band that no longer touches the copyright.</li>
+      </ul>
+      <p class="small">Desktop hero height: 1,144 px → 854 px (−25%).</p>
+    </div>
+  </div>
+
+  <figure>
+    <img src="../report-assets/after-hero-desktop.png" alt="After hero desktop" />
+    <figcaption>After — desktop hero at 1440 × 960. Split message/stage, one CTA hierarchy, one telemetry ribbon.</figcaption>
+  </figure>
+
+  <div class="pair">
+    <figure><img src="../report-assets/after-hero-mobile.png" alt="After hero mobile" /><figcaption><b>After</b> — 390 px: character in the first scroll, chips reflow</figcaption></figure>
+    <figure><img src="../report-assets/after-menu-mobile.png" alt="After mobile menu" /><figcaption><b>After</b> — opaque sheet, 44 px rows, route chips</figcaption></figure>
+  </div>
+
+  <div class="foot"><span>ARENAX / VISUAL UPGRADE</span><span>04</span></div>
+</section>
+
+<!-- ============ 5. RESPONSIVE ============ -->
+<section class="page">
+  <h2><span class="num">/ 05</span>Responsive rebuild</h2>
+  <p class="lead">
+    The mobile pass was not a single breakpoint fix: each section was re-laid-out for the width at
+    which it actually breaks.
+  </p>
+
+  <table>
+    <thead><tr><th style="width:20%">Section</th><th style="width:44%">Phone behaviour</th><th>Tablet behaviour</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Hero</strong></td><td>Message-first stack; 2×2 chips; 3-up telemetry</td><td>Single column with 400 px stage</td></tr>
+      <tr><td><strong>App showcase</strong></td><td>Phone + screen switcher first, chapters second</td><td>Single column, 320 px phone</td></tr>
+      <tr><td><strong>Tournaments</strong></td><td>Nowrap 10 px tabs; card header stays on one line</td><td>Single column, full-width card</td></tr>
+      <tr><td><strong>Wallet</strong></td><td>Five compact connector rows; vault cards full width</td><td>2-column flow; vault cards full width</td></tr>
+      <tr><td><strong>Ranks</strong></td><td>Snap carousel, 200 px cards with peek</td><td>2/4-up grid</td></tr>
+      <tr><td><strong>Scout</strong></td><td>Cards stacked, 3 stat tiles preserved</td><td>Cards stacked until 1024 px</td></tr>
+      <tr><td><strong>Footer</strong></td><td>2-column nav + legal; full-width channels</td><td>4-column grid</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Measured at every viewport</h3>
+  <table>
+    <thead><tr><th>Viewport</th><th>Overflow</th><th>Page height</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td>320 × 568</td><td><strong>None</strong></td><td>19,511 px</td><td>Smallest supported phone</td></tr>
+      <tr><td>360 × 740</td><td><strong>None</strong></td><td>18,541 px</td><td>Android baseline</td></tr>
+      <tr><td>390 × 844</td><td><strong>None</strong></td><td>17,906 px</td><td>iPhone 14</td></tr>
+      <tr><td>768 × 1024</td><td><strong>None</strong></td><td>16,390 px</td><td>Tablet</td></tr>
+      <tr><td>1024 × 768</td><td><strong>None</strong></td><td>14,109 px</td><td>Two-column hero begins</td></tr>
+      <tr><td>1280 × 800</td><td><strong>None</strong></td><td>14,570 px</td><td>Laptop</td></tr>
+      <tr><td>1440 × 900</td><td><strong>None</strong></td><td>15,012 px</td><td>Reference desktop</td></tr>
+      <tr><td>1920 × 1080</td><td><strong>None</strong></td><td>15,289 px</td><td>Container capped at 1,200 px</td></tr>
+    </tbody>
+  </table>
+
+  <div class="cols-2 mt">
+    <div>
+      <h3>Rules applied at every breakpoint</h3>
+      <ul>
+        <li>Two-column hero only at ≥1024 px; below that the message leads.</li>
+        <li>Card grids collapse to a single column before their content starts to wrap.</li>
+        <li>Horizontal tracks always snap and always show a peek of the next card.</li>
+        <li>Telemetry stays 3-up at every width; labels wrap, values never do.</li>
+        <li>Every fixed control respects safe-area insets.</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Touch & reading comfort</h3>
+      <ul>
+        <li>Header buttons 40 px; drawer rows 44 px+; primary CTAs 52 px.</li>
+        <li>Body copy never drops below 13 px; telemetry labels never below 10 px.</li>
+        <li>Long legal pages keep a 65–72 character measure.</li>
+        <li>No text is clipped by a scroll container at any tested width.</li>
+      </ul>
+    </div>
+  </div>
+
+</section>
+</section>
+
+<!-- ============ 6. ASSETS ============ -->
+<section class="page">
+  <h2><span class="num">/ 06</span>Assets & content integrity</h2>
+
+  <div class="split">
+    <div>
+      <h3>Repaired assets</h3>
+      <p>
+        <strong>Master rank badge.</strong> The shipped file contained a baked-in “chinatown” watermark
+        and white scribbles. It was replaced with a clean, transparent gold phoenix emblem generated
+        from the higher-resolution Heroic artwork, so the 80 px medal reads correctly.
+      </p>
+      <p>
+        <strong>Logo.</strong> The 1,024 px WebP was resized to 128 px for its 30–34 px display size:
+        65.5 kB → <strong>4.65 kB</strong> (−93%) with no visible difference.
+      </p>
+      <p>
+        <strong>Punctuation.</strong> UTF-8 mojibake was repaired across twelve components. The table
+        below shows the corrupted byte sequence on the left and the character the copy was always
+        meant to contain on the right.
+      </p>
+      <table style="margin-top:2mm;">
+        <thead><tr><th>Corrupted bytes</th><th>Restored</th><th>Character</th></tr></thead>
+        <tbody>
+          <tr><td><code>â€“</code></td><td><code>–</code></td><td>En dash</td></tr>
+          <tr><td><code>â€¢</code></td><td><code>•</code></td><td>Bullet</td></tr>
+          <tr><td><code>â˜…</code></td><td><code>★</code></td><td>Star</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <h3>Content preservation</h3>
+      <p>
+        Every marketing string, legal clause, calculator label and route label is unchanged. The
+        preservation tests from the original project still pass, and the only text edits were the
+        punctuation repairs above — restoring the characters the copy was always meant to contain.
+      </p>
+      <div class="callout">
+        <div class="t">Not changed</div>
+        <p>No headline, CTA, price, reward, FAQ answer, legal clause, footer link, analytics event or APK URL was rewritten, reordered or removed.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="pair mt">
+    <figure><img src="../report-assets/before-ranks-desktop.jpg" alt="Before ranks" /><figcaption><b>Before</b> — garbled dashes and watermarked Master badge</figcaption></figure>
+    <figure><img src="../report-assets/after-ranks-desktop.png" alt="After ranks" /><figcaption><b>After</b> — clean typography, consistent medal presentation</figcaption></figure>
+  </div>
+
+  <div class="foot"><span>ARENAX / VISUAL UPGRADE</span><span>06</span></div>
+</section>
+
+<!-- ============ 7. VERIFICATION ============ -->
+<section class="page">
+  <h2><span class="num">/ 07</span>Verification & delivery</h2>
+
+  <table>
+    <thead><tr><th>Check</th><th>Result</th><th>Detail</th></tr></thead>
+    <tbody>
+      <tr><td>TypeScript</td><td><strong>PASS</strong></td><td>Strict mode, 0 errors</td></tr>
+      <tr><td>ESLint</td><td><strong>PASS</strong></td><td>0 errors, 0 warnings</td></tr>
+      <tr><td>Production build</td><td><strong>PASS</strong></td><td>Vite 8, 3.59 s</td></tr>
+      <tr><td>Automated tests</td><td><strong>546 / 546</strong></td><td>134 suites, 0 failures</td></tr>
+      <tr><td>Responsive audit</td><td><strong>PASS</strong></td><td>No horizontal overflow at 8 viewports</td></tr>
+    </tbody>
+  </table>
+
+  <div class="cols-2">
+    <div>
+      <h3>Production footprint</h3>
+      <table>
+        <tbody>
+          <tr><td>JavaScript</td><td>584.10 kB / <strong>168.17 kB gzip</strong></td></tr>
+          <tr><td>CSS</td><td>86.83 kB / <strong>14.63 kB gzip</strong></td></tr>
+          <tr><td>Logo</td><td>4.65 kB (was 65.5 kB)</td></tr>
+          <tr><td>Fonts</td><td>10 Latin-subset WOFF2, self-hosted</td></tr>
+          <tr><td>External font requests</td><td><strong>0</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <h3>Accessibility delivered</h3>
+      <ul>
+        <li>Focus-visible rings on all interactive controls.</li>
+        <li><code>aria-expanded</code>, <code>aria-controls</code>, <code>aria-modal</code>, <code>aria-current</code>, <code>aria-pressed</code>.</li>
+        <li>Escape closes the drawer; background scroll locks.</li>
+        <li>Reduced-motion support in CSS and GSAP scenes.</li>
+        <li>44 px+ drawer rows, 52 px primary CTAs.</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>Recommended next steps</h3>
+  <ol>
+    <li><strong>Route-level code splitting</strong> for About/FAQ/Contact/legal pages — estimated 30–50 kB off initial JS.</li>
+    <li><strong>Raise the tertiary text token</strong> from <code>#707070</code> to ~<code>#8A8F8B</code> on 11–12 px labels for AA.</li>
+    <li><strong>Real device screenshots</strong> for the phone mockup when app captures are available.</li>
+    <li><strong>Responsive images</strong> (<code>srcset</code>) for the hero character and rank badges.</li>
+    <li><strong>Focus trap</strong> inside the mobile drawer to complete the dialog pattern.</li>
+    <li><strong>Performance budget:</strong> &lt;150 kB gzip initial JS, Lighthouse mobile ≥ 90.</li>
+  </ol>
+
+  <div class="callout">
+    <div class="t">Delivery</div>
+    <p>The implementation is complete in the workspace, the production build is current, and this report is accompanied by before/after captures in <code>report-assets/</code>.</p>
+  </div>
+
+  <div class="foot"><span>ARENAX / VISUAL UPGRADE</span><span>07 · END</span></div>
+</section>
+
+</body>
+</html>

@@ -23,11 +23,9 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(
     const isHighlighted = variant === 'highlighted';
 
     const baseClass =
-      'group relative overflow-hidden rounded-card p-6 sm:p-8 transition-all duration-200 ease-[cubic-bezier(0.16,1,0.3,1)]';
-    const variantClass = isHighlighted
-      ? 'hud-card-highlight bg-[#181a19] border border-[#3ECF8E]/35'
-      : 'hud-card bg-[#171717] border border-white/8';
-    const interactiveClass = interactive ? 'hover:-translate-y-1 hover:shadow-lift' : '';
+      'group relative overflow-hidden rounded-card p-6 sm:p-8 transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]';
+    const variantClass = isHighlighted ? 'hud-card-highlight' : 'hud-card';
+    const interactiveClass = interactive ? 'hover:-translate-y-1' : '';
 
     return (
       <Component
